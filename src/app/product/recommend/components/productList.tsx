@@ -5,6 +5,7 @@ import PaginaionBtn from "./button/paginationBtn";
 import FilterBtn from "./button/filterBtn";
 import SearchBar from "./bars/searchBar";
 import { useCallback, useEffect, useState } from "react";
+//============================================================Data===========================================================================
 interface product {
   id: number;
   imgSrc: string;
@@ -26,7 +27,7 @@ export const productList: product[] = [
     rating: "5",
   },
   {
-    id: 1,
+    id: 2,
     imgSrc:
       "https://as2.ftcdn.net/v2/jpg/00/65/77/27/1000_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
     name: "Asus",
@@ -36,7 +37,7 @@ export const productList: product[] = [
     rating: "5",
   },
   {
-    id: 1,
+    id: 3,
     imgSrc:
       "https://as2.ftcdn.net/v2/jpg/00/65/77/27/1000_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
     name: "Del",
@@ -46,7 +47,7 @@ export const productList: product[] = [
     rating: "5",
   },
 ];
-
+//============================================================================================================
 function ProductList() {
   const [inputValue, setInputValue] = useState<string>("");
   const [initialList] = useState(productList);
@@ -61,7 +62,7 @@ function ProductList() {
   useEffect(() => {
     const timer = setTimeout(() => {
       searchHandler();
-    }, 100);
+    }, 200);
     return () => {
       clearTimeout(timer);
     };

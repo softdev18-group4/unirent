@@ -1,5 +1,35 @@
 import FindYourParterCard from "./cards/findYourPartnerCard";
-
+//============================================================Data===========================================================================
+interface partner {
+  id: number;
+  imgSrc: string;
+  topic: string;
+  description: string;
+}
+export const partnerList: partner[] = [
+  {
+    id: 1,
+    imgSrc:
+      "https://as2.ftcdn.net/v2/jpg/00/65/77/27/1000_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
+    topic: "กำลังปล่อยเช่า...",
+    description: "รีบเช่าจะได้ไปทำอย่างอื่นนะ",
+  },
+  {
+    id: 2,
+    imgSrc:
+      "https://as2.ftcdn.net/v2/jpg/00/65/77/27/1000_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
+    topic: "กำลังปล่อยเช่า...",
+    description: "รีบเช่าจะได้ไปทำอย่างอื่นนะ",
+  },
+  {
+    id: 3,
+    imgSrc:
+      "https://as2.ftcdn.net/v2/jpg/00/65/77/27/1000_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
+    topic: "กำลังปล่อยเช่า...",
+    description: "รีบเช่าจะได้ไปทำอย่างอื่นนะ",
+  },
+];
+//============================================================================================================
 function FindYourParter() {
   return (
     <div>
@@ -11,28 +41,9 @@ function FindYourParter() {
       </div>
 
       <div className="flex gap-x-5">
-        {[
-          [
-            "1",
-            "https://as2.ftcdn.net/v2/jpg/00/65/77/27/1000_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
-            "กำลังปล่อยเช่า...",
-            "รีบเช่าจะได้ไปทำอย่างอื่นนะ",
-          ],
-          [
-            "2",
-            "https://as2.ftcdn.net/v2/jpg/00/65/77/27/1000_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
-            "กำลังปล่อยเช่า...",
-            "รีบเช่าจะได้ไปทำอย่างอื่นนะ",
-          ],
-          [
-            "3",
-            "https://as2.ftcdn.net/v2/jpg/00/65/77/27/1000_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
-            "กำลังปล่อยเช่า...",
-            "รีบเช่าจะได้ไปทำอย่างอื่นนะ",
-          ],
-        ].map(([key, imgSrc, topic, description]) => (
+        {partnerList.map(({ id, imgSrc, topic, description }) => (
           <FindYourParterCard
-            key={key}
+            key={id}
             imgSrc={imgSrc}
             topic={topic}
             description={description}
