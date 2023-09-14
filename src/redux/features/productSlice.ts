@@ -1,7 +1,7 @@
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { imageList } from "../../../constants";
-
+import { ProductState , InitialState } from "@/types";
 
 
 const initialState = {

@@ -12,9 +12,18 @@
 .product_details {
     @apply grid grid-cols-2 p-3 mt-3 gap-10;
 }
+.product_slide {
+    
+}
 .product_image_under{
     @apply grid grid-cols-3 mt-3 gap-1;
 }
+.product_select_title {
+    @apply grid grid-cols-2;
+}
+.product_select_title h1 {
+    @apply text-[#212A3E]  font-bold capitalize;
+}
 .image_fix {
-    @apply relative rounded-md !important;
+    @apply relative rounded-md  !important;
 }

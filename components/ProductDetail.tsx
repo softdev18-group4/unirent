@@ -2,16 +2,14 @@
 
 import { ProductSelect, SlideProduct } from ".";
 
-
-
-
 const ProductDetail = () => {
   return (
     <div className="product_details">
-      <SlideProduct />
-      <div className="product_select">
-        <ProductSelect />
+      <div className="product_slide">
+        <SlideProduct />
       </div>
+
+      <ProductSelect />
     </div>
   );
 };

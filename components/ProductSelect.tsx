@@ -7,7 +7,10 @@ const ProductSelect = () => {
 
   return (
     <div className="product_select">
-      <h1>{product.name}</h1>
+      <div className="product_select_title">
+        <h1 className="mr-auto">{product.name}</h1>
+        <button className="align-right">Add to Cart</button>
+      </div>
     </div>
   );
 };
