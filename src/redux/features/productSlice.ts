@@ -1,42 +1,46 @@
 
-
-// Example 
-
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type CounterState = {
-  value: number;
-};
+
 
 const initialState = {
-  value: 0,
-} as CounterState;
+  value: {
+    id: 0,
+    name: "Macbook Pro 2020",
+    description: "Apple",
+    providerId: "_id1fg515432",
+    provider: "Mewpk",
+    src: "/product"
+  } as ProductState
+} as InitialState
 
-export const counter = createSlice({
-  name: "counter",
+export const product = createSlice({
+  name: "product",
   initialState,
   reducers: {
     reset: () => initialState,
-    increment: (state) => {
-      state.value += 1;
+    // increment: (state) => {
+    //   state.value += 1;
+    // },
+    // decrement: (state) => {
+    //   state.value -= 1;
+    // },
+    updateProduct: (state, action: PayloadAction<ProductState>) => {
+      state.value = action.payload;
     },
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload;
-    },
-    decrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value -= action.payload;
-    },
+    // decrementByAmount: (state, action: PayloadAction<number>) => {
+    //   state.value -= action.payload;
+    // },
   },
 });
 
 export const {
-  increment,
-  incrementByAmount,
-  decrement,
-  decrementByAmount,
+  // increment,
+  // incrementByAmount,
+  // decrement,
+  // decrementByAmount,
+  updateProduct,
   reset,
-} = counter.actions;
-export default counter.reducer;
+} = product.actions;
+
+export const productReducer =  product.reducer;

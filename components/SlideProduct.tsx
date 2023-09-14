@@ -27,13 +27,13 @@ const SlideProduct = () => {
   }, []);
   return (
     <div className="product_image">
-        <Image
-          src={product[currentIndex]}
-          alt={`Image ${currentIndex + 1}`}
-          layout="fill"
-          objectFit="cover"
-          className="image_fix"
-        />
+      <Image
+        src={product[currentIndex]}
+        alt={`Image ${currentIndex + 1}`}
+        layout="fill"
+        objectFit="cover"
+        className="image_fix"
+      />
 
       <div className="product_image_under">
         {product.map((image, index) => (
@@ -47,8 +47,8 @@ const SlideProduct = () => {
               src={image}
               alt={`Image ${index + 1}`}
               layout="fill"
-          objectFit="cover"
-          className="image_fix"
+              objectFit="cover"
+              className="image_fix"
               onClick={() => setCurrentIndex(index)}
             />
           </div>

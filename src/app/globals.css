@@ -16,5 +16,5 @@
     @apply grid grid-cols-3 mt-3 gap-1;
 }
 .image_fix {
-    @apply static rounded-md !important;
+    @apply relative rounded-md !important;
 }
