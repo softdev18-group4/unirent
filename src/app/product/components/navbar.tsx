@@ -28,9 +28,9 @@ function Navbar() {
               ["Customers", "/product/recommend"],
               ["Rents", "/product/recommend"],
               ["FAQ", "/product/recommend"],
-            ].map(([title, url]) => (
+            ].map(([title, url], index) => (
               <a
-                key={title}
+                key={index}
                 href={url}
                 className="grow rounded-full px-1 py-1 text-white text-center font-thin hover:bg-[color:var(--theme-color2)] hover:font-normal"
               >
@@ -75,11 +75,11 @@ function Navbar() {
         {/* <md size  */}
         <div className="md:hidden flex justify-between items-center py-4">
           <div className="block grow-[1]">
-            <div className="w-full py-6 pb-8">
+            <div className="w-full py-6 pb-6">
               <div className="relative inline-block">
                 <button
                   type="button"
-                  className="px-4 py-2 text-white theme-bg-color1 hover:bg-[color:var(--theme-color2)] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm inline-flex items-center"
+                  className="px-4 py-2 bg-transparent hover:ring-4 hover:outline-none hover:ring-blue-300 font-medium rounded-lg text-sm inline-flex items-center"
                   onClick={toggleDropdown}
                 >
                   <svg
@@ -88,7 +88,7 @@ function Navbar() {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-6 h-6"
+                    className="w-6 h-6 fill-black"
                   >
                     <path
                       strokeLinecap="round"
@@ -113,10 +113,9 @@ function Navbar() {
                         ["FAQ", "/product/recommend"],
                         ["Cart", "/product/recommend"],
                         ["Profile", "/product/recommend"],
-                      ].map(([title, url]) => (
-                        <li key={title}>
+                      ].map(([title, url], index) => (
+                        <li key={index}>
                           <a
-                            key={title}
                             href={url}
                             className="block rounded-lg px-1 py-1 text-white text-center font-thin hover:bg-[color:var(--theme-color2)] hover:font-normal"
                             onClick={closeDropdown}

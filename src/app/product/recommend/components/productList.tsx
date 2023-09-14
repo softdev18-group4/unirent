@@ -18,8 +18,7 @@ interface product {
 export const productList: product[] = [
   {
     id: 1,
-    imgSrc:
-      "https://as2.ftcdn.net/v2/jpg/00/65/77/27/1000_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
+    imgSrc: "/vercel.svg",
     name: "Mac",
     description: "ปล่อยเช่า mac",
     price: "50",
@@ -28,8 +27,7 @@ export const productList: product[] = [
   },
   {
     id: 2,
-    imgSrc:
-      "https://as2.ftcdn.net/v2/jpg/00/65/77/27/1000_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
+    imgSrc: "/vercel.svg",
     name: "Asus",
     description: "ปล่อยเช่า mac",
     price: "50",
@@ -38,9 +36,53 @@ export const productList: product[] = [
   },
   {
     id: 3,
-    imgSrc:
-      "https://as2.ftcdn.net/v2/jpg/00/65/77/27/1000_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
+    imgSrc: "/vercel.svg",
     name: "Del",
+    description: "ปล่อยเช่า mac",
+    price: "50",
+    period: "1-14",
+    rating: "5",
+  },
+  {
+    id: 4,
+    imgSrc: "/vercel.svg",
+    name: "Del",
+    description: "ปล่อยเช่า mac",
+    price: "50",
+    period: "1-14",
+    rating: "5",
+  },
+  {
+    id: 5,
+    imgSrc: "/vercel.svg",
+    name: "Del",
+    description: "ปล่อยเช่า mac",
+    price: "50",
+    period: "1-14",
+    rating: "5",
+  },
+  {
+    id: 6,
+    imgSrc: "/vercel.svg",
+    name: "Del",
+    description: "ปล่อยเช่า mac",
+    price: "50",
+    period: "1-14",
+    rating: "5",
+  },
+  {
+    id: 7,
+    imgSrc: "/vercel.svg",
+    name: "Sleep",
+    description: "ปล่อยเช่า mac",
+    price: "50",
+    period: "1-14",
+    rating: "5",
+  },
+  {
+    id: 8,
+    imgSrc: "/vercel.svg",
+    name: "Predator",
     description: "ปล่อยเช่า mac",
     price: "50",
     period: "1-14",
@@ -77,35 +119,56 @@ function ProductList() {
           setInputValue={setInputValue}
         ></SearchBar>
       </div>
-      <div className="grid grid-cols-3 gap-10">
-        {inputValue.length > 0
-          ? filteredList.map(
-              ({ id, imgSrc, name, description, price, period, rating }) => (
-                <ProductListCard
-                  key={id}
-                  imgSrc={imgSrc}
-                  name={name}
-                  description={description}
-                  price={price}
-                  period={period}
-                  rating={rating}
-                ></ProductListCard>
-              )
-            )
-          : initialList.map(
-              ({ id, imgSrc, name, description, price, period, rating }) => (
-                <ProductListCard
-                  key={id}
-                  imgSrc={imgSrc}
-                  name={name}
-                  description={description}
-                  price={price}
-                  period={period}
-                  rating={rating}
-                ></ProductListCard>
-              )
-            )}
-      </div>
+      {filteredList.length > 0 ? (
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-10">
+          {inputValue.length > 0
+            ? filteredList
+                .slice(0, 6)
+                .map(
+                  (
+                    { id, imgSrc, name, description, price, period, rating },
+                    index
+                  ) => (
+                    <ProductListCard
+                      key={index}
+                      id={id}
+                      imgSrc={imgSrc}
+                      name={name}
+                      description={description}
+                      price={price}
+                      period={period}
+                      rating={rating}
+                    ></ProductListCard>
+                  )
+                )
+            : initialList
+                .slice(0, 6)
+                .map(
+                  (
+                    { id, imgSrc, name, description, price, period, rating },
+                    index
+                  ) => (
+                    <ProductListCard
+                      key={index}
+                      id={id}
+                      imgSrc={imgSrc}
+                      name={name}
+                      description={description}
+                      price={price}
+                      period={period}
+                      rating={rating}
+                    ></ProductListCard>
+                  )
+                )}
+        </div>
+      ) : (
+        <div className="flex">
+          <div className="grow flex items-center justify-center">
+            ไม่พบข้อมูลนะจ๊ะ
+          </div>
+        </div>
+      )}
+
       <div className="flex justify-end my-10">
         {["1", "2", "3", "4", "..."].map((num) => (
           <PaginaionBtn key={num} number={num}></PaginaionBtn>

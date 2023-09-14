@@ -1,3 +1,5 @@
+"use client";
+import { useEffect, useState } from "react";
 import FindYourParterCard from "./cards/findYourPartnerCard";
 //============================================================Data===========================================================================
 interface partner {
@@ -9,28 +11,29 @@ interface partner {
 export const partnerList: partner[] = [
   {
     id: 1,
-    imgSrc:
-      "https://as2.ftcdn.net/v2/jpg/00/65/77/27/1000_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
-    topic: "กำลังปล่อยเช่า...",
+    imgSrc: "/vercel.svg",
+    topic: "กำลังปล่อยเช่า1...",
     description: "รีบเช่าจะได้ไปทำอย่างอื่นนะ",
   },
   {
     id: 2,
-    imgSrc:
-      "https://as2.ftcdn.net/v2/jpg/00/65/77/27/1000_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
-    topic: "กำลังปล่อยเช่า...",
+    imgSrc: "/vercel.svg",
+    topic: "กำลังปล่อยเช่า2...",
     description: "รีบเช่าจะได้ไปทำอย่างอื่นนะ",
   },
   {
     id: 3,
-    imgSrc:
-      "https://as2.ftcdn.net/v2/jpg/00/65/77/27/1000_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
-    topic: "กำลังปล่อยเช่า...",
+    imgSrc: "/vercel.svg",
+    topic: "กำลังปล่อยเช่า3...",
     description: "รีบเช่าจะได้ไปทำอย่างอื่นนะ",
   },
 ];
 //============================================================================================================
 function FindYourParter() {
+  const [index1, setIndex1] = useState(0);
+  const [index2, setIndex2] = useState(0);
+  const [index3, setIndex3] = useState(0);
+
   return (
     <div>
       <div className="flex font-extrabold py-3 justify-between">
@@ -41,16 +44,56 @@ function FindYourParter() {
       </div>
 
       <div className="flex gap-x-5">
-        {partnerList.map(({ id, imgSrc, topic, description }) => (
-          <FindYourParterCard
-            key={id}
-            imgSrc={imgSrc}
-            topic={topic}
-            description={description}
-          ></FindYourParterCard>
-        ))}
-
-        <div className="cursor-pointer w-10 bg-white drop-shadow-lg rounded-xl flex items-stretch justify-center hover:bg-slate-200">
+        <div className="hidden xl:flex grow gap-x-5">
+          {partnerList
+            .slice(index3, index3 + 3)
+            .map(({ id, imgSrc, topic, description }, index) => (
+              <FindYourParterCard
+                key={index}
+                id={id}
+                imgSrc={imgSrc}
+                topic={topic}
+                description={description}
+              ></FindYourParterCard>
+            ))}
+        </div>
+        <div className="hidden xl:hidden md:flex grow gap-x-5">
+          {partnerList
+            .slice(index2, index2 + 2)
+            .map(({ id, imgSrc, topic, description }, index) => (
+              <FindYourParterCard
+                key={index}
+                id={id}
+                imgSrc={imgSrc}
+                topic={topic}
+                description={description}
+              ></FindYourParterCard>
+            ))}
+        </div>
+        <div className="md:hidden flex grow gap-x-5">
+          {partnerList
+            .slice(index1, index1 + 1)
+            .map(({ id, imgSrc, topic, description }, index) => (
+              <FindYourParterCard
+                key={index}
+                id={id}
+                imgSrc={imgSrc}
+                topic={topic}
+                description={description}
+              ></FindYourParterCard>
+            ))}
+        </div>
+        <div
+          onClick={(e) => {
+            setIndex1(index1 + 1);
+            if (index1 + 1 >= partnerList.length) setIndex1(0);
+            setIndex2(index2 + 1);
+            if (index2 + 2 >= partnerList.length) setIndex2(0);
+            setIndex3(index3 + 1);
+            if (index3 + 3 >= partnerList.length) setIndex3(0);
+          }}
+          className="cursor-pointer w-10 bg-white drop-shadow-lg rounded-xl flex items-stretch justify-center hover:bg-slate-200"
+        >
           <div className="h-full flex items-center justify-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"

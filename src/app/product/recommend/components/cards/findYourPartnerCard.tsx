@@ -2,10 +2,12 @@ import Image from "next/image";
 import "./styles.css";
 
 function FindYourParterCard({
+  id,
   imgSrc,
   topic,
   description,
 }: {
+  id: number;
   imgSrc: string;
   topic: string;
   description: string;
