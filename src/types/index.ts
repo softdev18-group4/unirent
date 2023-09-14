@@ -21,3 +21,7 @@ export interface CustomButtonProps   {
     MouseEventHandler<HTMLButtonElement>;
 
 }
+
+export interface StarProps {
+  rating: number;
+}
