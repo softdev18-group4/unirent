@@ -1,8 +1,11 @@
-import React from 'react'
+import Image from "next/image"
+import { ProductDetail } from "../../components"
 
 const page = () => {
   return (
-    <div>page</div>
+    <div className="main_container">
+      <ProductDetail/>
+    </div>
   )
 }
 

@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.main {
+    @apply bg-[#F1F6F9];
+}
+.main_container {
+    @apply container mx-auto;
+}
+
+.product_details {
+    @apply grid grid-cols-2 p-3 mt-3 gap-10;
+}
+.product_image_under{
+    @apply grid grid-cols-3 mt-3 gap-1;
+}
+.image_fix {
+    @apply static rounded-md !important;
+}
