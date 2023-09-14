@@ -1,53 +1,114 @@
+"use client";
+
 import ProductListCard from "./cards/productListCard";
 import PaginaionBtn from "./button/paginationBtn";
 import FilterBtn from "./button/filterBtn";
+import SearchBar from "./bars/searchBar";
+import { useCallback, useEffect, useState } from "react";
+interface product {
+  id: number;
+  imgSrc: string;
+  name: string;
+  description: string;
+  price: string;
+  period: string;
+  rating: string;
+}
+export const productList: product[] = [
+  {
+    id: 1,
+    imgSrc:
+      "https://as2.ftcdn.net/v2/jpg/00/65/77/27/1000_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
+    name: "Mac",
+    description: "ปล่อยเช่า mac",
+    price: "50",
+    period: "1-14",
+    rating: "5",
+  },
+  {
+    id: 1,
+    imgSrc:
+      "https://as2.ftcdn.net/v2/jpg/00/65/77/27/1000_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
+    name: "Asus",
+    description: "ปล่อยเช่า mac",
+    price: "50",
+    period: "1-14",
+    rating: "5",
+  },
+  {
+    id: 1,
+    imgSrc:
+      "https://as2.ftcdn.net/v2/jpg/00/65/77/27/1000_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg",
+    name: "Del",
+    description: "ปล่อยเช่า mac",
+    price: "50",
+    period: "1-14",
+    rating: "5",
+  },
+];
 
 function ProductList() {
+  const [inputValue, setInputValue] = useState<string>("");
+  const [initialList] = useState(productList);
+  const [filteredList, setFilteredList] = useState(productList);
+  const searchHandler = useCallback(() => {
+    const filteredData = initialList.filter((product) => {
+      return product.name.toLowerCase().includes(inputValue.toLowerCase());
+    });
+    setFilteredList(filteredData);
+  }, [initialList, inputValue]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      searchHandler();
+    }, 100);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [searchHandler]);
   return (
     <div>
       <div className="py-8 flex items-center">
         <FilterBtn></FilterBtn>
         <div className="grow-[5] mx-8 h-0 flex items-center justify-center border-dashed border border-black"></div>
-        <div className="grow-[1]">
-          <label className="relative text-gray-400 focus-within:text-gray-600 block">
-            <input
-              type="search"
-              id="default-search"
-              className="block w-full h-12 p-4 pl-12 text-sm text-gray-900 border drop-shadow-lg rounded-full bg-white "
-              placeholder="Search..."
-              required
-            ></input>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="pointer-events-none w-8 h-8 absolute top-1/2 transform -translate-y-1/2 left-3"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-              />
-            </svg>
-          </label>
-        </div>
+        <SearchBar
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+        ></SearchBar>
       </div>
       <div className="grid grid-cols-3 gap-10">
-        <ProductListCard></ProductListCard>
-        <ProductListCard></ProductListCard>
-        <ProductListCard></ProductListCard>
-        <ProductListCard></ProductListCard>
-        <ProductListCard></ProductListCard>
-        <ProductListCard></ProductListCard>
+        {inputValue.length > 0
+          ? filteredList.map(
+              ({ id, imgSrc, name, description, price, period, rating }) => (
+                <ProductListCard
+                  key={id}
+                  imgSrc={imgSrc}
+                  name={name}
+                  description={description}
+                  price={price}
+                  period={period}
+                  rating={rating}
+                ></ProductListCard>
+              )
+            )
+          : initialList.map(
+              ({ id, imgSrc, name, description, price, period, rating }) => (
+                <ProductListCard
+                  key={id}
+                  imgSrc={imgSrc}
+                  name={name}
+                  description={description}
+                  price={price}
+                  period={period}
+                  rating={rating}
+                ></ProductListCard>
+              )
+            )}
       </div>
       <div className="flex justify-end my-10">
-        <PaginaionBtn number="1"></PaginaionBtn>
-        <PaginaionBtn number="2"></PaginaionBtn>
-        <PaginaionBtn number="3"></PaginaionBtn>
-        <PaginaionBtn number="4"></PaginaionBtn>
-        <PaginaionBtn number="..."></PaginaionBtn>
+        {["1", "2", "3", "4", "..."].map((num) => (
+          <PaginaionBtn key={num} number={num}></PaginaionBtn>
+        ))}
       </div>
     </div>
   );

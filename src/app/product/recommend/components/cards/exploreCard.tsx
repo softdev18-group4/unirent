@@ -1,7 +1,7 @@
 function ExploreCard() {
   return (
-    <div className="grow">
-      <div className="cursor-pointer flex items-center justify-center drop-shadow h-36 bg-white p-3 mr-5 rounded-lg">
+    <div className="grow drop-shadow h-36 bg-white p-3 rounded-lg cursor-pointer ">
+      <div className="flex items-center justify-center h-full">
         ยังคิดไม่ออก
       </div>
     </div>

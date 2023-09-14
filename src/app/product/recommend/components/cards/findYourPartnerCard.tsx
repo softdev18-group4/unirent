@@ -1,25 +1,28 @@
 import Image from "next/image";
+import "./styles.css";
 
 function FindYourParterCard({
+  imgSrc,
   topic,
   description,
 }: {
+  imgSrc: string;
   topic: string;
   description: string;
 }) {
   return (
-    <div className="grow-[3] cursor-pointer">
-      <div className="flex items-center justify-start drop-shadow-lg h-20 bg-white p-3 mr-5 rounded-xl">
+    <div className="grow-[3] cursor-pointer items-stretch ">
+      <div className="flex items-center justify-start drop-shadow-lg h-full bg-white p-3 rounded-xl">
         <div>
           <Image
-            src="https://as2.ftcdn.net/v2/jpg/00/65/77/27/1000_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg"
+            src={imgSrc}
             width={60}
             height={60}
             alt="Picture of the author"
-            className="rounded-full"
+            className="rounded-full profileImg"
           />
         </div>
-        <div className="flex-col">
+        <div className="flex-col items-stretch">
           <div className="font-extrabold">{topic}</div>
           <div>{description}</div>
         </div>
