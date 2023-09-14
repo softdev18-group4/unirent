@@ -2,33 +2,29 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { imageList } from "../constants";
+import { useAppSelector , useAppDispatch } from "@/redux/hooks";
 
 const SlideProduct = () => {
-  const [product, setProduct] = useState<string[]>([]);
+  const dispatch = useAppDispatch();
+  const product = useAppSelector((state) => state.productReducer.value);
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const getProduct = async () => {
-    setProduct(imageList);
-  };
   const goToPrevImage = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? product.length - 1 : prevIndex - 1
+      prevIndex === 0 ? product.src.length - 1 : prevIndex - 1
     );
   };
 
   const goToNextImage = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === product.length - 1 ? 0 : prevIndex + 1
+      prevIndex === product.src.length - 1 ? 0 : prevIndex + 1
     );
   };
-
-  useEffect(() => {
-    getProduct();
-  }, []);
   return (
     <div className="product_image">
       <Image
-        src={product[currentIndex]}
+        src={product.src[currentIndex]}
         alt={`Image ${currentIndex + 1}`}
         layout="fill"
         objectFit="cover"
@@ -36,7 +32,7 @@ const SlideProduct = () => {
       />
 
       <div className="product_image_under">
-        {product.map((image, index) => (
+        {product.src.map((image, index) => (
           <div
             key={index}
             className={`thumbnail_image ${

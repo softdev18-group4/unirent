@@ -1,5 +1,6 @@
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { imageList } from "../../../constants";
 
 
 
@@ -10,7 +11,7 @@ const initialState = {
     description: "Apple",
     providerId: "_id1fg515432",
     provider: "Mewpk",
-    src: "/product"
+    src: imageList
   } as ProductState
 } as InitialState
 

@@ -4,7 +4,7 @@ type ProductState = {
     description: string;
     providerId: string;
     provider: string;
-    src: string;
+    src: string[];
   };
   
   type InitialState = {
