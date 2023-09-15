@@ -1,12 +1,17 @@
 import { MouseEventHandler } from "react";
+import ProductSelector from '../../components/ProductSelector';
 
 
 export interface ProductState {
-  id: number;
+  _id: object;
   name: string;
-  description: string;
-  providerId: string;
-  provider: string;
+  description : string;
+  ownerId : object;
+  // rental_options : object[];
+  specifications : object;
+  // reviews : object;
+  availability : Boolean;
+  availableDays : object;
   src: string[];
 };
 
@@ -24,4 +29,9 @@ export interface CustomButtonProps   {
 
 export interface StarProps {
   rating: number;
+}
+
+export interface ProductSelectorProps {
+  title : string;
+  price :number;
 }

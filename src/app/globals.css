@@ -37,11 +37,32 @@
     @apply bg-[#9BA4B5] rounded-full text-white w-fit py-1.5  max-lg:px-5 px-10 text-xs font-thin ml-auto;
 }
 .product_select_review {
-    @apply mt-3 flex items-center;
+    @apply mt-3 flex items-center text-[#394867];
 }
 .product_select_review_count {
     @apply ml-7 font-thin text-xs; 
 }
+.product_selector {
+    @apply my-2;
+}
+.product_selector_option {
+    @apply w-full h-12 border border-black bg-white rounded-md grid grid-cols-2 ;
+}
+.product_selector_option p{
+    @apply font-thin text-xs text-[#394867] mx-5;
+}
+.product_selector_option_left {
+    @apply flex flex-row items-center;
+}
+.product_selector_option_right {
+    @apply flex flex-row items-center ml-auto; 
+}
+.product_selector_option_right h1 {
+    @apply text-slate-600 text-xs font-semibold;
+}
 .hr {
     @apply h-[1px] bg-[#394867] my-4 mx-5;
+}
+.dot {
+    @apply w-2 h-2 rounded-full bg-[#F1F6F9] border border-[#9BA4B5] ml-5;
 }

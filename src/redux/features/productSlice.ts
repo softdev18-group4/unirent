@@ -1,16 +1,40 @@
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { imageList } from "../../../constants";
-import { ProductState , InitialState } from "@/types";
+import { ProductState, InitialState } from "@/types";
 
 
 const initialState = {
   value: {
-    id: 0,
-    name: "Macbook Pro 2020",
-    description: "Apple",
-    providerId: "_id1fg515432",
-    provider: "Mewpk",
+    _id: {
+      $oid: "6502cfbf89d76f38290ff5c5"
+    },
+    name: "Gaming Laptop",
+    description: "Powerful gaming laptop for immersive gaming experiences.",
+    ownerId: {
+      $oid: "65016f4172559e91e72127df"
+    },
+    availability: true,
+    specifications: {
+      brand: "Example Brand",
+      model: "GamerPro X",
+      processor: "Intel Core i9",
+      graphicCard: "NVIDIA GeForce RTX 3080",
+      ramSize: {
+        $numberLong: "16"
+      },
+      storageSize: {
+        $numberLong: "1000"
+      }
+    },
+    availableDays: {
+      startDate: {
+        $date: "2023-09-15T00:00:00.000Z"
+      },
+      endDate: {
+        $date: "2023-09-15T00:00:00.000Z"
+      }
+    },
     src: imageList
   } as ProductState
 } as InitialState
@@ -44,4 +68,4 @@ export const {
   reset,
 } = product.actions;
 
-export const productReducer =  product.reducer;
+export const productReducer = product.reducer;
