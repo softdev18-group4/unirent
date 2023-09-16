@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { imageList } from "../constants";
-import { useAppSelector , useAppDispatch } from "@/redux/hooks";
+import { imageList } from "../../../../../../constants";
+import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 
 const SlideProduct = () => {
   const dispatch = useAppDispatch();

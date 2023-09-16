@@ -16,11 +16,11 @@ function ProductListCard({
   rating: string;
 }) {
   return (
-    <div>
+    <a href="/product/detail/0">
       <div className="cursor-pointer flex items-center justify-center drop-shadow-lg h-60 lg:h-80 bg-white p-3 rounded-xl">
         {name}
       </div>
-    </div>
+    </a>
   );
 }
 export default ProductListCard;
