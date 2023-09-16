@@ -1,3 +1,68 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.main {
+  @apply bg-[#F1F6F9];
+}
+.main_container {
+  @apply container mx-auto;
+}
+
+.product_details {
+  @apply grid grid-cols-2 p-3 mt-3 gap-10 max-md:grid-cols-1;
+}
+.product_slide {
+  @apply mx-auto w-[90%];
+}
+.product_select {
+  @apply w-[90%] mx-auto;
+}
+.product_image_under {
+  @apply grid grid-cols-3 mt-3 gap-1 max-md:hidden;
+}
+.product_select_title {
+  @apply grid grid-cols-2 items-center;
+}
+.product_select_title h1 {
+  @apply text-[#212A3E]  font-bold capitalize;
+}
+.product_select_tag {
+  @apply border border-black w-fit mt-2 py-0.5 max-lg:px-4 px-7 rounded-full max-lg:text-xs text-sm font-thin;
+}
+.image_fix {
+  @apply relative rounded-md  !important;
+}
+.btn_custom1 {
+  @apply bg-[#9BA4B5] rounded-full text-white w-fit py-1.5  max-lg:px-5 px-10 text-xs font-thin ml-auto;
+}
+.product_select_review {
+  @apply mt-3 flex items-center text-[#394867];
+}
+.product_select_review_count {
+  @apply ml-7 font-thin text-xs;
+}
+.product_selector {
+  @apply my-2;
+}
+.product_selector_option {
+  @apply w-full h-12 border border-black bg-white rounded-md grid grid-cols-2;
+}
+.product_selector_option p {
+  @apply font-thin text-xs text-[#394867] mx-5;
+}
+.product_selector_option_left {
+  @apply flex flex-row items-center;
+}
+.product_selector_option_right {
+  @apply flex flex-row items-center ml-auto;
+}
+.product_selector_option_right h1 {
+  @apply text-slate-600 text-xs font-semibold;
+}
+.hr {
+  @apply h-[1px] bg-[#394867] my-4 mx-5;
+}
+.dot {
+  @apply w-2 h-2 rounded-full bg-[#F1F6F9] border border-[#9BA4B5] ml-5;
+}
