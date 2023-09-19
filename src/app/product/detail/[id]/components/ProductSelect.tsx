@@ -22,9 +22,9 @@ const ProductSelect = () => {
         <p className="product_select_review_count">3 รีวิว</p>
       </div>
       <div className="hr" />
-        <ProductSelector title="รายวัน" price={300}/>
-        <ProductSelector title="รายสัปดาห์" price={2200}/>
-        <ProductSelector title="รายเดือน" price={8000}/>
+      <ProductSelector title="รายวัน" price={300} />
+      <ProductSelector title="รายสัปดาห์" price={2200} />
+      <ProductSelector title="รายเดือน" price={8000} />
     </div>
   );
 };
