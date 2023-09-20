@@ -52,7 +52,7 @@ function ProductList() {
   };
   //======================================== data ===========================================
   useEffect(() => {
-    getData(page);
+    if (inputValue == "") getData(page);
   }, [page]);
   //=========================================================================================
   const searchHandler = useCallback(async () => {
@@ -70,6 +70,10 @@ function ProductList() {
     } else {
       getData(page);
     }
+  }, [inputValue, page]);
+
+  useEffect(() => {
+    setPage(1);
   }, [inputValue]);
 
   useEffect(() => {
@@ -151,7 +155,7 @@ function ProductList() {
 
       <div className="flex justify-end my-10">
         {page <= 3
-          ? [1, 2, 3, 4, -1].map((num, index) => (
+          ? [1, 2, 3, 4, 5].map((num, index) => (
               <PaginaionBtn
                 number={num}
                 ishighlight={num == page}
@@ -159,7 +163,7 @@ function ProductList() {
                 childSetPage={childSetPage}
               ></PaginaionBtn>
             ))
-          : [page - 2, page - 1, page, page + 1, -1].map((num, index) => (
+          : [page - 2, page - 1, page, page + 1, page + 2].map((num, index) => (
               <PaginaionBtn
                 number={num}
                 ishighlight={num == page}
