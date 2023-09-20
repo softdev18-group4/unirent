@@ -127,6 +127,14 @@
   @apply bg-[#9BA4B5] w-fit px-3 py-1 text-white max-sm:text-[10px] text-base max-md:text-xs font-thin rounded-full mb-auto;
 }
 
+.btn_custom4 {
+  @apply border p-1 px-2 rounded-lg border-gray-400 text-slate-600
+  border-spacing-3
+  text-xs
+  font-normal
+  capitalize;
+}
+
 /* Card Seller */
 .card_seller {
   @apply grid grid-cols-[40%,5%,55%] bg-white rounded-md py-5 px-3 mt-5 max-md:rounded-lg  ;
@@ -179,10 +187,7 @@
   ml-5;
 }
 /* product_detail */
-.product_detail{
-  @apply mt-10 mx-auto;
-}
-.product_detail .title {
+.title_p{
   @apply text-gray-400
   text-sm
   max-md:text-xs
@@ -190,6 +195,9 @@
   font-bold
   capitalize
   mb-3;
+}
+.product_detail{
+  @apply mt-10 mx-auto;
 }
 .product_detail .layout {
   @apply bg-white rounded-lg p-10;
@@ -206,15 +214,8 @@
 .product_characteristics{
   @apply mt-10 mx-auto;
 }
-.product_characteristics .title {
-  @apply text-gray-400
-  text-sm
-  max-md:text-xs
-  max-md:ml-4
-  font-bold
-  capitalize
-  mb-3;
-}
+
+
 .card_detail {
   @apply bg-white rounded-lg p-10 my-10;
 }
@@ -224,4 +225,37 @@
   text-sm
   font-medium
   capitalize
+}
+
+
+/* Card Review */
+.product_review{
+  @apply mt-10 max-md:mt-0;
+}
+.product_review_title{
+  @apply title_p max-md:text-start text-right mx-10;
+}
+.card_review {
+  @apply grid grid-cols-[35%,65%] card_detail ;
+}
+.card_review .right{
+  @apply flex flex-wrap gap-x-2 gap-y-1 justify-center;
+}
+.card_review .left {
+  @apply 
+  grid
+  text-slate-600
+  text-lg
+  font-normal
+  font-['Inter']
+  capitalize
+  justify-center;
+}
+.card_review .star {
+  @apply scale-150 max-md:scale-110;
+}
+
+/* product_layout */
+.product_layout {
+  @apply grid max-md:grid-cols-1 grid-cols-2 gap-6
 }

@@ -8,6 +8,9 @@ import CardSeller from "./card/CardSeller";
 import ProductDetail from "./product/ProductDetail";
 import ProductCharacteristics from "./product/ProductCharacteristics";
 import CardDetail from "./card/CardDetail";
+import CardReview from "./card/CardReview";
+import ProductReview from './product/ProductReview';
+
 export {
   ProductRent,
   ProductSlide,
@@ -19,4 +22,6 @@ export {
   ProductDetail,
   ProductCharacteristics,
   CardDetail,
+  CardReview,
+  ProductReview
 };

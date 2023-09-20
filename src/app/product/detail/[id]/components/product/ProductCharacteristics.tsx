@@ -4,7 +4,7 @@ import { CardDetail } from ".."
 const ProductCharacteristics = () => {
   return (
     <div className="product_characteristics">
-      <p className="title">ลักษณะสินค้า</p>
+      <p className="title_p">ลักษณะสินค้า</p>
         <CardDetail detail="" />
         <CardDetail detail="" />
         <CardDetail detail="" />
