@@ -26,10 +26,13 @@
 .theme-bg-color2 {
   background-color: var(--theme-color2);
 }
+*{
+  @apply font-['Inter'];
+}
 
 /* Main */
 .main {
-  @apply bg-[#F1F6F9] ;
+  @apply bg-[#F1F6F9];
 }
 .main_container {
   @apply container mx-auto ;
@@ -126,7 +129,7 @@
 
 /* Card Seller */
 .card_seller {
-  @apply grid grid-cols-[40%,5%,55%] bg-white rounded-md py-5 px-3 mt-5 max-md:rounded-lg ;
+  @apply grid grid-cols-[40%,5%,55%] bg-white rounded-md py-5 px-3 mt-5 max-md:rounded-lg  ;
 }
 .avatar_card {
   @apply rounded-full w-16 h-16 m-auto max-sm:w-10 max-sm:h-10;
@@ -140,7 +143,7 @@
   max-sm:text-[10px]
   max-md:text-xs
   font-medium
-  font-['Inter']
+  
   capitalize;
 
 }
@@ -162,7 +165,7 @@
   max-[380px]:text-[8px]
   max-md:text-[10px]
   font-extralight
-  font-['Inter']
+  
   capitalize;
 }
 .card_seller .right .item p {
@@ -171,7 +174,54 @@
   max-[380px]:text-[8px]
   max-md:text-[10px]
   font-medium
-  font-['Inter']
+  
   capitalize
   ml-5;
+}
+/* product_detail */
+.product_detail{
+  @apply mt-10 mx-auto;
+}
+.product_detail .title {
+  @apply text-gray-400
+  text-sm
+  max-md:text-xs
+  max-md:ml-4
+  font-bold
+  capitalize
+  mb-3;
+}
+.product_detail .layout {
+  @apply bg-white rounded-lg p-10;
+}
+.product_detail .layout p{
+  @apply text-gray-400
+  max-md:text-xs
+  text-sm
+  font-medium
+  capitalize
+}
+
+/* product_characteristics */
+.product_characteristics{
+  @apply mt-10 mx-auto;
+}
+.product_characteristics .title {
+  @apply text-gray-400
+  text-sm
+  max-md:text-xs
+  max-md:ml-4
+  font-bold
+  capitalize
+  mb-3;
+}
+.card_detail {
+  @apply bg-white rounded-lg p-10 my-10;
+}
+.card_detail p{
+  @apply text-gray-400
+  max-md:text-xs
+  text-sm
+  font-medium
+  capitalize
 }

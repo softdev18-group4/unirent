@@ -1,6 +1,4 @@
 import { MouseEventHandler } from "react";
-import ProductSelector from "../app/product/detail/[id]/components/ProductSelector";
-
 export interface ProductState {
   _id: object;
   name: string;
@@ -31,4 +29,8 @@ export interface StarProps {
 export interface ProductSelectorProps {
   title : string;
   price :number;
+}
+
+export interface CardDetailProps {
+  detail : string
 }

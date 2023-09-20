@@ -1,11 +1,13 @@
 import Image from "next/image";
-import { ProductRent, CardSeller } from "./components";
+import { ProductRent, CardSeller , ProductDetail ,ProductCharacteristics} from "./components";
 
 const page = () => {
   return (
     <div className="main_container">
       <ProductRent />
       <CardSeller />
+      <ProductDetail />
+      <ProductCharacteristics />
     </div>
   );
 };
