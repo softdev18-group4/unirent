@@ -1,4 +1,4 @@
-import ProductDetail from "./ProductDetail";
+import ProductDetail from "./ProductRent";
 import SlideProduct from "./product/SlideProduct";
 import ProductSelect from "./product/ProductSelect";
 import Star from "./star/Star";

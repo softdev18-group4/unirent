@@ -6,6 +6,7 @@ const page = () => {
     <div className="main_container">
       <ProductDetail />
       <CardSeller />
+      
     </div>
   );
 };

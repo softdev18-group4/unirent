@@ -40,7 +40,7 @@
 }
 
 /* product detail */
-.product_details {
+.product_rent {
     @apply grid grid-cols-2 p-3 mt-3 gap-10 max-md:grid-cols-1;
 }
 .product_slide {

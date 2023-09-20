@@ -2,9 +2,9 @@
 
 import { ProductSelect, SlideProduct } from ".";
 
-const ProductDetail = () => {
+const ProductRent = () => {
   return (
-    <div className="product_details">
+    <div className="product_rent">
       <div className="product_slide">
         <SlideProduct />
       </div>
@@ -13,4 +13,4 @@ const ProductDetail = () => {
   );
 };
 
-export default ProductDetail;
+export default ProductRent;
