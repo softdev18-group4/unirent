@@ -1,5 +1,5 @@
 import ProductRent from "./product/ProductRent";
-import SlideProduct from "./product/SlideProduct";
+import ProductSlide from "./product/ProductSlide";
 import ProductSelect from "./product/ProductSelect";
 import Star from "./star/Star";
 import ProductSelector from "./product/ProductSelector";
@@ -10,7 +10,7 @@ import ProductCharacteristics from "./product/ProductCharacteristics";
 import CardDetail from "./card/CardDetail";
 export {
   ProductRent,
-  SlideProduct,
+  ProductSlide,
   ProductSelect,
   Star,
   ProductSelector,

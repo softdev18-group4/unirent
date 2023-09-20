@@ -1,12 +1,12 @@
 "use client";
 
-import { ProductSelect, SlideProduct } from "..";
+import { ProductSelect, ProductSlide } from "..";
 
 const ProductRent = () => {
   return (
     <div className="product_rent">
       <div className="product_slide">
-        <SlideProduct />
+        <ProductSlide />
       </div>
       <ProductSelect />
     </div>

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 
-const SlideProduct = () => {
+const ProductSlide = () => {
   const dispatch = useAppDispatch();
   const product = useAppSelector((state) => state.productReducer.value);
 
@@ -53,4 +53,4 @@ const SlideProduct = () => {
   );
 };
 
-export default SlideProduct;
+export default ProductSlide;
