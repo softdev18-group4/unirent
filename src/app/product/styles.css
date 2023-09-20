@@ -239,7 +239,7 @@
   @apply grid grid-cols-[35%,65%] card_detail ;
 }
 .card_review .right{
-  @apply flex flex-wrap gap-x-2 gap-y-1 justify-center;
+  @apply flex flex-wrap gap-x-2 gap-y-1 max-md:justify-center;
 }
 .card_review .left {
   @apply 
