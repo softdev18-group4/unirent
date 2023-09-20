@@ -1,6 +1,6 @@
 "use client";
 
-import { ProductSelect, SlideProduct } from ".";
+import { ProductSelect, SlideProduct } from "..";
 
 const ProductRent = () => {
   return (
