@@ -25,6 +25,15 @@ const ProductSelect = () => {
         <ProductSelector title="รายวัน" price={300}/>
         <ProductSelector title="รายสัปดาห์" price={2200}/>
         <ProductSelector title="รายเดือน" price={8000}/>
+        <div className="product_select_price">
+           <div className="left">
+            <p>จำนวนเงินที่ต้องซำระ</p>
+           </div>
+           <div className="right">
+            <p>คิดเป็นเฉลี่ย {300}฿/ วัน</p>
+            <h6>{900}฿</h6>
+           </div>
+        </div>
     </div>
   );
 };
