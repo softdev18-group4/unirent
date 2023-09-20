@@ -1,8 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { reset, updateProduct } from "@/redux/features/productSlice";
-import CustomButton from "../CustomButton";
-import Star from "../Star";
-import ProductSelector from "./ProductSelector";
+import {Star , CustomButton , ProductSelector } from "..";
 
 const ProductSelect = () => {
   const dispatch = useAppDispatch();
