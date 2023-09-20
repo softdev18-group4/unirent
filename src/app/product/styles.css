@@ -105,18 +105,9 @@
 .product_select_price .right h6{
     @apply text-[#FF6E31] text-xs font-bold text-right my-3;
 }
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.product_select_count {
+  @apply flex border w-fit items-center mx-auto py-3 px-10 gap-10 rounded-full;
 }
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --foreground-rgb: 0, 0, 0;
-    --background-start-rgb: 255, 255, 255;
-    --background-end-rgb: 255, 255, 255;
-  }
-} */
+.btn_custom2 {
+  @apply w-fit px-[40vw] mx-auto h-10 mt-5 bg-[#FF6E31] rounded-full text-white text-xs font-thin;
+}

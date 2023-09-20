@@ -1,8 +1,8 @@
 import ProductDetail from "./ProductDetail";
-import SlideProduct from "./SlideProduct";
-import ProductSelect from "./ProductSelect";
+import SlideProduct from "./product/SlideProduct";
+import ProductSelect from "./product/ProductSelect";
 import Star from "./Star";
-import ProductSelector from "./ProductSelector"
+import ProductSelector from "./product/ProductSelector"
 export {
     ProductDetail,SlideProduct, ProductSelect,Star,ProductSelector
 }

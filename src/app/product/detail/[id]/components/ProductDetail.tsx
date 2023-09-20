@@ -8,7 +8,6 @@ const ProductDetail = () => {
       <div className="product_slide">
         <SlideProduct />
       </div>
-
       <ProductSelect />
     </div>
   );

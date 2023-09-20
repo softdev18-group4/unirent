@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { reset, updateProduct } from "@/redux/features/productSlice";
-import CustomButton from "./CustomButton";
-import Star from "./Star";
+import CustomButton from "../CustomButton";
+import Star from "../Star";
 import ProductSelector from "./ProductSelector";
 
 const ProductSelect = () => {
@@ -34,6 +34,12 @@ const ProductSelect = () => {
             <h6>{900}฿</h6>
            </div>
         </div>
+        <div className="product_select_count">
+            <CustomButton title="-"/>
+            <h1>{1}</h1>
+            <CustomButton title="+"/>
+        </div>
+        <CustomButton title="เช่า" customBtn="btn_custom2" />
     </div>
   );
 };
