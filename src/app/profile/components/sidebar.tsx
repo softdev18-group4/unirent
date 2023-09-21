@@ -37,13 +37,15 @@ function Sidebar({
     if (sidebar != null) sidebar.classList.toggle("-translate-x-full");
     const padding = document.getElementById("padding");
     if (padding != null) padding.classList.toggle("hidden");
+    const unirent = document.getElementById("unirent");
+    if (unirent != null) unirent.classList.toggle("hidden");
   };
 
   const pathname = usePathname();
 
   return (
     <div>
-      <div className="sm:hidden flex items-center mt-4">
+      <div className="md:hidden flex items-center mt-4 sticky top-0 z-40 bg-[#f1f6f9]">
         <div id="padding" className="hidden w-64"></div>
         <button
           onClick={(e) => toggleSidebar()}
@@ -62,14 +64,17 @@ function Sidebar({
             <path d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
           </svg>
         </button>
-        <div className="flex justify-center items-center grow uppercase cursor-default pr-3 py-3 font-bold text-3xl">
+        <div
+          id="unirent"
+          className="flex justify-center items-center grow uppercase cursor-default pr-3 py-3 font-extrabold text-3xl"
+        >
           <div className="theme-text-color2">uni</div>
           <div className="theme-text-color1">rent</div>
         </div>
       </div>
 
       <aside
-        className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        className="fixed top-0 left-0 z-50 w-64 h-screen transition-transform -translate-x-full md:translate-x-0"
         aria-label="Sidebar"
         id="sidebar"
       >
@@ -149,7 +154,7 @@ function Sidebar({
                   />
                 </svg>
               </button>
-              <ul id="dropdown" className=" py-2 space-y-2">
+              <ul id="dropdown" className="hidden py-2 space-y-2">
                 <li>
                   <Link
                     href={product}
@@ -292,7 +297,6 @@ function Sidebar({
                   src={profileImg}
                   width={60}
                   height={60}
-                  // layout="fill"
                   objectFit="none"
                   alt="Picture of the author"
                   className="rounded-full w-[25%] aspect-square"

@@ -25,7 +25,7 @@ export default function RootLayout({
         name="Tylor Swift"
         email="tylor@gmail.com"
       ></Sidebar>
-      <div className="p-4 sm:ml-64">
+      <div className="p-4 md:ml-64">
         <main>{children}</main>
       </div>
     </div>
