@@ -1,64 +1,72 @@
 function TableHeader() {
   return (
-    <div className="mt-6 w-full rounded-2xl bg-white h-16 flex items-center justify-between py-4 px-20 font-bold">
-      <div className="flex items-center gap-3 cursor-pointer">
-        <div>สินค้า</div>
-        <svg
-          className="w-3 h-3"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 10 6"
-        >
-          <path
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="m1 1 4 4 4-4"
-          />
-        </svg>
-      </div>
-      <div className="flex items-center gap-3 cursor-pointer">
-        <div>สถานะ</div>
-        <svg
-          className="w-3 h-3"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 10 6"
-        >
-          <path
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="m1 1 4 4 4-4"
-          />
-        </svg>
-      </div>
-      <div>ระยะการเช่า</div>
-      <div className="flex items-center gap-3 cursor-pointer">
-        <div>ราคา</div>
-        <svg
-          className="w-3 h-3"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 10 6"
-        >
-          <path
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="m1 1 4 4 4-4"
-          />
-        </svg>
-      </div>
-      <div>วันที่</div>
-      <div>เวลาที่เหลือ</div>
-    </div>
+    <thead>
+      <tr className="w-full h-16 font-bold">
+        <th className="rounded-l-2xl bg-white">
+          <div className="cursor-pointer flex items-center justify-center gap-3">
+            สินค้า
+            <svg
+              className="w-3 h-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 6"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="m1 1 4 4 4-4"
+              />
+            </svg>
+          </div>
+        </th>
+        <th className="bg-white">
+          <div className="cursor-pointer flex items-center gap-3">
+            สถานะ
+            <svg
+              className="w-3 h-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 6"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="m1 1 4 4 4-4"
+              />
+            </svg>
+          </div>
+        </th>
+        <th className="text-left bg-white">ระยะการเช่า</th>
+        <th className="text-left bg-white">
+          <div className="cursor-pointer flex items-center gap-3">
+            ราคา
+            <svg
+              className="w-3 h-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 6"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="m1 1 4 4 4-4"
+              />
+            </svg>
+          </div>
+        </th>
+        <th className="text-left bg-white">วันที่</th>
+        <th className="text-left rounded-r-2xl bg-white">เวลาที่เหลือ</th>
+      </tr>
+    </thead>
   );
 }
 export default TableHeader;
