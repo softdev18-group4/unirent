@@ -16,8 +16,13 @@ function ProductsPage() {
   return (
     <div className="p-4">
       <div className="flex justify-between items-end">
-        <div className="font-bold uppercase text-3xl">your products</div>
-        <Link className="theme-text-color2 font-extrabold" href="#">
+        <div className="cursor-default font-bold uppercase text-2xl lg:text-3xl">
+          your products
+        </div>
+        <Link
+          className="theme-text-color2 font-extrabold"
+          href="/profile/myShop/products/add"
+        >
           + เพิ่มสินค้า
         </Link>
       </div>

@@ -44,8 +44,8 @@ function Sidebar({
   const pathname = usePathname();
 
   return (
-    <div>
-      <div className="md:hidden flex items-center mt-4 sticky top-0 z-40 bg-[#f1f6f9]">
+    <div className="sticky top-0 z-50">
+      <div className="sticky top-0 md:hidden flex items-center mt-4 z-40 bg-[#f1f6f9]">
         <div id="padding" className="hidden w-64"></div>
         <button
           onClick={(e) => toggleSidebar()}
@@ -78,7 +78,7 @@ function Sidebar({
         aria-label="Sidebar"
         id="sidebar"
       >
-        <div className="flex justify-center h-full px-3 py-4 overflow-y-auto bg-white">
+        <div className="flex justify-center h-full px-3 pt-10 py-4 overflow-y-auto bg-white">
           <ul className="space-y-3 font-medium">
             <li>
               <div className="flex cursor-default grow-[1] items-center justifiy-center uppercase pr-3 py-3 font-extrabold text-3xl">

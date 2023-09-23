@@ -16,10 +16,9 @@ function OrdersPage() {
   return (
     <div className="p-4">
       <div className="flex justify-between items-end">
-        <div className="font-bold uppercase text-3xl">your products</div>
-        <Link className="theme-text-color2 font-extrabold" href="#">
-          + เพิ่มสินค้า
-        </Link>
+        <div className="cursor-default font-bold uppercase text-2xl lg:text-3xl">
+          your orders
+        </div>
       </div>
       <div className="my-4 w-full rounded-2xl bg-white h-24 flex justify-end items-center p-4">
         <SearchBar
