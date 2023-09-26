@@ -1,4 +1,16 @@
-function DescriptionBox() {
+function DescriptionBox({
+  productName,
+  descriptionName,
+  productValue,
+  descriptionValue,
+  handleInput,
+}: {
+  productName: string;
+  descriptionName: string;
+  productValue: string;
+  descriptionValue: string;
+  handleInput: (value: any) => void;
+}) {
   return (
     <div className="w-full row-start-5 col-start-1 row-span-6 col-span-1 xl:row-start-1 xl:col-start-1 xl:row-span-6 xl:col-span-1">
       <div className="cursor-default font-bold text-xl lg:text-2xl mb-4">
@@ -10,7 +22,9 @@ function DescriptionBox() {
         </div>
         <input
           type="text"
-          id="product name"
+          name={productName}
+          value={productValue}
+          onChange={handleInput}
           className="block w-full h-12 p-3 text-sm border border-slate-400 rounded bg-slate-50 resize-none"
           required
         ></input>
@@ -18,7 +32,9 @@ function DescriptionBox() {
           คำอธิบาย
         </div>
         <textarea
-          id="description"
+          name={descriptionName}
+          value={descriptionValue}
+          onChange={handleInput}
           className="block w-full h-full p-3 text-sm border border-slate-400 rounded bg-slate-50 resize-none"
           required
         ></textarea>

@@ -1,6 +1,34 @@
 import PeriodInput from "./periodInput";
 
-function PeriodBox() {
+function PeriodBox({
+  dayPriceName,
+  dayPriceValue,
+  dayRangeName,
+  dayRangeValue,
+  weekPriceName,
+  weekPriceValue,
+  weekRangeName,
+  weekRangeValue,
+  monthPriceName,
+  monthPriceValue,
+  monthRangeName,
+  monthRangeValue,
+  handleInput,
+}: {
+  dayPriceName: string;
+  dayPriceValue: string;
+  dayRangeName: string;
+  dayRangeValue: any;
+  weekPriceName: string;
+  weekPriceValue: string;
+  weekRangeName: string;
+  weekRangeValue: any;
+  monthPriceName: string;
+  monthPriceValue: string;
+  monthRangeName: string;
+  monthRangeValue: any;
+  handleInput: (e: any, name?: string) => void;
+}) {
   return (
     <div className="w-full row-start-[11] col-start-1 row-span-6 col-span-1 xl:row-start-[7] xl:col-start-1 xl:row-span-6 xl:col-span-1">
       <div className="cursor-default font-bold text-xl lg:text-2xl mb-4">
@@ -10,26 +38,32 @@ function PeriodBox() {
         <PeriodInput
           checkboxtext="รายวัน"
           checkboxid="day checkbox"
-          startdateid="day start"
-          enddateid="day end"
           pricetext="ราคา/วัน"
-          priceid="day"
+          priceName={dayPriceName}
+          priceValue={dayPriceValue}
+          RangeName={dayRangeName}
+          RangeValue={dayRangeValue}
+          handleInput={handleInput}
         ></PeriodInput>
         <PeriodInput
           checkboxtext="รายสัปดาห์"
           checkboxid="week checkbox"
-          startdateid="week start"
-          enddateid="week end"
           pricetext="ราคา/สัปดาห์"
-          priceid="week"
+          priceName={weekPriceName}
+          priceValue={weekPriceValue}
+          RangeName={weekRangeName}
+          RangeValue={weekRangeValue}
+          handleInput={handleInput}
         ></PeriodInput>
         <PeriodInput
           checkboxtext="รายเดือน"
           checkboxid="month checkbox"
-          startdateid="month start"
-          enddateid="month end"
           pricetext="ราคา/เดือน"
-          priceid="month"
+          priceName={monthPriceName}
+          priceValue={monthPriceValue}
+          RangeName={monthRangeName}
+          RangeValue={monthRangeValue}
+          handleInput={handleInput}
         ></PeriodInput>
       </div>
     </div>

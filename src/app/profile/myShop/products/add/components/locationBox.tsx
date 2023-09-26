@@ -1,6 +1,6 @@
 function LocationBox() {
   return (
-    <div className="w-full row-start-[25] col-start-1 row-span-2 col-span-1 xl:row-start-[11] xl:col-start-2 xl:row-span-2 xl:col-span-1">
+    <div className="-z-50 w-full row-start-[25] col-start-1 row-span-2 col-span-1 xl:row-start-[11] xl:col-start-2 xl:row-span-2 xl:col-span-1">
       <div className="cursor-default font-bold text-xl lg:text-2xl mb-4">
         จุดรับสินค้า
       </div>

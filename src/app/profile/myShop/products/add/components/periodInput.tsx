@@ -1,22 +1,54 @@
+"use client";
+
+import { useState } from "react";
+import Datepicker from "react-tailwindcss-datepicker";
+
 function PeriodInput({
   checkboxtext,
   checkboxid,
-  startdateid,
-  enddateid,
   pricetext,
-  priceid,
+  priceName,
+  priceValue,
+  RangeName,
+  RangeValue,
+  handleInput,
 }: {
   checkboxtext: string;
   checkboxid: string;
-  startdateid: string;
-  enddateid: string;
   pricetext: string;
-  priceid: string;
+  priceName: string;
+  priceValue: any;
+  RangeName: string;
+  RangeValue: any;
+  handleInput: (e: any, name?: string) => void;
 }) {
+  const [value, setValue] = useState({
+    startDate: new Date(),
+    endDate: new Date(),
+  });
+  const handleValueChange = (newValue: any) => {
+    handleInput(newValue, RangeName);
+    setValue(newValue);
+  };
+  const [disable, setdisable] = useState(true);
+  const checkboxEvent = () => {
+    const checkbox = document.getElementById(checkboxid) as HTMLInputElement;
+    const input = document.getElementById(priceName) as HTMLInputElement;
+    if (checkbox) {
+      if (checkbox.checked) {
+        setdisable(false);
+        input.disabled = false;
+      } else {
+        setdisable(true);
+        input.disabled = true;
+        handleInput("", priceName);
+      }
+    }
+  };
   return (
     <div className="flex flex-col gap-2 items-start">
       <div className="flex">
-        <input id={checkboxid} type="checkbox"></input>
+        <input id={checkboxid} onChange={checkboxEvent} type="checkbox"></input>
         <label
           htmlFor={checkboxid}
           className="ml-2 text-md font-bold theme-text-color2"
@@ -27,23 +59,20 @@ function PeriodInput({
       <div className="w-full justify-evenly flex gap-2">
         <div className="grow flex flex-col">
           <div className="cursor-default font-semibold text-md lg:text-lg text-slate-700">
-            เริ่มต้น
+            ระยะเวลาที่ให้เช่า
           </div>
-          <input
-            type="date"
-            id={startdateid}
-            className="block w-full h-12 p-1 text-xs border border-slate-400 rounded bg-slate-50 resize-none"
-          ></input>
-        </div>
-        <div className="grow flex flex-col">
-          <div className="cursor-default font-semibold text-md lg:text-lg text-slate-700">
-            สิ้นสุด
-          </div>
-          <input
-            type="date"
-            id={enddateid}
-            className="block w-full h-12 p-1 text-xs border border-slate-400 rounded bg-slate-50 resize-none"
-          ></input>
+          <Datepicker
+            placeholder={"เลือกระยะเวลา"}
+            primaryColor={"amber"}
+            value={RangeValue}
+            inputName={RangeName}
+            onChange={handleValueChange}
+            minDate={new Date()}
+            separator={"ถึง"}
+            disabled={disable}
+            displayFormat={"DD/MM/YYYY"}
+            inputClassName="w-full h-12 p-1 text-xs md:text-md border border-slate-400 rounded bg-slate-50 resize-none"
+          ></Datepicker>
         </div>
         <div className="grow flex flex-col">
           <div className="cursor-default font-semibold text-md lg:text-lg text-slate-700">
@@ -51,8 +80,12 @@ function PeriodInput({
           </div>
           <input
             type="text"
-            id={priceid}
+            id={priceName}
+            name={priceName}
+            value={priceValue}
+            onChange={handleInput}
             className="block w-full h-12 p-3 text-sm border border-slate-400 rounded bg-slate-50 resize-none"
+            disabled
           ></input>
         </div>
       </div>

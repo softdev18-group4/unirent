@@ -1,9 +1,9 @@
 import Link from "next/link";
-import DescriptionBox from "./components/descriptionBox";
-import PeriodBox from "./components/periodBox";
-import PictureBox from "./components/pictureBox";
-import SpecificationBox from "./components/specificationBox";
-import LocationBox from "./components/locationBox";
+import { Metadata } from "next";
+import From from "./components/form";
+export const metadata: Metadata = {
+  title: "Add Product",
+};
 
 function AddProduct() {
   return (
@@ -34,18 +34,7 @@ function AddProduct() {
         </div>
       </div>
       <div className="my-20">
-        <form className="grid grid-cols-1 xl:grid-cols-2 gap-20">
-          <DescriptionBox></DescriptionBox>
-          <PictureBox></PictureBox>
-          <SpecificationBox></SpecificationBox>
-          <PeriodBox></PeriodBox>
-          <LocationBox></LocationBox>
-          <input
-            type="submit"
-            value="submit"
-            className="cursor-pointer col-start-1 justify-self-center xl:col-start-2 xl:justify-self-end bg-[color:var(--theme-color2)] text-white uppercase font-semibold rounded-xl xl:rounded-md w-[60%] xl:w-40 h-8 xl:h-12"
-          ></input>
-        </form>
+        <From></From>
       </div>
     </div>
   );

@@ -1,6 +1,34 @@
 import Dropdown from "./dropDown";
 
-function SpecificationBox() {
+function SpecificationBox({
+  summaryStorageName,
+  summaryStorageValue,
+  avaliableStorageName,
+  avaliableStorageValue,
+  RAMName,
+  RAMValue,
+  CPUName,
+  CPUValue,
+  GPUName,
+  GPUValue,
+  operatingSystemName,
+  operatingSystemValue,
+  handleInput,
+}: {
+  summaryStorageName: string;
+  summaryStorageValue: string;
+  avaliableStorageName: string;
+  avaliableStorageValue: string;
+  RAMName: string;
+  RAMValue: string;
+  CPUName: string;
+  CPUValue: string;
+  GPUName: string;
+  GPUValue: string;
+  operatingSystemName: string;
+  operatingSystemValue: string;
+  handleInput: (value: any) => void;
+}) {
   return (
     <div className="w-full row-start-[17] col-start-1 row-end-[25] col-span-1 xl:row-start-4 xl:col-start-2 xl:row-end-[11] xl:col-span-1">
       <div className="cursor-default font-bold text-xl lg:text-2xl mb-4">
@@ -8,14 +36,18 @@ function SpecificationBox() {
       </div>
       <div className="flex flex-col justify-evenly gap-3 bg-white w-full h-full rounded-2xl drop-shadow-2xl p-4 lg:p-8">
         <Dropdown
-          id="cpu"
+          name={CPUName}
+          value={CPUValue}
           title="CPU"
-          dropdownList={["test1", "Test2", "test3"]}
+          dropdownList={[CPUValue, "amd ลายเส้น", "test3"]}
+          handleInput={handleInput}
         ></Dropdown>
         <Dropdown
-          id="gpu"
+          name={GPUName}
+          value={GPUValue}
           title="GPU"
-          dropdownList={["test1", "Test2", "test3"]}
+          dropdownList={[GPUValue, "GTX 100", "test3"]}
+          handleInput={handleInput}
         ></Dropdown>
         <div className="flex justify-between items-center gap-10">
           <div className="grow flex flex-col">
@@ -24,9 +56,11 @@ function SpecificationBox() {
             </div>
             <input
               type="text"
-              id="summary storage"
+              name={summaryStorageName}
+              value={summaryStorageValue}
+              onChange={handleInput}
               className="block w-full h-10 p-4 text-sm text-gray-900 border border-slate-400 rounded-xl bg-slate-50 "
-              placeholder=""
+              placeholder="Ex. 1 TB"
               required
             ></input>
           </div>
@@ -36,9 +70,11 @@ function SpecificationBox() {
             </div>
             <input
               type="text"
-              id="avaliable storage"
+              name={avaliableStorageName}
+              value={avaliableStorageValue}
+              onChange={handleInput}
               className="block w-full h-10 p-4 text-sm text-gray-900 border border-slate-400 rounded-xl bg-slate-50 "
-              placeholder=""
+              placeholder="Ex. 320 GB"
               required
             ></input>
           </div>
@@ -49,25 +85,22 @@ function SpecificationBox() {
           </div>
           <input
             type="text"
-            id="ram"
+            name={RAMName}
+            value={RAMValue}
+            onChange={handleInput}
             className="block w-full h-10 p-4 text-sm text-gray-900 border border-slate-400 rounded-xl bg-slate-50 "
-            placeholder=""
+            placeholder="Ex. 32 GB"
             required
           ></input>
         </div>
         <Dropdown
-          id="os"
+          name={operatingSystemName}
+          value={operatingSystemValue}
           title="Operating System"
-          dropdownList={["test1", "Test2", "test3"]}
+          dropdownList={[operatingSystemValue, "MacOS", "Linux"]}
+          handleInput={handleInput}
         ></Dropdown>
       </div>
-
-      <label
-        htmlFor="countries"
-        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-      >
-        Select an option
-      </label>
     </div>
   );
 }
