@@ -66,10 +66,15 @@ function Sidebar({
         </button>
         <div
           id="unirent"
-          className="flex justify-center items-center grow uppercase cursor-default pr-3 py-3 font-extrabold text-3xl"
+          className="flex justify-center items-center grow uppercase pr-3 py-3 font-extrabold text-3xl"
         >
-          <div className="theme-text-color2">uni</div>
-          <div className="theme-text-color1">rent</div>
+          <a
+            className="flex justify-center items-center cursor-pointer pr-5"
+            href="/product/recommend"
+          >
+            <div className="theme-text-color2">uni</div>
+            <div className="theme-text-color1">rent</div>
+          </a>
         </div>
       </div>
 
@@ -81,10 +86,13 @@ function Sidebar({
         <div className="flex justify-center h-full px-3 pt-10 py-4 overflow-y-auto bg-white">
           <ul className="space-y-3 font-medium">
             <li>
-              <div className="flex cursor-default grow-[1] items-center justifiy-center uppercase pr-3 py-3 font-extrabold text-3xl">
+              <a
+                className="flex cursor-pointer grow-[1] items-center justifiy-center uppercase pr-3 py-3 font-extrabold text-3xl"
+                href="/product/recommend"
+              >
                 <div className="theme-text-color2">uni</div>
                 <div className="theme-text-color1">rent</div>
-              </div>
+              </a>
             </li>
             <li>
               <Link
@@ -290,6 +298,9 @@ function Sidebar({
 
                 <span className="flex-1 ml-3 whitespace-nowrap">Settings</span>
               </Link>
+            </li>
+            <li>
+              <div className="h-20"></div>
             </li>
             <li className="fixed left-0 bottom-0 pb-5 px-4 bg-white w-64">
               <div className="flex gap-2 items-center justify-start">

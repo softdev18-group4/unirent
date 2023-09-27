@@ -6,6 +6,7 @@ import FilterBtn from "./button/filterBtn";
 import SearchBar from "./bars/searchBar";
 import { use, useCallback, useEffect, useState } from "react";
 import { product } from "@/redux/features/productSlice";
+import LoadingCard from "./cards/loadingCard";
 //============================================================Data===========================================================================
 interface product {
   id: string;
@@ -97,12 +98,17 @@ function ProductList() {
       </div>
       {isLoading ? (
         <div className="flex">
-          <div className="grow flex items-center justify-center">
-            โหลดอยู่ใจเย็น
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-10 w-full">
+            <LoadingCard></LoadingCard>
+            <LoadingCard></LoadingCard>
+            <LoadingCard></LoadingCard>
+            <LoadingCard></LoadingCard>
+            <LoadingCard></LoadingCard>
+            <LoadingCard></LoadingCard>
           </div>
         </div>
       ) : productInfo.length > 0 ? (
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-10 w-full">
           {productInfo
             .slice(0, 6)
             .map(
@@ -148,8 +154,16 @@ function ProductList() {
       ) : (
         <div className="flex">
           <div className="grow flex items-center justify-center">
-            ไม่พบข้อมูลนะจ๊ะ
+            ไม่พบข้อมูล
           </div>
+          {/* <div className="grid grid-cols-2 lg:grid-cols-3 gap-10 w-full">
+            <LoadingCard></LoadingCard>
+            <LoadingCard></LoadingCard>
+            <LoadingCard></LoadingCard>
+            <LoadingCard></LoadingCard>
+            <LoadingCard></LoadingCard>
+            <LoadingCard></LoadingCard>
+          </div> */}
         </div>
       )}
 

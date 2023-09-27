@@ -34,13 +34,18 @@ function PeriodInput({
   const checkboxEvent = () => {
     const checkbox = document.getElementById(checkboxid) as HTMLInputElement;
     const input = document.getElementById(priceName) as HTMLInputElement;
+    const range = document.getElementById(RangeName) as HTMLInputElement;
     if (checkbox) {
       if (checkbox.checked) {
         setdisable(false);
         input.disabled = false;
+        range.classList.remove("cursor-not-allowed");
+        input.classList.remove("cursor-not-allowed");
       } else {
         setdisable(true);
         input.disabled = true;
+        input.classList.add("cursor-not-allowed");
+        range.classList.add("cursor-not-allowed");
         handleInput("", priceName);
       }
     }
@@ -65,13 +70,13 @@ function PeriodInput({
             placeholder={"เลือกระยะเวลา"}
             primaryColor={"amber"}
             value={RangeValue}
-            inputName={RangeName}
+            inputId={RangeName}
             onChange={handleValueChange}
             minDate={new Date()}
             separator={"ถึง"}
             disabled={disable}
             displayFormat={"DD/MM/YYYY"}
-            inputClassName="w-full h-12 p-1 text-xs md:text-md border border-slate-400 rounded bg-slate-50 resize-none"
+            inputClassName="cursor-not-allowed w-full h-12 p-1 text-xs md:text-md border border-slate-400 rounded bg-slate-50 resize-none"
           ></Datepicker>
         </div>
         <div className="grow flex flex-col">
@@ -84,7 +89,7 @@ function PeriodInput({
             name={priceName}
             value={priceValue}
             onChange={handleInput}
-            className="block w-full h-12 p-3 text-sm border border-slate-400 rounded bg-slate-50 resize-none"
+            className="cursor-not-allowed block w-full h-12 p-3 text-sm border border-slate-400 rounded bg-slate-50 resize-none"
             disabled
           ></input>
         </div>
