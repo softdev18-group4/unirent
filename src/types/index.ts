@@ -1,15 +1,32 @@
 import { MouseEventHandler } from "react";
+import { product } from '@/redux/features/productSlice';
 export interface ProductState {
-  _id: object;
+  specifications: {
+    brand: string;
+    model: string;
+    processor: string;
+    graphicCard: string;
+    ramSize: number;
+    storageSize: number;
+  },
+  availableDays: {
+    startDate: string;
+    endDate: string;
+  },
+  id: string;
   name: string;
   description: string;
-  ownerId: object;
-  // rental_options : object[];
-  specifications: object;
-  // reviews : object;
-  availability: Boolean;
-  availableDays: object;
-  src: string[];
+  ownerId: string;
+  availability: boolean;
+  rentalOptions: RentalOption[],
+  src   : string[];
+}
+
+interface RentalOption {
+  id: string;
+  productId: string;
+  type: string; // Daily, Weekly, Monthly
+  priceRate : number;
 }
 
 export interface InitialState {
@@ -27,10 +44,10 @@ export interface StarProps {
 }
 
 export interface ProductSelectorProps {
-  title : string;
-  price :number;
+  title: string;
+  price: number;
 }
 
 export interface CardDetailProps {
-  detail : string
+  detail: string
 }

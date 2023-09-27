@@ -1,10 +1,12 @@
+"use client";
+
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { reset, updateProduct } from "@/redux/features/productSlice";
-import {Star , CustomButton , ProductSelector } from "..";
-
+import { Star, CustomButton, ProductSelector } from "..";
 const ProductSelect = () => {
   const dispatch = useAppDispatch();
   const product = useAppSelector((state) => state.productReducer.value);
+
 
   return (
     <div className="product_select">
@@ -20,24 +22,24 @@ const ProductSelect = () => {
         <p className="product_select_review_count">3 รีวิว</p>
       </div>
       <div className="hr" />
-        <ProductSelector title="รายวัน" price={300}/>
-        <ProductSelector title="รายสัปดาห์" price={2200}/>
-        <ProductSelector title="รายเดือน" price={8000}/>
-        <div className="product_select_price">
-           <div className="left">
-            <p>จำนวนเงินที่ต้องซำระ</p>
-           </div>
-           <div className="right">
-            <p>คิดเป็นเฉลี่ย {300}฿/ วัน</p>
-            <h6>{900}฿</h6>
-           </div>
+      <ProductSelector title="รายวัน" price={300} />
+      <ProductSelector title="รายสัปดาห์" price={2200} />
+      <ProductSelector title="รายเดือน" price={8000} />
+      <div className="product_select_price">
+        <div className="left">
+          <p>จำนวนเงินที่ต้องซำระ</p>
         </div>
-        <div className="product_select_count">
-            <CustomButton title="-"/>
-            <h1>{1}</h1>
-            <CustomButton title="+"/>
+        <div className="right">
+          <p>คิดเป็นเฉลี่ย {300}฿/ วัน</p>
+          <h6>{900}฿</h6>
         </div>
-        <CustomButton title="เช่า" customBtn="btn_custom2" />
+      </div>
+      <div className="product_select_count">
+        <CustomButton title="-" />
+        <h1>{1}</h1>
+        <CustomButton title="+" />
+      </div>
+      <CustomButton title="เช่า" customBtn="btn_custom2" />
     </div>
   );
 };
