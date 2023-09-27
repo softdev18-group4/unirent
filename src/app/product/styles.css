@@ -3,10 +3,6 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 255, 255, 255;
-  --background-end-rgb: 255, 255, 255;
-
   --theme-color1: #212a3e;
   --theme-color2: coral;
 }
