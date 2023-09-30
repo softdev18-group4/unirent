@@ -153,7 +153,7 @@ function ProductList() {
         </div>
       ) : (
         <div className="flex">
-          <div className="grow flex items-center justify-center">
+          <div className="grow flex items-center justify-center text-3xl">
             ไม่พบข้อมูล
           </div>
           {/* <div className="grid grid-cols-2 lg:grid-cols-3 gap-10 w-full">

@@ -22,3 +22,6 @@
 .theme-bg-color2 {
   background-color: var(--theme-color2);
 }
+.main {
+  @apply bg-[#F1F6F9];
+}
