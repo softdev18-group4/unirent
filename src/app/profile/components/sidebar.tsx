@@ -44,7 +44,7 @@ function Sidebar({
   const pathname = usePathname();
 
   return (
-    <div className="sticky top-0 z-50">
+    <div className="sticky top-0 z-40">
       <div className="sticky top-0 md:hidden flex items-center mt-4 z-40 bg-[#f1f6f9]">
         <div id="padding" className="hidden w-64"></div>
         <button
@@ -193,14 +193,14 @@ function Sidebar({
               <Link
                 href={message}
                 className={
-                  pathname.includes(message)
+                  pathname.includes("message")
                     ? "flex items-center w-full p-2 text-base text-[color:var(--theme-color2)] transition duration-75 rounded-lg group"
                     : "flex items-center w-full p-2 text-base text-[color:var(--theme-color1)] transition duration-75 rounded-lg group hover:text-[color:var(--theme-color2)]"
                 }
               >
                 <svg
                   className={
-                    pathname.includes(message)
+                    pathname.includes("message")
                       ? "w-5 h-5 text-[color:var(--theme-color2)] transition duration-75"
                       : "w-5 h-5 text-[color:var(--theme-color1)] transition duration-75 group-hover:text-[color:var(--theme-color2)]"
                   }

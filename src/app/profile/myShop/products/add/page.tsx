@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 function AddProduct() {
   return (
-    <div className="px-10">
+    <div className="px-10 py-6">
       <div className="cursor-default font-semibold ml-16 text-md lg:text-xl text-slate-400">
         back to your product
       </div>

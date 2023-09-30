@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 function ProductsPage() {
   return (
-    <div className="p-4">
+    <div className="p-8">
       <div className="flex justify-between items-end">
         <div className="cursor-default font-bold uppercase text-2xl lg:text-3xl">
           your products

@@ -17,7 +17,7 @@ export default function RootLayout({
         dashboard="/profile/dashboard"
         product="/profile/myShop/products"
         orders="/profile/myShop/orders"
-        message="/profile/message"
+        message="/profile/message/0"
         history="/profile/history"
         reviews="/profile/reviews"
         settings="/profile/settings"
@@ -25,7 +25,7 @@ export default function RootLayout({
         name="Tylor Swift"
         email="tylor@gmail.com"
       ></Sidebar>
-      <div className="p-4 pt-10 md:ml-64 z-30">
+      <div className="md:ml-64 z-30">
         <main>{children}</main>
       </div>
     </div>
