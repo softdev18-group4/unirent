@@ -4,111 +4,88 @@ import ProductListCard from "./cards/productListCard";
 import PaginaionBtn from "./button/paginationBtn";
 import FilterBtn from "./button/filterBtn";
 import SearchBar from "./bars/searchBar";
-import { useCallback, useEffect, useState } from "react";
+import { use, useCallback, useEffect, useState } from "react";
+import { product } from "@/redux/features/productSlice";
+import LoadingCard from "./cards/loadingCard";
 //============================================================Data===========================================================================
 interface product {
-  id: number;
-  imgSrc: string;
+  id: string;
   name: string;
   description: string;
-  price: string;
-  period: string;
-  rating: string;
+  ownerId: string;
+  availability: boolean;
+  availableDays: {
+    startDate: Date;
+    endDate: Date;
+  };
+  specifications: {
+    brand: string;
+    model: string;
+    processor: string;
+    graphicCard: string;
+    ramSize: number;
+    storageSize: number;
+  };
 }
-export const productList: product[] = [
-  {
-    id: 1,
-    imgSrc: "/vercel.svg",
-    name: "Mac",
-    description: "ปล่อยเช่า mac",
-    price: "50",
-    period: "1-14",
-    rating: "5",
-  },
-  {
-    id: 2,
-    imgSrc: "/vercel.svg",
-    name: "Asus",
-    description: "ปล่อยเช่า mac",
-    price: "50",
-    period: "1-14",
-    rating: "5",
-  },
-  {
-    id: 3,
-    imgSrc: "/vercel.svg",
-    name: "Del",
-    description: "ปล่อยเช่า mac",
-    price: "50",
-    period: "1-14",
-    rating: "5",
-  },
-  {
-    id: 4,
-    imgSrc: "/vercel.svg",
-    name: "Del",
-    description: "ปล่อยเช่า mac",
-    price: "50",
-    period: "1-14",
-    rating: "5",
-  },
-  {
-    id: 5,
-    imgSrc: "/vercel.svg",
-    name: "Del",
-    description: "ปล่อยเช่า mac",
-    price: "50",
-    period: "1-14",
-    rating: "5",
-  },
-  {
-    id: 6,
-    imgSrc: "/vercel.svg",
-    name: "Del",
-    description: "ปล่อยเช่า mac",
-    price: "50",
-    period: "1-14",
-    rating: "5",
-  },
-  {
-    id: 7,
-    imgSrc: "/vercel.svg",
-    name: "Sleep",
-    description: "ปล่อยเช่า mac",
-    price: "50",
-    period: "1-14",
-    rating: "5",
-  },
-  {
-    id: 8,
-    imgSrc: "/vercel.svg",
-    name: "Predator",
-    description: "ปล่อยเช่า mac",
-    price: "50",
-    period: "1-14",
-    rating: "5",
-  },
-];
 //============================================================================================================
 function ProductList() {
   const [inputValue, setInputValue] = useState<string>("");
-  const [initialList] = useState(productList);
-  const [filteredList, setFilteredList] = useState(productList);
-  const searchHandler = useCallback(() => {
-    const filteredData = initialList.filter((product) => {
-      return product.name.toLowerCase().includes(inputValue.toLowerCase());
-    });
-    setFilteredList(filteredData);
-  }, [initialList, inputValue]);
+  const [productInfo, setProductInfo] = useState<product[]>([]);
+  const [isLoading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const getData = async (page: number) => {
+    const query = await fetch(
+      "https://api-unirent.1tpp.dev/products/paginate/filter?page=" +
+        page +
+        "&perPage=6",
+      {
+        method: "GET",
+      }
+    );
+    const response = await query.json();
+    setLoading(false);
+    setProductInfo(response);
+    console.log("this is page " + page);
+  };
+  const childSetPage = (page: number) => {
+    setPage(page);
+    setLoading(true);
+  };
+  //======================================== data ===========================================
+  useEffect(() => {
+    if (inputValue == "") getData(page);
+  }, [page]);
+  //=========================================================================================
+  const searchHandler = useCallback(async () => {
+    if (inputValue != "") {
+      const query = await fetch(
+        "https://api-unirent.1tpp.dev/products/paginate/search?input=" +
+          inputValue,
+        {
+          method: "GET",
+        }
+      );
+      const response = await query.json();
+      setLoading(false);
+      setProductInfo(response);
+    } else {
+      getData(page);
+    }
+  }, [inputValue, page]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [inputValue]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       searchHandler();
-    }, 200);
+    }, 500);
     return () => {
       clearTimeout(timer);
     };
   }, [searchHandler]);
+  //=========================================================================================
   return (
     <div>
       <div className="py-8 flex items-center">
@@ -119,60 +96,96 @@ function ProductList() {
           setInputValue={setInputValue}
         ></SearchBar>
       </div>
-      {filteredList.length > 0 ? (
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-10">
-          {inputValue.length > 0
-            ? filteredList
-                .slice(0, 6)
-                .map(
-                  (
-                    { id, imgSrc, name, description, price, period, rating },
-                    index
-                  ) => (
-                    <ProductListCard
-                      key={index}
-                      id={id}
-                      imgSrc={imgSrc}
-                      name={name}
-                      description={description}
-                      price={price}
-                      period={period}
-                      rating={rating}
-                    ></ProductListCard>
-                  )
-                )
-            : initialList
-                .slice(0, 6)
-                .map(
-                  (
-                    { id, imgSrc, name, description, price, period, rating },
-                    index
-                  ) => (
-                    <ProductListCard
-                      key={index}
-                      id={id}
-                      imgSrc={imgSrc}
-                      name={name}
-                      description={description}
-                      price={price}
-                      period={period}
-                      rating={rating}
-                    ></ProductListCard>
-                  )
-                )}
+      {isLoading ? (
+        <div className="flex">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-10 w-full">
+            <LoadingCard></LoadingCard>
+            <LoadingCard></LoadingCard>
+            <LoadingCard></LoadingCard>
+            <LoadingCard></LoadingCard>
+            <LoadingCard></LoadingCard>
+            <LoadingCard></LoadingCard>
+          </div>
+        </div>
+      ) : productInfo.length > 0 ? (
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-10 w-full">
+          {productInfo
+            .slice(0, 6)
+            .map(
+              (
+                {
+                  id,
+                  name,
+                  description,
+                  ownerId,
+                  availability,
+                  availableDays: { startDate, endDate },
+                  specifications: {
+                    brand,
+                    model,
+                    processor,
+                    graphicCard,
+                    ramSize,
+                    storageSize,
+                  },
+                },
+                index
+              ) => (
+                <ProductListCard
+                  key={index}
+                  id={id}
+                  name={name}
+                  description={description}
+                  ownerId={ownerId}
+                  availability={availability}
+                  availableDays={{ startDate, endDate }}
+                  specifications={{
+                    brand,
+                    model,
+                    processor,
+                    graphicCard,
+                    ramSize,
+                    storageSize,
+                  }}
+                ></ProductListCard>
+              )
+            )}
         </div>
       ) : (
         <div className="flex">
-          <div className="grow flex items-center justify-center">
-            ไม่พบข้อมูลนะจ๊ะ
+          <div className="grow flex items-center justify-center text-3xl">
+            ไม่พบข้อมูล
           </div>
+          {/* <div className="grid grid-cols-2 lg:grid-cols-3 gap-10 w-full">
+            <LoadingCard></LoadingCard>
+            <LoadingCard></LoadingCard>
+            <LoadingCard></LoadingCard>
+            <LoadingCard></LoadingCard>
+            <LoadingCard></LoadingCard>
+            <LoadingCard></LoadingCard>
+          </div> */}
         </div>
       )}
 
       <div className="flex justify-end my-10">
-        {["1", "2", "3", "4", "..."].map((num) => (
-          <PaginaionBtn key={num} number={num}></PaginaionBtn>
-        ))}
+        {page <= 3
+          ? [1, 2, 3, 4, 5].map((num, index) => (
+              <PaginaionBtn
+                number={num}
+                ishighlight={num == page}
+                key={index}
+                childSetPage={childSetPage}
+              ></PaginaionBtn>
+            ))
+          : [page - 2, page - 1, page, page + 1, page + 2].map((num, index) => (
+              <PaginaionBtn
+                number={num}
+                ishighlight={num == page}
+                key={index}
+                childSetPage={childSetPage}
+              ></PaginaionBtn>
+            ))}
+        {}
       </div>
     </div>
   );

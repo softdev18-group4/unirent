@@ -73,28 +73,25 @@ function Navbar() {
           </div>
         </div>
         {/* <md size  */}
-        <div className="md:hidden flex justify-between items-center py-4">
+        <div className="md:hidden flex justify-between items-center">
           <div className="block grow-[1]">
             <div className="w-full py-6 pb-6">
               <div className="relative inline-block">
                 <button
                   type="button"
-                  className="px-4 py-2 bg-transparent hover:ring-4 hover:outline-none hover:ring-blue-300 font-medium rounded-lg text-sm inline-flex items-center"
                   onClick={toggleDropdown}
+                  className="-ml-5 px-4 py-2 bg-transparent hover:ring-4 hover:outline-none hover:ring-blue-300 font-medium rounded-lg text-sm inline-flex items-center"
                 >
+                  <span className="sr-only">Open sidebar</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    strokeWidth={1.5}
+                    strokeWidth={2}
                     stroke="currentColor"
                     className="w-6 h-6 fill-black"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
-                    />
+                    <path d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
                   </svg>
                 </button>
 
@@ -130,7 +127,7 @@ function Navbar() {
               </div>
             </div>
           </div>
-          <div className="grow-[3] flex justify-center items-center cursor-default uppercase pr-3 py-3 font-extrabold text-3xl">
+          <div className="grow-[3] flex justify-center items-center cursor-default uppercase pl-3 py-3 font-extrabold text-3xl">
             <div className="theme-text-color2">uni</div>
             <div className="theme-text-color1">rent</div>
           </div>

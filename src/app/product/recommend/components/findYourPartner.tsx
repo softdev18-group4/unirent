@@ -11,19 +11,19 @@ interface partner {
 export const partnerList: partner[] = [
   {
     id: 1,
-    imgSrc: "/vercel.svg",
+    imgSrc: "/product.png",
     topic: "กำลังปล่อยเช่า1...",
     description: "รีบเช่าจะได้ไปทำอย่างอื่นนะ",
   },
   {
     id: 2,
-    imgSrc: "/vercel.svg",
+    imgSrc: "/product1.png",
     topic: "กำลังปล่อยเช่า2...",
     description: "รีบเช่าจะได้ไปทำอย่างอื่นนะ",
   },
   {
     id: 3,
-    imgSrc: "/vercel.svg",
+    imgSrc: "/product2.png",
     topic: "กำลังปล่อยเช่า3...",
     description: "รีบเช่าจะได้ไปทำอย่างอื่นนะ",
   },

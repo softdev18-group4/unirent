@@ -1,5 +1,4 @@
 import Image from "next/image";
-import "./styles.css";
 
 function FindYourParterCard({
   id,
@@ -14,17 +13,19 @@ function FindYourParterCard({
 }) {
   return (
     <div className="grow-[3] cursor-pointer items-stretch ">
-      <div className="flex items-center justify-start drop-shadow-lg h-full bg-white p-3 rounded-xl">
+      <div className="flex gap-4 items-center justify-start drop-shadow-lg h-full bg-white p-3 rounded-xl">
         <div>
           <Image
             src={imgSrc}
             width={60}
             height={60}
+            // layout="fill"
+            objectFit="none"
             alt="Picture of the author"
-            className="rounded-full profileImg"
+            className="rounded-full w-[100%] aspect-square"
           />
         </div>
-        <div className="flex-col items-stretch">
+        <div className="flex flex-col items-stretch">
           <div className="font-extrabold">{topic}</div>
           <div>{description}</div>
         </div>
