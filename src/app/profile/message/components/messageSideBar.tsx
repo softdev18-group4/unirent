@@ -105,6 +105,7 @@ function MessageSideBar() {
                 imgSrc="/product.png"
                 lastMsg="Hello, I want a computer"
                 herf={"/profile/message/" + val}
+                notificationNumber={2}
                 toggleChat={toggleChat}
               ></MessageCard>
             ))}

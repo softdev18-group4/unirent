@@ -26,6 +26,7 @@ function MessageEnter() {
           viewBox="0 0 26 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className="scale-75"
         >
           <path
             d="M1.01725e-05 23.9999L26 11.9999L1.01725e-05 -6.10352e-05V9.33325L18.625 11.9999L1.01725e-05 14.6666V23.9999Z"

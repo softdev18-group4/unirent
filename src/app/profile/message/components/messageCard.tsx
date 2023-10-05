@@ -5,12 +5,14 @@ function MessageCard({
   name,
   lastMsg,
   imgSrc,
+  notificationNumber,
   toggleChat,
 }: {
   herf: string;
   name: string;
   lastMsg: string;
   imgSrc: string;
+  notificationNumber: Number;
   toggleChat: () => void;
 }) {
   return (
@@ -27,9 +29,17 @@ function MessageCard({
             alt="Picture of the author"
             className="rounded-full h-[100%] aspect-square"
           />
-          <div className="flex flex-col w-[65%]">
+          <div className="flex flex-col w-[55%]">
             <p className="font-bold truncate">{name}</p>
             <p className="text-slate-500 truncate">{lastMsg}</p>
+          </div>
+          <div className="absolute right-3">
+            <span className="relative flex w-6 h-6 bg-[color:var(--theme-color2)] text-white rounded-full justify-center items-center">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[color:var(--theme-color2)] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-[color:var(--theme-color2)] justify-center items-center">
+                {notificationNumber.toString()}
+              </span>
+            </span>
           </div>
         </div>
       </Link>

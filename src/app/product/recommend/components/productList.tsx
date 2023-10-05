@@ -26,6 +26,15 @@ interface product {
     ramSize: number;
     storageSize: number;
   };
+  rentalOptions: {
+    id: string;
+    productId: string;
+    type: string;
+    priceRate: number;
+  }[];
+  reviews: {
+    rating: number;
+  }[];
 }
 //============================================================================================================
 function ProductList() {
@@ -129,6 +138,8 @@ function ProductList() {
                     ramSize,
                     storageSize,
                   },
+                  rentalOptions,
+                  reviews,
                 },
                 index
               ) => (
@@ -148,6 +159,8 @@ function ProductList() {
                     ramSize,
                     storageSize,
                   }}
+                  rentalOptions={rentalOptions}
+                  reviews={reviews}
                 ></ProductListCard>
               )
             )}

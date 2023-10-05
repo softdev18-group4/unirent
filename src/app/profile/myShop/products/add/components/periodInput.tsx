@@ -22,17 +22,14 @@ function PeriodInput({
   RangeValue: any;
   handleInput: (e: any, name?: string) => void;
 }) {
-  const [value, setValue] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
-  });
   const handleValueChange = (newValue: any) => {
     handleInput(newValue, RangeName);
-    setValue(newValue);
   };
   const [disable, setdisable] = useState(true);
   const checkboxEvent = () => {
-    const checkbox = document.getElementById(checkboxid) as HTMLInputElement;
+    const checkbox = document.getElementById(
+      "checkbox" + checkboxid
+    ) as HTMLInputElement;
     const input = document.getElementById(priceName) as HTMLInputElement;
     const range = document.getElementById(RangeName) as HTMLInputElement;
     if (checkbox) {
@@ -53,9 +50,13 @@ function PeriodInput({
   return (
     <div className="flex flex-col gap-2 items-start">
       <div className="flex">
-        <input id={checkboxid} onChange={checkboxEvent} type="checkbox"></input>
+        <input
+          id={"checkbox" + checkboxid}
+          onChange={checkboxEvent}
+          type="checkbox"
+        ></input>
         <label
-          htmlFor={checkboxid}
+          htmlFor={"checkbox" + checkboxid}
           className="ml-2 text-md font-bold theme-text-color2"
         >
           {checkboxtext}

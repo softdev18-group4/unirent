@@ -36,6 +36,10 @@ function From() {
 
   const handleInput = (e: any, name?: string) => {
     if (name) {
+      if (e.startDate != null && e.endDate != null) {
+        e.startDate = new Date(e.startDate);
+        e.endDate = new Date(e.endDate);
+      }
       setFormData((prevState) => ({
         ...prevState,
         [name]: e,
