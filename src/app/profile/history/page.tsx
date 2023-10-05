@@ -5,6 +5,6 @@ export const metadata: Metadata = {
 };
 
 function HistoryPage() {
-  return <div></div>;
+  return <div>history</div>;
 }
 export default HistoryPage;

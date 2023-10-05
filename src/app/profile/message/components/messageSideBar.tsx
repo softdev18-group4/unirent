@@ -9,17 +9,30 @@ import MessageCard from "./messageCard";
 function MessageSideBar() {
   const [inputValue, setInputValue] = useState<string>("");
   const toggleChat = () => {
-    const check = document.getElementById("check");
-    if (check?.offsetWidth != 288) {
-      const sidebar = document.getElementById("chatSidebar");
+    const checklg = document.getElementById("checklg");
+    if (checklg?.offsetWidth != 144) {
+      const Msgsidebar = document.getElementById("chatSidebar");
       const chathead = document.getElementById("chatHeader");
       if (chathead != null) {
         chathead.classList.toggle("hidden");
       }
-      if (sidebar != null) {
-        sidebar.classList.toggle("-translate-x-[60rem]");
-        sidebar.classList.toggle("lg:w-72");
-        sidebar.classList.toggle("min-[800px]:w-72");
+      if (Msgsidebar != null) {
+        Msgsidebar.classList.toggle("-translate-x-[60rem]");
+        Msgsidebar.classList.toggle("lg:w-72");
+        Msgsidebar.classList.toggle("min-[800px]:w-72");
+      }
+      const navhead = document.getElementById("navhead");
+      if (navhead != null) navhead.classList.toggle("hidden");
+      const checkmd = document.getElementById("checkmd");
+      if (checkmd?.offsetWidth != 144) {
+        const sidebar = document.getElementById("sidebar");
+        if (!sidebar?.classList.contains("-translate-x-full")) {
+          if (sidebar != null) sidebar.classList.toggle("-translate-x-full");
+          const padding = document.getElementById("padding");
+          if (padding != null) padding.classList.toggle("hidden");
+          const unirent = document.getElementById("unirent");
+          if (unirent != null) unirent.classList.toggle("hidden");
+        }
       }
     }
   };
@@ -29,7 +42,8 @@ function MessageSideBar() {
         className="sticky top-0 right-0 hidden lg:flex items-center z-30 bg-[#f1f6f9] border-y border-slate-400 h-24"
         id="chatHeader"
       >
-        <div className="w-72 hidden lg:flex" id="check"></div>
+        <div className="w-36 hidden lg:flex" id="checklg"></div>
+        <div className="w-36 hidden md:flex" id="checkmd"></div>
         <div className="flex items-center gap-4 p-4">
           <div
             className="w-8 h-8 flex items-center justify-center hover:bg-slate-300 rounded-full lg:hidden"

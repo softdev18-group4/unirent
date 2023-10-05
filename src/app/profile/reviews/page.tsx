@@ -5,6 +5,6 @@ export const metadata: Metadata = {
 };
 
 function ReviewsPage() {
-  return <div></div>;
+  return <div>reviews</div>;
 }
 export default ReviewsPage;

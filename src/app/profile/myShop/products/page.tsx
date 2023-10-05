@@ -20,7 +20,7 @@ function ProductsPage() {
           + เพิ่มสินค้า
         </Link>
       </div>
-      <PaginationTable api="myProduct API"></PaginationTable>
+      <PaginationTable api="yourProduct"></PaginationTable>
     </div>
   );
 }

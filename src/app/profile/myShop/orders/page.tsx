@@ -13,7 +13,7 @@ function OrdersPage() {
           your orders
         </div>
       </div>
-      <PaginationTable api="myOrder api"></PaginationTable>
+      <PaginationTable api="yourOrder"></PaginationTable>
     </div>
   );
 }

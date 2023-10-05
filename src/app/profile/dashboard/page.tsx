@@ -5,6 +5,6 @@ export const metadata: Metadata = {
 };
 
 function DashBoardPage() {
-  return <div></div>;
+  return <div>dashboard</div>;
 }
 export default DashBoardPage;
