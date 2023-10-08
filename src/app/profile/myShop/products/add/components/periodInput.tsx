@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Datepicker from "react-tailwindcss-datepicker";
 
 function PeriodInput({
   checkboxtext,
@@ -9,8 +8,6 @@ function PeriodInput({
   pricetext,
   priceName,
   priceValue,
-  RangeName,
-  RangeValue,
   handleInput,
 }: {
   checkboxtext: string;
@@ -18,31 +15,23 @@ function PeriodInput({
   pricetext: string;
   priceName: string;
   priceValue: any;
-  RangeName: string;
-  RangeValue: any;
   handleInput: (e: any, name?: string) => void;
 }) {
-  const handleValueChange = (newValue: any) => {
-    handleInput(newValue, RangeName);
-  };
   const [disable, setdisable] = useState(true);
   const checkboxEvent = () => {
     const checkbox = document.getElementById(
       "checkbox" + checkboxid
     ) as HTMLInputElement;
     const input = document.getElementById(priceName) as HTMLInputElement;
-    const range = document.getElementById(RangeName) as HTMLInputElement;
     if (checkbox) {
       if (checkbox.checked) {
         setdisable(false);
         input.disabled = false;
-        range.classList.remove("cursor-not-allowed");
         input.classList.remove("cursor-not-allowed");
       } else {
         setdisable(true);
         input.disabled = true;
         input.classList.add("cursor-not-allowed");
-        range.classList.add("cursor-not-allowed");
         handleInput("", priceName);
       }
     }
@@ -65,27 +54,10 @@ function PeriodInput({
       <div className="w-full justify-evenly flex gap-2">
         <div className="grow flex flex-col">
           <div className="cursor-default font-semibold text-md lg:text-lg text-slate-700">
-            ระยะเวลาที่ให้เช่า
-          </div>
-          <Datepicker
-            placeholder={"เลือกระยะเวลา"}
-            primaryColor={"amber"}
-            value={RangeValue}
-            inputId={RangeName}
-            onChange={handleValueChange}
-            minDate={new Date()}
-            separator={"ถึง"}
-            disabled={disable}
-            displayFormat={"DD/MM/YYYY"}
-            inputClassName="cursor-not-allowed w-full h-12 p-1 text-xs md:text-md border border-slate-400 rounded bg-slate-50 resize-none"
-          ></Datepicker>
-        </div>
-        <div className="grow flex flex-col">
-          <div className="cursor-default font-semibold text-md lg:text-lg text-slate-700">
             {pricetext}
           </div>
           <input
-            type="text"
+            type="number"
             id={priceName}
             name={priceName}
             value={priceValue}

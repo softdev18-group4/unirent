@@ -62,7 +62,7 @@ function ProductListCard({
     if (endDate != null) {
       //get remaining time in millisecond
       let time = new Date(endDate).getTime() - new Date().getTime();
-      setday(Math.floor(time / 86400000));
+      setday(Math.floor(time / 86400000.0));
     }
   };
   useEffect(() => {
@@ -120,7 +120,13 @@ function ProductListCard({
               )}
 
               <div className="flex justify-end">
-                <Star rating={rating}></Star>
+                {reviews[0] != null ? (
+                  <Star rating={rating}></Star>
+                ) : (
+                  <div className="font-bold text-slate-600 text-xl">
+                    ไม่มีรีวิว
+                  </div>
+                )}
               </div>
             </div>
           </div>

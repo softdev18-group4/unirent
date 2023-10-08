@@ -31,13 +31,15 @@ function PaginationTable({ api }: { api: string }) {
   const getData = async (page: number) => {
     //manully token
     const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTA3ZDczMzg4ZDdhYzlkMmFkNzFmYjUiLCJyb2xlIjoidXNlciIsImlhdCI6MTY5NjMzNzAxNywiZXhwIjoxNjk2NDIzNDE3fQ.-214NFUuyH3MqOcO_uarGO8kUlNiB1kU3cpguM_Zqis";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTA3ZDczMzg4ZDdhYzlkMmFkNzFmYjUiLCJyb2xlIjoidXNlciIsImlhdCI6MTY5Njc0NjQ1MCwiZXhwIjoxNjk2ODMyODUwfQ.WhqmPZUbTo9MnNJHi5CGr3nF5h7tLOB_sEqZj6JCka4";
     if (api == "yourProduct") {
       //if api is yourProduct fetch from your product
       const query = await fetch(
-        "https://api-unirent.1tpp.dev/products/yourProduct/byUser?page=" +
+        "https://api-unirent.1tpp.dev/products/yourProduct/byUser/search?page=" +
           page +
-          "&perPage=5",
+          "&perPage=5&keyword=" +
+          inputValue +
+          "&searchBy=name",
         {
           method: "GET",
           headers: {
@@ -50,9 +52,11 @@ function PaginationTable({ api }: { api: string }) {
     } else if (api == "yourOrder") {
       const query = await fetch(
         //if api is yourOrder fetch from your order
-        "https://api-unirent.1tpp.dev/orders/yourOrder/byUser?page=" +
+        "https://api-unirent.1tpp.dev/orders/yourOrder/byUser/search?page=" +
           page +
-          "&perPage=5",
+          "&perPage=5&keyword=" +
+          inputValue +
+          "&searchBy=name",
         {
           method: "GET",
           headers: {
@@ -73,6 +77,21 @@ function PaginationTable({ api }: { api: string }) {
     const response = await query.json();
     return response;
   };
+  //month to string
+  const monthToString = (month: number) => {
+    if (month == 0) return "Jan";
+    else if (month == 1) return "Feb";
+    else if (month == 2) return "Mar";
+    else if (month == 3) return "Apr";
+    else if (month == 4) return "May";
+    else if (month == 5) return "Jun";
+    else if (month == 6) return "Jul";
+    else if (month == 7) return "Aug";
+    else if (month == 8) return "Sep";
+    else if (month == 9) return "Oct";
+    else if (month == 10) return "Nov";
+    else if (month == 11) return "Dec";
+  };
   //transfrom array of product data to table data
   const getTableData = (data: any) => {
     //data:any input depends on (Your Order) and (Your Product) api
@@ -80,14 +99,27 @@ function PaginationTable({ api }: { api: string }) {
     const tabledata: tableData[] = [];
     if (api == "yourProduct") {
       data.map((tmp: any) => {
+        //period and price string
+        let period: string = "";
+        let price: string = "";
+        for (const rentalOption of tmp.rentalOptions) {
+          period += rentalOption.type + "/";
+          price += rentalOption.priceRate + "/";
+        }
+        if (period != "") period = period.slice(0, -1);
+        if (price != "") price = price.slice(0, -1);
+        let day, month, year;
+        day = new Date(tmp.availableDays.startDate).getDay() + 1;
+        month = monthToString(new Date(tmp.availableDays.startDate).getMonth());
+        year = new Date(tmp.availableDays.startDate).getFullYear();
         const onedata: tableData = {
           imgSrc: "/product.png",
           name: tmp.name,
           status: tmp.availability ? "ว่าง" : "กำลังปล่อยเช่า",
-          period: "skip",
-          price: "skip",
-          date: "skip",
-          timeleft: "skip",
+          period: period,
+          price: price,
+          date: day + " " + month + " " + year,
+          timeleft: "",
           productId: tmp.id,
         };
         tabledata.push(onedata);
@@ -96,16 +128,21 @@ function PaginationTable({ api }: { api: string }) {
     //transfrom array of order data to table data
     else if (api == "yourOrder") {
       data.map((tmp: any) => {
+        let day, month, year;
+        day = new Date(tmp.product.availableDays.startDate).getDay() + 1;
+        month = monthToString(
+          new Date(tmp.product.availableDays.startDate).getMonth()
+        );
+        year = new Date(tmp.product.availableDays.startDate).getFullYear();
         //get Product of the order
-        const productData: any = getProduct(tmp.productId);
         const onedata: tableData = {
           imgSrc: "/product.png",
-          name: productData.name,
-          status: "skip",
-          period: "skip",
-          price: "skip",
-          date: "skip",
-          timeleft: "skip",
+          name: tmp.product.name,
+          status: tmp.status == "wait" ? "กำลังดำเนินการ" : "ได้รับแล้ว",
+          period: tmp.rentalOption.type,
+          price: tmp.rentalOption.priceRate,
+          date: day + " " + month + " " + year,
+          timeleft: tmp.rentTime + " ชั่วโมง",
           productId: tmp.productId,
         };
         tabledata.push(onedata);
@@ -113,26 +150,21 @@ function PaginationTable({ api }: { api: string }) {
     }
     setTableInfo(tabledata);
   };
-  //initial fetch and if page change fetch again
-  useEffect(() => {
-    if (inputValue == "") getData(page);
-  }, [page]);
+  // //initial fetch and if page change fetch again
+  // useEffect(() => {
+  //   if (inputValue == "") getData(page);
+  // }, [page]);
   //handle delete product
   const handleDelete = (productId: string) => {
     //fetch to delete
   };
   //handle search
   const searchHandler = useCallback(async () => {
-    //check if have input
-    if (inputValue != "") {
-      //fetch using search
-      setLoading(false);
-    } else {
-      getData(page);
-    }
+    getData(page);
   }, [inputValue, page]);
   //if inputvalue change set page=1
   useEffect(() => {
+    setLoading(true);
     childSetPage(1);
   }, [inputValue]);
   // check if inputvalue change every 300 millisec

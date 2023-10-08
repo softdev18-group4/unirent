@@ -1,6 +1,10 @@
 import Dropdown from "./dropDown";
 
 function SpecificationBox({
+  brandName,
+  brandValue,
+  modelName,
+  modelValue,
   summaryStorageName,
   summaryStorageValue,
   avaliableStorageName,
@@ -15,6 +19,10 @@ function SpecificationBox({
   operatingSystemValue,
   handleInput,
 }: {
+  brandName: string;
+  brandValue: string;
+  modelName: string;
+  modelValue: string;
   summaryStorageName: string;
   summaryStorageValue: string;
   avaliableStorageName: string;
@@ -36,16 +44,30 @@ function SpecificationBox({
       </div>
       <div className="flex flex-col justify-evenly gap-3 bg-white w-full h-full rounded-2xl drop-shadow-2xl p-4 lg:p-8">
         <Dropdown
+          name={brandName}
+          value={brandValue}
+          title="Brand"
+          dropdownList={[brandValue, "acer", "del"]}
+          handleInput={handleInput}
+        ></Dropdown>
+        <Dropdown
+          name={modelName}
+          value={modelValue}
+          title="Model"
+          dropdownList={[modelValue, "model1", "model2"]}
+          handleInput={handleInput}
+        ></Dropdown>
+        <Dropdown
           name={CPUName}
           value={CPUValue}
-          title="CPU"
+          title="Processor"
           dropdownList={[CPUValue, "amd ลายเส้น", "test3"]}
           handleInput={handleInput}
         ></Dropdown>
         <Dropdown
           name={GPUName}
           value={GPUValue}
-          title="GPU"
+          title="Graphic Card"
           dropdownList={[GPUValue, "GTX 100", "test3"]}
           handleInput={handleInput}
         ></Dropdown>
@@ -55,12 +77,12 @@ function SpecificationBox({
               Summary Storage
             </div>
             <input
-              type="text"
+              type="number"
               name={summaryStorageName}
               value={summaryStorageValue}
               onChange={handleInput}
               className="block w-full h-10 p-4 text-sm text-gray-900 border border-slate-400 rounded-xl bg-slate-50 "
-              placeholder="Ex. 1 TB"
+              placeholder="Ex. 1000 (GB)"
               required
             ></input>
           </div>
@@ -69,12 +91,12 @@ function SpecificationBox({
               Avaliable Storage
             </div>
             <input
-              type="text"
+              type="number"
               name={avaliableStorageName}
               value={avaliableStorageValue}
               onChange={handleInput}
               className="block w-full h-10 p-4 text-sm text-gray-900 border border-slate-400 rounded-xl bg-slate-50 "
-              placeholder="Ex. 320 GB"
+              placeholder="Ex. 1000 (GB)"
               required
             ></input>
           </div>
@@ -84,12 +106,12 @@ function SpecificationBox({
             RAM
           </div>
           <input
-            type="text"
+            type="number"
             name={RAMName}
             value={RAMValue}
             onChange={handleInput}
             className="block w-full h-10 p-4 text-sm text-gray-900 border border-slate-400 rounded-xl bg-slate-50 "
-            placeholder="Ex. 32 GB"
+            placeholder="Ex. 32 (GB)"
             required
           ></input>
         </div>
