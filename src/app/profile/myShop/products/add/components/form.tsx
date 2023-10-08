@@ -1,15 +1,15 @@
 "use client";
 
-import { useRouter } from "next/router";
 import { useState } from "react";
 import DescriptionBox from "./descriptionBox";
 import LocationBox from "./locationBox";
 import PeriodBox from "./periodBox";
 import PictureBox from "./pictureBox";
 import SpecificationBox from "./specificationBox";
+import { useRouter } from "next/navigation";
 
 function From() {
-  const router = useRouter();
+  const { push } = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -103,12 +103,12 @@ function From() {
       });
     if (formData.weekPrice != "")
       rentalOptions.push({
-        type: "Daily",
+        type: "Weekly",
         priceRate: Number(formData.weekPrice),
       });
     if (formData.monthPrice != "")
       rentalOptions.push({
-        type: "Daily",
+        type: "Monthly",
         priceRate: Number(formData.monthPrice),
       });
     const query = await fetch("https://api-unirent.1tpp.dev/products", {
@@ -136,7 +136,7 @@ function From() {
     const response = await query.json();
     //console.log(response);
 
-    router.push("/profile/myShop/products");
+    push("/profile/myShop/products");
   };
   return (
     <form
