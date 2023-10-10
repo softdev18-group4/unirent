@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 function ProductCard({
   imgSrc,
@@ -24,10 +25,11 @@ function ProductCard({
   handleDelete: (productId: string) => void;
 }) {
   return (
+    //<Link href={"/profile/myShop/products/edit/" + productId}>
     <tr className="cursor-default w-full h-20 bg-white font-semibold">
       <td className="rounded-l-2xl bg-white">
-        <div className="flex items-center justify-center truncate">
-          <div className="flex items-center justify-start gap-2 w-[80%] lg:w-[70%] xl:w-[50%]">
+        <div className="flex items-center justify-left truncate">
+          <div className="flex items-center gap-2 w-full ml-[calc(20%)]">
             <div
               onClick={() => handleDelete(productId)}
               className={canDelete ? "" : "hidden"}
@@ -49,33 +51,88 @@ function ProductCard({
                 />
               </svg>
             </div>
-
-            <Image
-              src={imgSrc}
-              width={60}
-              height={60}
-              objectFit="none"
-              alt="Picture of the author"
-              className="hidden rounded-md lg:flex aspect-square"
-            />
-            {name}
+            <Link
+              href={"/profile/myShop/products/edit/" + productId}
+              className="flex gap-2 items-center h-[80px] w-full truncate"
+              style={
+                canDelete
+                  ? {}
+                  : { pointerEvents: "none", textDecoration: "none" }
+              }
+            >
+              <Image
+                src={imgSrc}
+                width={60}
+                height={60}
+                objectFit="none"
+                alt="Picture of the author"
+                className="hidden rounded-md lg:flex aspect-square"
+              />
+              {name}
+            </Link>
           </div>
         </div>
       </td>
 
-      <td
-        className={
-          status == "ว่าง" || status == "กำลังดำเนินการ"
-            ? "text-yellow-500 text-left bg-white truncate"
-            : "text-green-500 text-left bg-white truncate"
-        }
-      >
-        {status}
+      <td>
+        <Link
+          href={"/profile/myShop/products/edit/" + productId}
+          className={
+            status == "ว่าง" || status == "กำลังดำเนินการ"
+              ? "text-yellow-500 text-left bg-white truncate flex items-center justify-start w-full h-[80px]"
+              : "text-green-500 text-left bg-white truncate flex items-center justify-start w-full h-[80px]"
+          }
+          style={
+            canDelete ? {} : { pointerEvents: "none", textDecoration: "none" }
+          }
+        >
+          {status}
+        </Link>
       </td>
-      <td className="text-slate-400 text-left bg-white truncate">{period}</td>
-      <td className="bg-white text-left truncate">{price}</td>
-      <td className=" text-slate-400 text-left bg-white truncate">{date}</td>
-      <td className="rounded-r-2xl text-left bg-white truncate">{timeleft}</td>
+      <td>
+        <Link
+          href={"/profile/myShop/products/edit/" + productId}
+          className="text-slate-400 text-left bg-white truncate  flex items-center justify-start w-full h-[80px]"
+          style={
+            canDelete ? {} : { pointerEvents: "none", textDecoration: "none" }
+          }
+        >
+          {period}
+        </Link>
+      </td>
+      <td>
+        <Link
+          href={"/profile/myShop/products/edit/" + productId}
+          className="bg-white text-left truncate  flex items-center justify-start w-full h-[80px]"
+          style={
+            canDelete ? {} : { pointerEvents: "none", textDecoration: "none" }
+          }
+        >
+          {price}
+        </Link>
+      </td>
+      <td>
+        <Link
+          href={"/profile/myShop/products/edit/" + productId}
+          className="text-slate-400 text-left bg-white truncate  flex items-center justify-start w-full h-[80px]"
+          style={
+            canDelete ? {} : { pointerEvents: "none", textDecoration: "none" }
+          }
+        >
+          {date}
+        </Link>
+      </td>
+      <td className="rounded-r-2xl text-left bg-white truncate">
+        <Link
+          href={"/profile/myShop/products/edit/" + productId}
+          className="rounded-r-2xl text-left bg-white truncate flex items-center justify-start w-full h-[80px]"
+          style={
+            canDelete ? {} : { pointerEvents: "none", textDecoration: "none" }
+          }
+        >
+          {timeleft}
+        </Link>
+      </td>
     </tr>
   );
 }

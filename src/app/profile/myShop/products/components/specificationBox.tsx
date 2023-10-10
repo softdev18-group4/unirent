@@ -43,7 +43,63 @@ function SpecificationBox({
         รายละเอียดสินค้า
       </div>
       <div className="flex flex-col justify-evenly gap-3 bg-white w-full h-full rounded-2xl drop-shadow-2xl p-4 lg:p-8">
-        <Dropdown
+        <div className="flex flex-col">
+          <div className="cursor-default font-semibold text-md lg:text-lg text-slate-700">
+            Brand
+          </div>
+          <input
+            type="text"
+            name={brandName}
+            value={brandValue}
+            onChange={handleInput}
+            className="block w-full h-10 p-4 text-sm text-gray-900 border border-slate-400 rounded-xl bg-slate-50 "
+            placeholder="Ex. Asus Del Acer etc..."
+            required
+          ></input>
+        </div>
+        <div className="flex flex-col">
+          <div className="cursor-default font-semibold text-md lg:text-lg text-slate-700">
+            Model
+          </div>
+          <input
+            type="text"
+            name={modelName}
+            value={modelValue}
+            onChange={handleInput}
+            className="block w-full h-10 p-4 text-sm text-gray-900 border border-slate-400 rounded-xl bg-slate-50 "
+            placeholder="Ex. model"
+            required
+          ></input>
+        </div>
+        <div className="flex flex-col">
+          <div className="cursor-default font-semibold text-md lg:text-lg text-slate-700">
+            Processor
+          </div>
+          <input
+            type="text"
+            name={CPUName}
+            value={CPUValue}
+            onChange={handleInput}
+            className="block w-full h-10 p-4 text-sm text-gray-900 border border-slate-400 rounded-xl bg-slate-50 "
+            placeholder="Ex. Core i9 etc..."
+            required
+          ></input>
+        </div>
+        <div className="flex flex-col">
+          <div className="cursor-default font-semibold text-md lg:text-lg text-slate-700">
+            Graphic Card
+          </div>
+          <input
+            type="text"
+            name={GPUName}
+            value={GPUValue}
+            onChange={handleInput}
+            className="block w-full h-10 p-4 text-sm text-gray-900 border border-slate-400 rounded-xl bg-slate-50 "
+            placeholder="Ex. gtx1060 etc..."
+            required
+          ></input>
+        </div>
+        {/* <Dropdown
           name={brandName}
           value={brandValue}
           title="Brand"
@@ -63,14 +119,14 @@ function SpecificationBox({
           title="Processor"
           dropdownList={[CPUValue, "amd ลายเส้น", "test3"]}
           handleInput={handleInput}
-        ></Dropdown>
+        ></Dropdown> 
         <Dropdown
           name={GPUName}
           value={GPUValue}
           title="Graphic Card"
           dropdownList={[GPUValue, "GTX 100", "test3"]}
           handleInput={handleInput}
-        ></Dropdown>
+        ></Dropdown>*/}
         <div className="flex justify-between items-center gap-10">
           <div className="grow flex flex-col">
             <div className="cursor-default font-semibold text-md lg:text-lg text-slate-700">
@@ -83,6 +139,7 @@ function SpecificationBox({
               onChange={handleInput}
               className="block w-full h-10 p-4 text-sm text-gray-900 border border-slate-400 rounded-xl bg-slate-50 "
               placeholder="Ex. 1000 (GB)"
+              min="0"
               required
             ></input>
           </div>
@@ -97,6 +154,7 @@ function SpecificationBox({
               onChange={handleInput}
               className="block w-full h-10 p-4 text-sm text-gray-900 border border-slate-400 rounded-xl bg-slate-50 "
               placeholder="Ex. 1000 (GB)"
+              min="0"
               required
             ></input>
           </div>
@@ -112,6 +170,7 @@ function SpecificationBox({
             onChange={handleInput}
             className="block w-full h-10 p-4 text-sm text-gray-900 border border-slate-400 rounded-xl bg-slate-50 "
             placeholder="Ex. 32 (GB)"
+            min="0"
             required
           ></input>
         </div>

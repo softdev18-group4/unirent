@@ -10,16 +10,18 @@ import { useRouter } from "next/navigation";
 
 function From() {
   const { push } = useRouter();
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTA3ZDczMzg4ZDdhYzlkMmFkNzFmYjUiLCJyb2xlIjoidXNlciIsImlhdCI6MTY5Njk1OTQwOCwiZXhwIjoxNjk3MDQ1ODA4fQ.zrkll4H4kIRcmw7cPW0EjGobuYXf7PRCaYe624b9vs0";
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    brand: "asus",
-    model: "model",
+    brand: "",
+    model: "",
     summaryStorage: "",
     avaliableStorage: "",
     RAM: "",
-    processor: "core i เจ็บ",
-    graphicCard: "RTX 100000",
+    processor: "",
+    graphicCard: "",
     operatingSystem: "Window",
     availableDays: {
       startDate: null,
@@ -93,8 +95,7 @@ function From() {
     // Object.entries(formData).forEach(([key, value]) => {
     //   data.append(key, value);
     // });
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTA3ZDczMzg4ZDdhYzlkMmFkNzFmYjUiLCJyb2xlIjoidXNlciIsImlhdCI6MTY5Njc0NjQ1MCwiZXhwIjoxNjk2ODMyODUwfQ.WhqmPZUbTo9MnNJHi5CGr3nF5h7tLOB_sEqZj6JCka4";
+
     let rentalOptions: any[] = [];
     if (formData.dayPrice != "")
       rentalOptions.push({
@@ -134,7 +135,7 @@ function From() {
       }),
     });
     const response = await query.json();
-    //console.log(response);
+    // console.log(response);
 
     push("/profile/myShop/products");
   };

@@ -27,11 +27,11 @@ function PaginationTable({ api }: { api: string }) {
     setPage(page);
     setLoading(true);
   };
+  //manully token
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTA3ZDczMzg4ZDdhYzlkMmFkNzFmYjUiLCJyb2xlIjoidXNlciIsImlhdCI6MTY5Njk1OTQwOCwiZXhwIjoxNjk3MDQ1ODA4fQ.zrkll4H4kIRcmw7cPW0EjGobuYXf7PRCaYe624b9vs0";
   //fetch data
   const getData = async (page: number) => {
-    //manully token
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTA3ZDczMzg4ZDdhYzlkMmFkNzFmYjUiLCJyb2xlIjoidXNlciIsImlhdCI6MTY5Njc0NjQ1MCwiZXhwIjoxNjk2ODMyODUwfQ.WhqmPZUbTo9MnNJHi5CGr3nF5h7tLOB_sEqZj6JCka4";
     if (api == "yourProduct") {
       //if api is yourProduct fetch from your product
       const query = await fetch(
@@ -69,13 +69,23 @@ function PaginationTable({ api }: { api: string }) {
     }
     setLoading(false);
   };
-  //fetch product data by product id
-  const getProduct = async (id: string) => {
-    const query = await fetch("https://api-unirent.1tpp.dev/products/" + id, {
-      method: "GET",
-    });
+  //handle delete product
+  const handleDelete = async (productId: string) => {
+    //fetch to delete
+    setLoading(true);
+    const query = await fetch(
+      "https://api-unirent.1tpp.dev/products/" + productId,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
     const response = await query.json();
-    return response;
+    // console.log(response);
+
+    getData(page);
   };
   //month to string
   const monthToString = (month: number) => {
@@ -154,10 +164,7 @@ function PaginationTable({ api }: { api: string }) {
   // useEffect(() => {
   //   if (inputValue == "") getData(page);
   // }, [page]);
-  //handle delete product
-  const handleDelete = (productId: string) => {
-    //fetch to delete
-  };
+
   //handle search
   const searchHandler = useCallback(async () => {
     getData(page);
@@ -244,7 +251,6 @@ function PaginationTable({ api }: { api: string }) {
                 childSetPage={childSetPage}
               ></PaginaionBtn>
             ))}
-        {}
       </div>
     </div>
   );

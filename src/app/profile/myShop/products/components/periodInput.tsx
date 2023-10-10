@@ -63,6 +63,7 @@ function PeriodInput({
             value={priceValue}
             onChange={handleInput}
             className="cursor-not-allowed block w-full h-12 p-3 text-sm border border-slate-400 rounded bg-slate-50 resize-none"
+            min="0"
             disabled
           ></input>
         </div>
