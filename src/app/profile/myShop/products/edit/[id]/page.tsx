@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import From from "../components/form";
+import From from "./components/form";
 export const metadata: Metadata = {
   title: "Add Product",
 };
 
-function AddProduct() {
+function AddProduct({ params }: { params: { id: string } }) {
   return (
     <div className="px-10 py-6">
       <div className="cursor-default font-semibold ml-16 text-md lg:text-xl text-slate-400">
@@ -30,11 +30,11 @@ function AddProduct() {
           </svg>
         </Link>
         <div className="cursor-default font-bold uppercase text-2xl lg:text-3xl">
-          add product
+          Update product
         </div>
       </div>
       <div className="my-20">
-        <From></From>
+        <From productId={params.id}></From>
       </div>
     </div>
   );

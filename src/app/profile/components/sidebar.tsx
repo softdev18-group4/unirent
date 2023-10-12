@@ -40,12 +40,21 @@ function Sidebar({
     const unirent = document.getElementById("unirent");
     if (unirent != null) unirent.classList.toggle("hidden");
   };
+  const resetNavhead = () => {
+    const navhead = document.getElementById("navhead");
+    if (navhead != null) {
+      navhead.classList.remove("hidden");
+    }
+  };
 
   const pathname = usePathname();
 
   return (
-    <div className="sticky top-0 z-50">
-      <div className="sticky top-0 md:hidden flex items-center mt-4 z-40 bg-[#f1f6f9]">
+    <div className="sticky top-0 z-40">
+      <div
+        className="sticky top-0 md:hidden flex items-center z-40 h-20 bg-[#f1f6f9]"
+        id="navhead"
+      >
         <div id="padding" className="hidden w-64"></div>
         <button
           onClick={(e) => toggleSidebar()}
@@ -97,6 +106,7 @@ function Sidebar({
             <li>
               <Link
                 href={dashboard}
+                onClick={resetNavhead}
                 className={
                   pathname.includes(dashboard)
                     ? "flex items-center w-full p-2 text-base text-[color:var(--theme-color2)] transition duration-75 rounded-lg group"
@@ -165,6 +175,7 @@ function Sidebar({
               <ul id="dropdown" className="hidden py-2 space-y-2">
                 <li>
                   <Link
+                    onClick={resetNavhead}
                     href={product}
                     className={
                       pathname.includes(product)
@@ -177,6 +188,7 @@ function Sidebar({
                 </li>
                 <li>
                   <Link
+                    onClick={resetNavhead}
                     href={orders}
                     className={
                       pathname.includes(orders)
@@ -193,14 +205,14 @@ function Sidebar({
               <Link
                 href={message}
                 className={
-                  pathname.includes(message)
+                  pathname.includes("message")
                     ? "flex items-center w-full p-2 text-base text-[color:var(--theme-color2)] transition duration-75 rounded-lg group"
                     : "flex items-center w-full p-2 text-base text-[color:var(--theme-color1)] transition duration-75 rounded-lg group hover:text-[color:var(--theme-color2)]"
                 }
               >
                 <svg
                   className={
-                    pathname.includes(message)
+                    pathname.includes("message")
                       ? "w-5 h-5 text-[color:var(--theme-color2)] transition duration-75"
                       : "w-5 h-5 text-[color:var(--theme-color1)] transition duration-75 group-hover:text-[color:var(--theme-color2)]"
                   }
@@ -217,6 +229,7 @@ function Sidebar({
             </li>
             <li>
               <Link
+                onClick={resetNavhead}
                 href={history}
                 className={
                   pathname.includes(history)
@@ -243,6 +256,7 @@ function Sidebar({
             </li>
             <li>
               <Link
+                onClick={resetNavhead}
                 href={reviews}
                 className={
                   pathname.includes(reviews)
@@ -275,6 +289,7 @@ function Sidebar({
             </li>
             <li>
               <Link
+                onClick={resetNavhead}
                 href={settings}
                 className={
                   pathname.includes(settings)

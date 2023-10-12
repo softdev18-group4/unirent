@@ -2,12 +2,12 @@ function TableHeader() {
   return (
     <thead>
       <tr className="w-full h-16 font-bold">
-        <th className="rounded-l-2xl bg-white">
+        <th className="rounded-l-2xl bg-white w-[20%] md:w-[30%]">
           <div className="flex items-center justify-center">
-            <div className="cursor-pointer flex items-center gap-3">
+            <div className="cursor-pointer flex items-center gap-1 md:gap-3">
               สินค้า
               <svg
-                className="w-3 h-3"
+                className="w-2 h-2 md:w-3 md:h-3"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -26,10 +26,10 @@ function TableHeader() {
         </th>
         <th className="bg-white">
           <div className=" flex items-center">
-            <div className="cursor-pointer flex items-center gap-3">
+            <div className="cursor-pointer flex items-center md:gap-3">
               สถานะ
               <svg
-                className="w-3 h-3"
+                className="w-2 h-2 md:w-3 md:h-3"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -49,10 +49,10 @@ function TableHeader() {
         <th className="cursor-default text-left bg-white">ระยะการเช่า</th>
         <th className="text-left bg-white">
           <div className="flex items-cente">
-            <div className="cursor-pointer flex items-center gap-3">
+            <div className="cursor-pointer flex items-center md:gap-3">
               ราคา
               <svg
-                className="w-3 h-3"
+                className="w-2 h-2 md:w-3 md:h-3"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

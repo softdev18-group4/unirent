@@ -16,9 +16,11 @@ function Navbar() {
       <nav>
         {/* >md size  */}
         <div className="hidden md:flex justify-between items-center py-4">
-          <div className="flex cursor-default grow-[1] items-center justifiy-center uppercase pr-3 py-3 font-extrabold text-3xl">
-            <div className="theme-text-color2">uni</div>
-            <div className="theme-text-color1">rent</div>
+          <div className="flex grow-[1] items-center justifiy-center uppercase pr-3 py-3 font-extrabold text-3xl">
+            <a href="/product/recommend" className="cursor-pointer flex">
+              <div className="theme-text-color2">uni</div>
+              <div className="theme-text-color1">rent</div>
+            </a>
           </div>
 
           <div className="grow-[3] flex items-center justify-evenly theme-bg-color1 rounded-full font-medium px-3 py-2">
@@ -56,20 +58,22 @@ function Navbar() {
               />
             </svg>
             {/* person icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="cursor-pointer rounded-full w-28 h-12 fill-white theme-bg-color1 p-3 mx-2 hover:bg-[color:var(--theme-color2)]"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-              />
-            </svg>
+            <a href="/profile/dashboard">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="cursor-pointer rounded-full w-28 h-12 fill-white theme-bg-color1 p-3 mx-2 hover:bg-[color:var(--theme-color2)]"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                />
+              </svg>
+            </a>
           </div>
         </div>
         {/* <md size  */}
@@ -109,7 +113,7 @@ function Navbar() {
                         ["Rents", "/product/recommend"],
                         ["FAQ", "/product/recommend"],
                         ["Cart", "/product/recommend"],
-                        ["Profile", "/product/recommend"],
+                        ["Profile", "/profile/dashboard"],
                       ].map(([title, url], index) => (
                         <li key={index}>
                           <a
@@ -128,8 +132,10 @@ function Navbar() {
             </div>
           </div>
           <div className="grow-[3] flex justify-center items-center cursor-default uppercase pl-3 py-3 font-extrabold text-3xl">
-            <div className="theme-text-color2">uni</div>
-            <div className="theme-text-color1">rent</div>
+            <a href="/product/recommend" className="cursor-pointer flex">
+              <div className="theme-text-color2">uni</div>
+              <div className="theme-text-color1">rent</div>
+            </a>
           </div>
           <div className="grow-[1] flex items-center pl-3 py-3 font-medium justify-end ">
             {/* computer icon */}

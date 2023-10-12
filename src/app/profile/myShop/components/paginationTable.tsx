@@ -4,14 +4,186 @@ import TableHeader from "../components/tableHeader";
 import ProductCard from "../components/productCard";
 import PaginaionBtn from "../components/paginationBtn";
 import SearchBar from "../components/searchBar";
-import { useState } from "react";
-
+import { useCallback, useEffect, useState } from "react";
+import LoadingCard from "./loadingCard";
+//========================================================Data=====================================================
+interface tableData {
+  imgSrc: string;
+  name: string;
+  status: string;
+  period: string;
+  price: string;
+  date: string;
+  timeleft: string;
+  productId: string;
+}
+//=================================================================================================================
 function PaginationTable({ api }: { api: string }) {
   const [inputValue, setInputValue] = useState<string>("");
-  const [page, setPage] = useState(0);
+  const [tableInfo, setTableInfo] = useState<tableData[]>([]);
+  const [isLoading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
   const childSetPage = (page: number) => {
     setPage(page);
+    setLoading(true);
   };
+  //manully token
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTA3ZDczMzg4ZDdhYzlkMmFkNzFmYjUiLCJyb2xlIjoidXNlciIsImlhdCI6MTY5Njk1OTQwOCwiZXhwIjoxNjk3MDQ1ODA4fQ.zrkll4H4kIRcmw7cPW0EjGobuYXf7PRCaYe624b9vs0";
+  //fetch data
+  const getData = async (page: number) => {
+    if (api == "yourProduct") {
+      //if api is yourProduct fetch from your product
+      const query = await fetch(
+        "https://api-unirent.1tpp.dev/products/yourProduct/byUser/search?page=" +
+          page +
+          "&perPage=5&keyword=" +
+          inputValue +
+          "&searchBy=name",
+        {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      const response = await query.json();
+      getTableData(response);
+    } else if (api == "yourOrder") {
+      const query = await fetch(
+        //if api is yourOrder fetch from your order
+        "https://api-unirent.1tpp.dev/orders/yourOrder/byUser/search?page=" +
+          page +
+          "&perPage=5&keyword=" +
+          inputValue +
+          "&searchBy=name",
+        {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      const response = await query.json();
+      getTableData(response);
+    }
+    setLoading(false);
+  };
+  //handle delete product
+  const handleDelete = async (productId: string) => {
+    //fetch to delete
+    setLoading(true);
+    const query = await fetch(
+      "https://api-unirent.1tpp.dev/products/" + productId,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    const response = await query.json();
+    // console.log(response);
+
+    getData(page);
+  };
+  //month to string
+  const monthToString = (month: number) => {
+    if (month == 0) return "Jan";
+    else if (month == 1) return "Feb";
+    else if (month == 2) return "Mar";
+    else if (month == 3) return "Apr";
+    else if (month == 4) return "May";
+    else if (month == 5) return "Jun";
+    else if (month == 6) return "Jul";
+    else if (month == 7) return "Aug";
+    else if (month == 8) return "Sep";
+    else if (month == 9) return "Oct";
+    else if (month == 10) return "Nov";
+    else if (month == 11) return "Dec";
+  };
+  //transfrom array of product data to table data
+  const getTableData = (data: any) => {
+    //data:any input depends on (Your Order) and (Your Product) api
+    //transfrom array of product data to table data
+    const tabledata: tableData[] = [];
+    if (api == "yourProduct") {
+      data.map((tmp: any) => {
+        //period and price string
+        let period: string = "";
+        let price: string = "";
+        for (const rentalOption of tmp.rentalOptions) {
+          period += rentalOption.type + "/";
+          price += rentalOption.priceRate + "/";
+        }
+        if (period != "") period = period.slice(0, -1);
+        if (price != "") price = price.slice(0, -1);
+        let day, month, year;
+        day = new Date(tmp.availableDays.startDate).getDay() + 1;
+        month = monthToString(new Date(tmp.availableDays.startDate).getMonth());
+        year = new Date(tmp.availableDays.startDate).getFullYear();
+        const onedata: tableData = {
+          imgSrc: "/product.png",
+          name: tmp.name,
+          status: tmp.availability ? "ว่าง" : "กำลังปล่อยเช่า",
+          period: period,
+          price: price,
+          date: day + " " + month + " " + year,
+          timeleft: "",
+          productId: tmp.id,
+        };
+        tabledata.push(onedata);
+      });
+    }
+    //transfrom array of order data to table data
+    else if (api == "yourOrder") {
+      data.map((tmp: any) => {
+        let day, month, year;
+        day = new Date(tmp.product.availableDays.startDate).getDay() + 1;
+        month = monthToString(
+          new Date(tmp.product.availableDays.startDate).getMonth()
+        );
+        year = new Date(tmp.product.availableDays.startDate).getFullYear();
+        //get Product of the order
+        const onedata: tableData = {
+          imgSrc: "/product.png",
+          name: tmp.product.name,
+          status: tmp.status == "wait" ? "กำลังดำเนินการ" : "ได้รับแล้ว",
+          period: tmp.rentalOption.type,
+          price: tmp.rentalOption.priceRate,
+          date: day + " " + month + " " + year,
+          timeleft: tmp.rentTime + " ชั่วโมง",
+          productId: tmp.productId,
+        };
+        tabledata.push(onedata);
+      });
+    }
+    setTableInfo(tabledata);
+  };
+  // //initial fetch and if page change fetch again
+  // useEffect(() => {
+  //   if (inputValue == "") getData(page);
+  // }, [page]);
+
+  //handle search
+  const searchHandler = useCallback(async () => {
+    getData(page);
+  }, [inputValue, page]);
+  //if inputvalue change set page=1
+  useEffect(() => {
+    setLoading(true);
+    childSetPage(1);
+  }, [inputValue]);
+  // check if inputvalue change every 300 millisec
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      searchHandler();
+    }, 300);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [searchHandler]);
+  //=========================================================================================
   return (
     <div>
       <div className="my-4 w-full rounded-2xl bg-white h-24 flex justify-end items-center p-4">
@@ -22,23 +194,45 @@ function PaginationTable({ api }: { api: string }) {
         ></SearchBar>
       </div>
       <div className="relative overflow-x-auto mt-4">
-        <table className="w-full border-separate border-spacing-y-2 text-xs md:text-sm lg:text-base">
+        <table className="w-full border-separate border-spacing-y-2 text-xs md:text-sm lg:text-base table-fixed">
           <TableHeader></TableHeader>
-          {[1, 2, 3, 4, 5].map((tmp, index) => (
-            <tbody key={index}>
-              <ProductCard
-                imgSrc="/product.png"
-                name="MacBook Air"
-                status="ว่าง"
-                period="รายวัน / รายเดือน"
-                price="100/1500"
-                date="24 Aug, 2023"
-                timeleft="10 ปี"
-              ></ProductCard>
+          {isLoading ? (
+            <tbody>
+              <LoadingCard></LoadingCard>
+              <LoadingCard></LoadingCard>
+              <LoadingCard></LoadingCard>
+              <LoadingCard></LoadingCard>
+              <LoadingCard></LoadingCard>
             </tbody>
-          ))}
+          ) : tableInfo.length > 0 ? (
+            tableInfo.map((data, index) => (
+              <tbody key={index}>
+                <ProductCard
+                  imgSrc={data.imgSrc}
+                  name={data.name}
+                  status={data.status}
+                  period={data.period}
+                  price={data.price}
+                  date={data.date}
+                  timeleft={data.timeleft}
+                  productId={data.productId}
+                  canDelete={api == "yourProduct" ? true : false}
+                  handleDelete={handleDelete}
+                ></ProductCard>
+              </tbody>
+            ))
+          ) : (
+            ""
+          )}
         </table>
       </div>
+      {!isLoading && tableInfo.length == 0 ? (
+        <div className="flex justify-center items-center text-3xl w-full h-20">
+          ไม่พบข้อมูล
+        </div>
+      ) : (
+        ""
+      )}
       <div className="flex justify-end my-5">
         {page <= 3
           ? [1, 2, 3, 4, 5].map((num, index) => (
@@ -57,7 +251,6 @@ function PaginationTable({ api }: { api: string }) {
                 childSetPage={childSetPage}
               ></PaginaionBtn>
             ))}
-        {}
       </div>
     </div>
   );

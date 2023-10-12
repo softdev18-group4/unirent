@@ -26,18 +26,32 @@ interface product {
     ramSize: number;
     storageSize: number;
   };
+  rentalOptions: {
+    id: string;
+    productId: string;
+    type: string;
+    priceRate: number;
+  }[];
+  reviews: {
+    rating: number;
+  }[];
 }
 //============================================================================================================
 function ProductList() {
   const [inputValue, setInputValue] = useState<string>("");
+  const [searchBy, setsearchBy] = useState<string>("name");
   const [productInfo, setProductInfo] = useState<product[]>([]);
   const [isLoading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
+  //pagination
   const getData = async (page: number) => {
     const query = await fetch(
-      "https://api-unirent.1tpp.dev/products/paginate/filter?page=" +
+      "https://api-unirent.1tpp.dev/products/?page=" +
         page +
-        "&perPage=6",
+        "&perPage=6&searchBy=" +
+        searchBy +
+        "&keyword=" +
+        inputValue,
       {
         method: "GET",
       }
@@ -45,42 +59,38 @@ function ProductList() {
     const response = await query.json();
     setLoading(false);
     setProductInfo(response);
-    console.log("this is page " + page);
+    //  console.log("this is page " + page);
   };
-  const childSetPage = (page: number) => {
-    setPage(page);
-    setLoading(true);
-  };
-  //======================================== data ===========================================
-  useEffect(() => {
-    if (inputValue == "") getData(page);
-  }, [page]);
-  //=========================================================================================
-  const searchHandler = useCallback(async () => {
-    if (inputValue != "") {
-      const query = await fetch(
-        "https://api-unirent.1tpp.dev/products/paginate/search?input=" +
-          inputValue,
-        {
-          method: "GET",
-        }
-      );
-      const response = await query.json();
-      setLoading(false);
-      setProductInfo(response);
-    } else {
-      getData(page);
+  const childSetPage = (setpage: number) => {
+    if (setpage != page) {
+      setPage(setpage);
+      setLoading(true);
     }
-  }, [inputValue, page]);
-
+  };
+  const setSearchBy = (keyword: string) => {
+    if (keyword != searchBy) {
+      setsearchBy(keyword);
+      setLoading(true);
+    }
+  };
+  // //initial fetch and if page change and no input get pagination
+  // useEffect(() => {
+  //   if (inputValue == "") getData(page);
+  // }, [page]);
+  //search if inputvalue change or page change and has input value
+  const searchHandler = useCallback(async () => {
+    getData(page);
+  }, [inputValue, searchBy, page]);
+  //if inputvalue change set page=1
   useEffect(() => {
-    setPage(1);
-  }, [inputValue]);
-
+    setLoading(true);
+    childSetPage(1);
+  }, [searchBy, inputValue]);
+  // check if inputvalue change every 300 millisec
   useEffect(() => {
     const timer = setTimeout(() => {
       searchHandler();
-    }, 500);
+    }, 300);
     return () => {
       clearTimeout(timer);
     };
@@ -89,8 +99,8 @@ function ProductList() {
   return (
     <div>
       <div className="py-8 flex items-center">
-        <FilterBtn></FilterBtn>
-        <div className="grow-[5] mx-8 h-0 flex items-center justify-center border-dashed border border-black"></div>
+        <FilterBtn nowSearch={searchBy} setSearchBy={setSearchBy}></FilterBtn>
+        <div className="grow-[5] mx-4 md:mx-8 h-0 flex items-center justify-center border-dashed border border-black"></div>
         <SearchBar
           inputValue={inputValue}
           setInputValue={setInputValue}
@@ -98,7 +108,7 @@ function ProductList() {
       </div>
       {isLoading ? (
         <div className="flex">
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-10 w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
             <LoadingCard></LoadingCard>
             <LoadingCard></LoadingCard>
             <LoadingCard></LoadingCard>
@@ -108,7 +118,7 @@ function ProductList() {
           </div>
         </div>
       ) : productInfo.length > 0 ? (
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-10 w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
           {productInfo
             .slice(0, 6)
             .map(
@@ -128,6 +138,8 @@ function ProductList() {
                     ramSize,
                     storageSize,
                   },
+                  rentalOptions,
+                  reviews,
                 },
                 index
               ) => (
@@ -147,6 +159,8 @@ function ProductList() {
                     ramSize,
                     storageSize,
                   }}
+                  rentalOptions={rentalOptions}
+                  reviews={reviews}
                 ></ProductListCard>
               )
             )}
