@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --theme-color1: #212a3e;
+  --theme-color2: coral;
+}
+.background {
+  background-color: #f1f6f9;
+}
+
+.theme-text-color1 {
+  color: var(--theme-color1);
+}
+.theme-bg-color1 {
+  background-color: var(--theme-color1);
+}
+.theme-text-color2 {
+  color: var(--theme-color2);
+}
+.theme-bg-color2 {
+  background-color: var(--theme-color2);
+}
+.main {
+  @apply bg-[#F1F6F9];
+}

@@ -1,0 +1,53 @@
+import { MouseEventHandler } from "react";
+import { product } from '@/redux/features/productSlice';
+export interface ProductState {
+  specifications: {
+    brand: string;
+    model: string;
+    processor: string;
+    graphicCard: string;
+    ramSize: number;
+    storageSize: number;
+  },
+  availableDays: {
+    startDate: string;
+    endDate: string;
+  },
+  id: string;
+  name: string;
+  description: string;
+  ownerId: string;
+  availability: boolean;
+  rentalOptions: RentalOption[],
+  src   : string[];
+}
+
+interface RentalOption {
+  id: string;
+  productId: string;
+  type: string; // Daily, Weekly, Monthly
+  priceRate : number;
+}
+
+export interface InitialState {
+  value: ProductState;
+}
+export interface CustomButtonProps {
+  title: string;
+  customBtn?: string;
+  containerStyle?: string;
+  handleClick?: MouseEventHandler<HTMLButtonElement>;
+}
+
+export interface StarProps {
+  rating: number;
+}
+
+export interface ProductSelectorProps {
+  title: string;
+  price: number;
+}
+
+export interface CardDetailProps {
+  detail: string
+}
