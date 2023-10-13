@@ -4,7 +4,7 @@ import FindYourParter from "./components/findYourPartner";
 import ProductList from "./components/productList";
 
 export const metadata: Metadata = {
-  title: "Recommend",
+  //title: "Recommend",
 };
 
 function Recommend() {
