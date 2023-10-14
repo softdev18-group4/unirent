@@ -23,13 +23,15 @@ function PaginationTable({ api }: { api: string }) {
   const [tableInfo, setTableInfo] = useState<tableData[]>([]);
   const [isLoading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const childSetPage = (page: number) => {
-    setPage(page);
-    setLoading(true);
+  const childSetPage = (setpage: number) => {
+    if (setpage != page) {
+      setPage(setpage);
+      setLoading(true);
+    }
   };
   //manully token
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTA3ZDczMzg4ZDdhYzlkMmFkNzFmYjUiLCJyb2xlIjoidXNlciIsImlhdCI6MTY5Njk1OTQwOCwiZXhwIjoxNjk3MDQ1ODA4fQ.zrkll4H4kIRcmw7cPW0EjGobuYXf7PRCaYe624b9vs0";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTA3ZDczMzg4ZDdhYzlkMmFkNzFmYjUiLCJyb2xlIjoidXNlciIsImlhdCI6MTY5NzI2MTYyNSwiZXhwIjoxNjk3MzQ4MDI1fQ.HI94R0Xu0QLHBIvAaW5j2QhK7nNQJ2HcjwF8M48KaLI";
   //fetch data
   const getData = async (page: number) => {
     if (api == "yourProduct") {
@@ -167,13 +169,18 @@ function PaginationTable({ api }: { api: string }) {
 
   //handle search
   const searchHandler = useCallback(async () => {
-    getData(page);
-  }, [inputValue, page]);
+    if (page != 1) childSetPage(1);
+    else {
+      setLoading(true);
+      getData(page);
+    }
+  }, [inputValue]);
   //if inputvalue change set page=1
   useEffect(() => {
-    setLoading(true);
-    childSetPage(1);
-  }, [inputValue]);
+    //setLoading(true);
+
+    getData(page);
+  }, [page]);
   // check if inputvalue change every 300 millisec
   useEffect(() => {
     const timer = setTimeout(() => {
