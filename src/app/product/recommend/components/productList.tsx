@@ -79,13 +79,16 @@ function ProductList() {
   // }, [page]);
   //search if inputvalue change or page change and has input value
   const searchHandler = useCallback(async () => {
-    getData(page);
-  }, [inputValue, searchBy, page]);
+    if (page != 1) childSetPage(1);
+    else {
+      setLoading(true);
+      getData(page);
+    }
+  }, [inputValue, searchBy]);
   //if inputvalue change set page=1
   useEffect(() => {
-    setLoading(true);
-    childSetPage(1);
-  }, [searchBy, inputValue]);
+    getData(page);
+  }, [page]);
   // check if inputvalue change every 300 millisec
   useEffect(() => {
     const timer = setTimeout(() => {
