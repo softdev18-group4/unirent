@@ -16,8 +16,8 @@ function CartCard({
   imgSrc: string;
   name: string;
   description: string;
-  period: string;
-  price: string;
+  period: number;
+  price: number;
   type: string;
   productId: string;
   isSelected: boolean;
@@ -39,8 +39,8 @@ function CartCard({
             <div
               className={
                 isSelected
-                  ? "w-6 h-6 rounded-full border-2 bg-[coral]"
-                  : "w-6 h-6 rounded-full border-2"
+                  ? "w-6 h-6 rounded-full border-2 bg-[coral] cursor-pointer"
+                  : "w-6 h-6 rounded-full border-2  cursor-pointer"
               }
               onClick={() => handleSelected(productId)}
             ></div>
@@ -81,6 +81,7 @@ function CartCard({
           className="text-slate-400 text-left bg-white truncate  flex items-center justify-start w-full h-24 lg:h-48"
         >
           {period}
+          {" วัน"}
         </Link>
       </td>
       <td className={isSelected ? "border-y-2 border-[coral]" : ""}>

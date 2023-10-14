@@ -9,10 +9,10 @@ function Navbar() {
       <nav>
         <div className="flex justify-center items-center lg:items-start py-4 flex-col gap-6 lg:gap-12 z-30">
           <div className="flex grow-[1] items-center justifiy-center uppercase pr-3 py-3 font-extrabold text-3xl">
-            <a href="/product/recommend" className="cursor-pointer flex">
+            <Link href="/product/recommend" className="cursor-pointer flex">
               <div className="text-[color:var(--theme-color2)]">uni</div>
               <div className="text-[color:var(--theme-color1)]">rent</div>
-            </a>
+            </Link>
           </div>
           <div className="flex w-full">
             <div className="grow-[1] flex items-center justify-evenly bg-[color:var(--theme-color1)] rounded-full font-medium px-3 py-2">

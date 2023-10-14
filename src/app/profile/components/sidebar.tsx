@@ -52,7 +52,8 @@ function Sidebar({
 
   const handleLogout = () => {
     //clear user data
-    push("/");
+    resetNavhead();
+    push("/auth/sign-in");
   };
   return (
     <div className="sticky top-0 z-40">
@@ -82,13 +83,14 @@ function Sidebar({
           id="unirent"
           className="flex justify-center items-center grow uppercase pr-3 py-3 font-extrabold text-3xl"
         >
-          <a
+          <Link
             className="flex justify-center items-center cursor-pointer pr-5"
             href="/product/recommend"
+            onClick={resetNavhead}
           >
             <div className="theme-text-color2">uni</div>
             <div className="theme-text-color1">rent</div>
-          </a>
+          </Link>
         </div>
       </div>
 
@@ -100,13 +102,14 @@ function Sidebar({
         <div className="flex justify-center h-full px-3 pt-10 py-4 overflow-y-auto bg-white">
           <ul className="space-y-3 font-medium">
             <li>
-              <a
+              <Link
                 className="flex cursor-pointer grow-[1] items-center justifiy-center uppercase pr-3 py-3 font-extrabold text-3xl"
                 href="/product/recommend"
+                onClick={resetNavhead}
               >
                 <div className="theme-text-color2">uni</div>
                 <div className="theme-text-color1">rent</div>
-              </a>
+              </Link>
             </li>
             <li>
               <Link

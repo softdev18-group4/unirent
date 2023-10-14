@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Star from "../Star";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 function ProductListCard({
   id,
   name,
@@ -70,7 +71,7 @@ function ProductListCard({
     getEndDate();
   }, []);
   return (
-    <a
+    <Link
       href={"/product/detail/" + id}
       className="cursor-pointer drop-shadow-lg bg-white rounded-xl"
     >
@@ -132,7 +133,7 @@ function ProductListCard({
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }
 export default ProductListCard;

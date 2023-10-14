@@ -3,13 +3,48 @@
 import Link from "next/link";
 import CartCard from "./components/cartCard";
 import TableHeader from "./components/tableHeader";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import {
+  addToCart,
+  removeFromCart,
+  selectProduct,
+} from "@/redux/features/cartSlice";
 
 function Cart() {
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        isSelected: true,
+        productid: "sadasdasdas",
+        imgSrc: "/product.png",
+        name: "notebook",
+        description: "test redux",
+        type: "Daily",
+        period: 8,
+        price: 1000,
+      })
+    );
+    dispatch(
+      addToCart({
+        isSelected: false,
+        productid: "asdsadasd",
+        imgSrc: "/product.png",
+        name: "notebook",
+        description: "test redux",
+        type: "Daily",
+        period: 8,
+        price: 1000,
+      })
+    );
+  };
   const handleSelected = async (productId: string) => {
-    //select cart
+    dispatch(selectProduct(productId));
   };
   const handleDelete = async (productId: string) => {
-    //delete cart
+    dispatch(removeFromCart(productId));
   };
   return (
     <div className="px-[5%]">
@@ -17,22 +52,36 @@ function Cart() {
         <table className="w-full border-separate border-spacing-y-4 text-xs md:text-sm lg:text-base table-fixed">
           <TableHeader></TableHeader>
 
-          {[1, 2, 3, 4].map((data, index) => (
-            <tbody key={index}>
-              <CartCard
-                imgSrc="/product.png"
-                name="noteboox"
-                description="test 123 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-                type="daily"
-                period="ุ8 วัน"
-                price="1000"
-                productId="{data.productId}"
-                isSelected={false}
-                handleSelected={handleSelected}
-                handleDelete={handleDelete}
-              ></CartCard>
+          {cartItems.length == 0 ? (
+            <tbody>
+              <tr>
+                <td>
+                  <div>ไม่มีสินค้าในตะกร้า</div>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
             </tbody>
-          ))}
+          ) : (
+            cartItems.map((data, index) => (
+              <tbody key={index}>
+                <CartCard
+                  imgSrc={data.imgSrc}
+                  name={data.name}
+                  description={data.description}
+                  type={data.type}
+                  period={data.period}
+                  price={data.price}
+                  productId={data.productid}
+                  isSelected={data.isSelected}
+                  handleSelected={handleSelected}
+                  handleDelete={handleDelete}
+                ></CartCard>
+              </tbody>
+            ))
+          )}
         </table>
       </div>
       <div className="sticky pb-16 bottom-0 h-48 lg:h-52 z-40 bg-[#f1f6f9] border-t-2 border-slate-200 flex justify-between items-end">
@@ -42,7 +91,10 @@ function Cart() {
         <div className="flex flex-col items-end gap-4">
           <div className="font-bold text-slate-600">Subtotal</div>
           <div className="font-bold text-slate-600">1800</div>
-          <button className="transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer text-white bg-[color:var(--theme-color2)] w-48 uppercase font-bold rounded-full h-12 flex justify-center items-center gap-2">
+          <button
+            onClick={handleAddToCart}
+            className="transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer text-white bg-[color:var(--theme-color2)] w-48 uppercase font-bold rounded-full h-12 flex justify-center items-center gap-2"
+          >
             ดำเนินการต่อ
           </button>
         </div>

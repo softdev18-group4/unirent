@@ -143,7 +143,7 @@ function SpecificationBox({
               required
             ></input>
           </div>
-          <div className="grow flex flex-col">
+          {/* <div className="grow flex flex-col">
             <div className="cursor-default font-semibold text-md lg:text-lg text-slate-700">
               Avaliable Storage
             </div>
@@ -157,7 +157,7 @@ function SpecificationBox({
               min="0"
               required
             ></input>
-          </div>
+          </div> */}
         </div>
         <div className="flex flex-col">
           <div className="cursor-default font-semibold text-md lg:text-lg text-slate-700">
@@ -174,13 +174,13 @@ function SpecificationBox({
             required
           ></input>
         </div>
-        <Dropdown
+        {/* <Dropdown
           name={operatingSystemName}
           value={operatingSystemValue}
           title="Operating System"
           dropdownList={[operatingSystemValue, "MacOS", "Linux"]}
           handleInput={handleInput}
-        ></Dropdown>
+        ></Dropdown> */}
       </div>
     </div>
   );

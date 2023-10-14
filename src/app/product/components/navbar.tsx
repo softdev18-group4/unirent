@@ -1,10 +1,15 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { push } = useRouter();
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state: RootState) => state.cart.items);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -19,10 +24,10 @@ function Navbar() {
         {/* >md size  */}
         <div className="hidden md:flex justify-between items-center py-4">
           <div className="flex grow-[1] items-center justifiy-center uppercase pr-3 py-3 font-extrabold text-3xl">
-            <a href="/product/recommend" className="cursor-pointer flex">
+            <Link href="/product/recommend" className="cursor-pointer flex">
               <div className="theme-text-color2">uni</div>
               <div className="theme-text-color1">rent</div>
-            </a>
+            </Link>
           </div>
 
           <div className="grow-[3] flex items-center justify-evenly theme-bg-color1 rounded-full font-medium px-3 py-2">
@@ -33,33 +38,43 @@ function Navbar() {
               ["Rents", "/product/recommend"],
               ["FAQ", "/product/recommend"],
             ].map(([title, url], index) => (
-              <a
+              <Link
                 key={index}
                 href={url}
                 className="grow rounded-full px-1 py-1 text-white text-center font-thin hover:bg-[color:var(--theme-color2)] hover:font-normal"
               >
                 {title}
-              </a>
+              </Link>
             ))}
           </div>
 
           <div className="grow-[1] flex items-center pl-3 py-3 font-medium justify-end ">
             {/* computer icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              onClick={() => push("/payment/cart")}
-              className="cursor-pointer rounded-full w-12 h-12 fill-white theme-bg-color1 p-3 mx-2 hover:bg-[color:var(--theme-color2)]"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
-              />
-            </svg>
+            <div onClick={() => push("/payment/cart")} className="relative">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="cursor-pointer rounded-full w-12 h-12 fill-white theme-bg-color1 p-3 mx-2 hover:bg-[color:var(--theme-color2)]"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
+                />
+              </svg>
+              {cartItems.length != 0 && (
+                <span className="absolute -top-2 right-0 flex w-6 h-6 bg-[color:var(--theme-color2)] text-white rounded-full justify-center items-center">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[color:var(--theme-color2)] opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-[color:var(--theme-color2)] justify-center items-center">
+                    {cartItems.length}
+                  </span>
+                </span>
+              )}
+            </div>
+
             {/* person icon */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -118,13 +133,13 @@ function Navbar() {
                         ["Profile", "/profile/dashboard"],
                       ].map(([title, url], index) => (
                         <li key={index}>
-                          <a
+                          <Link
                             href={url}
                             className="block rounded-lg px-1 py-1 text-white text-center font-thin hover:bg-[color:var(--theme-color2)] hover:font-normal"
                             onClick={closeDropdown}
                           >
                             {title}
-                          </a>
+                          </Link>
                         </li>
                       ))}
                     </ul>
@@ -134,28 +149,37 @@ function Navbar() {
             </div>
           </div>
           <div className="grow-[3] flex justify-center items-center cursor-default uppercase pl-3 py-3 font-extrabold text-3xl">
-            <a href="/product/recommend" className="cursor-pointer flex">
+            <Link href="/product/recommend" className="cursor-pointer flex">
               <div className="theme-text-color2">uni</div>
               <div className="theme-text-color1">rent</div>
-            </a>
+            </Link>
           </div>
           <div className="grow-[1] flex items-center pl-3 py-3 font-medium justify-end ">
             {/* computer icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              onClick={() => push("/payment/cart")}
-              className="cursor-pointer rounded-full w-12 h-12 fill-white theme-bg-color1 p-3 mx-2 hover:bg-[color:var(--theme-color2)]"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
-              />
-            </svg>
+            <div onClick={() => push("/payment/cart")} className="relative">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="cursor-pointer rounded-full w-12 h-12 fill-white theme-bg-color1 p-3 mx-2 hover:bg-[color:var(--theme-color2)]"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
+                />
+              </svg>
+              {cartItems.length != 0 && (
+                <span className="absolute -top-2 right-0 flex w-6 h-6 bg-[color:var(--theme-color2)] text-white rounded-full justify-center items-center">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[color:var(--theme-color2)] opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-[color:var(--theme-color2)] justify-center items-center">
+                    {cartItems.length}
+                  </span>
+                </span>
+              )}
+            </div>
           </div>
         </div>
       </nav>

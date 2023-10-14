@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import FindYourParterCard from "./cards/findYourPartnerCard";
+import Link from "next/link";
 //============================================================Data===========================================================================
 interface partner {
   id: number;
@@ -38,9 +39,9 @@ function FindYourParter() {
     <div>
       <div className="flex font-extrabold py-3 justify-between">
         <div className="cursor-default">ค้นหาคู่ค้าของคุณ</div>
-        <a className="theme-text-color2" href="#">
+        <Link className="theme-text-color2" href="#">
           ดูเพิ่มเติม
-        </a>
+        </Link>
       </div>
 
       <div className="flex gap-x-5">
