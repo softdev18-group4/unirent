@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import PaginationTable from "../components/paginationTable";
 
 export const metadata: Metadata = {
-  title: "Your Orders",
+  //title: "Your Orders",
 };
 
 function OrdersPage() {

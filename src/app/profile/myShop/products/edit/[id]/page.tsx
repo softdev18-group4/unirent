@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import From from "./components/form";
 export const metadata: Metadata = {
-  title: "Add Product",
+  // title: "Add Product",
 };
 
 function AddProduct({ params }: { params: { id: string } }) {

@@ -23,7 +23,7 @@ function ResetCode() {
           Reset Code is in your email
         </div>
         <div className="flex flex-col gap-2">
-          <label htmlFor="email" className="font-bold uppercase">
+          <label htmlFor="reset" className="font-bold uppercase">
             reset code
           </label>
           <input
