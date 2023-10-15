@@ -5,6 +5,13 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      - PORT=3000
+      - PORT
+      - API_URL
+      - NEXTAUTH_URL
+      - NEXTAUTH_SECRET
+      - GOOGLE_CLIENT_ID
+      - GOOGLE_CLIENT_SECRET
+      - NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
     ports:
-      - "3000:3000"
+      - "${PORT}:${PORT}"
+    command: ["node", "server.js"]
