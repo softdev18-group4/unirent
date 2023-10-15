@@ -7,6 +7,9 @@ import SearchBar from "./bars/searchBar";
 import { use, useCallback, useEffect, useState } from "react";
 import { product } from "@/redux/features/productSlice";
 import LoadingCard from "./cards/loadingCard";
+
+import { API_URL } from "@/app/config";
+
 //============================================================Data===========================================================================
 interface product {
   id: string;
@@ -46,12 +49,7 @@ function ProductList() {
   //pagination
   const getData = async (page: number) => {
     const query = await fetch(
-      "https://api-unirent.1tpp.dev/products/?page=" +
-        page +
-        "&perPage=6&searchBy=" +
-        searchBy +
-        "&keyword=" +
-        inputValue,
+      `${API_URL}/products/?page=${page}&perPage=6&searchBy=${searchBy}&keyword=${inputValue}`,
       {
         method: "GET",
       }
@@ -79,13 +77,16 @@ function ProductList() {
   // }, [page]);
   //search if inputvalue change or page change and has input value
   const searchHandler = useCallback(async () => {
-    getData(page);
-  }, [inputValue, searchBy, page]);
+    if (page != 1) childSetPage(1);
+    else {
+      setLoading(true);
+      getData(page);
+    }
+  }, [inputValue, searchBy]);
   //if inputvalue change set page=1
   useEffect(() => {
-    setLoading(true);
-    childSetPage(1);
-  }, [searchBy, inputValue]);
+    getData(page);
+  }, [page]);
   // check if inputvalue change every 300 millisec
   useEffect(() => {
     const timer = setTimeout(() => {

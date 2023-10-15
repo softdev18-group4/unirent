@@ -7,6 +7,7 @@ import PeriodBox from "./periodBox";
 import PictureBox from "./pictureBox";
 import SpecificationBox from "./specificationBox";
 import { useRouter } from "next/navigation";
+import { API_URL } from "@/app/config";
 
 function From() {
   const { push } = useRouter();
@@ -112,7 +113,7 @@ function From() {
         type: "Monthly",
         priceRate: Number(formData.monthPrice),
       });
-    const query = await fetch("https://api-unirent.1tpp.dev/products", {
+    const query = await fetch(`${API_URL}/products`, {
       method: "POST",
       headers: {
         Accept: "application/json",
