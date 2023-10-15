@@ -17,8 +17,8 @@ function LocationBox({
   const [selectedCoordinates, setSelectedCoordinates] = useState<
     [number, number]
   >([13.7291297, 100.7756406]);
-  const ReverseGeocoding = () => {
-    const url = `https://nominatim.openstreetmap.org/reverse?lat=${selectedCoordinates[0]}&lon=${selectedCoordinates[1]}&format=json`;
+  const ReverseGeocoding = ([lat, lng]: [number, number]) => {
+    const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`;
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
@@ -30,7 +30,7 @@ function LocationBox({
   const setCordinate = ([lat, lng]: [number, number]) => {
     setSelectedCoordinates([lat, lng]);
     // console.log(lat, lng);
-    ReverseGeocoding();
+    ReverseGeocoding([lat, lng]);
     handleInput(address, "location");
     toggleOpen();
   };

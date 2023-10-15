@@ -123,6 +123,7 @@ function From() {
       body: JSON.stringify({
         name: formData.name,
         description: formData.description,
+        location: formData.location,
         specifications: {
           brand: formData.brand,
           model: formData.model,
