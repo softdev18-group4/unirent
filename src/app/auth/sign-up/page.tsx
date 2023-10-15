@@ -46,7 +46,7 @@ function Signup() {
         </div>
         <div className="flex font-bold uppercase gap-2">
           already member?
-          <Link href="/" className="font-bold uppercase text-[coral]">
+          <Link href="/auth/sign-in" className="font-bold uppercase text-[coral]">
             sign in
           </Link>
         </div>

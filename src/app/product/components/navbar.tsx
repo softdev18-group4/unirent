@@ -1,8 +1,10 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { push } = useRouter();
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -49,6 +51,7 @@ function Navbar() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
+              onClick={() => push("/payment/cart")}
               className="cursor-pointer rounded-full w-12 h-12 fill-white theme-bg-color1 p-3 mx-2 hover:bg-[color:var(--theme-color2)]"
             >
               <path
@@ -58,22 +61,21 @@ function Navbar() {
               />
             </svg>
             {/* person icon */}
-            <a href="/profile/dashboard">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="cursor-pointer rounded-full w-28 h-12 fill-white theme-bg-color1 p-3 mx-2 hover:bg-[color:var(--theme-color2)]"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-                />
-              </svg>
-            </a>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              onClick={() => push("/profile/dashboard")}
+              className="cursor-pointer rounded-full w-28 h-12 fill-white theme-bg-color1 p-3 mx-2 hover:bg-[color:var(--theme-color2)]"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+              />
+            </svg>
           </div>
         </div>
         {/* <md size  */}
@@ -112,7 +114,7 @@ function Navbar() {
                         ["Customers", "/product/recommend"],
                         ["Rents", "/product/recommend"],
                         ["FAQ", "/product/recommend"],
-                        ["Cart", "/product/recommend"],
+                        ["Cart", "/payment/cart"],
                         ["Profile", "/profile/dashboard"],
                       ].map(([title, url], index) => (
                         <li key={index}>
@@ -145,6 +147,7 @@ function Navbar() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
+              onClick={() => push("/payment/cart")}
               className="cursor-pointer rounded-full w-12 h-12 fill-white theme-bg-color1 p-3 mx-2 hover:bg-[color:var(--theme-color2)]"
             >
               <path
