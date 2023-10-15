@@ -16,7 +16,6 @@ function ProductCard({
   productId: string;
 }) {
   return (
-    //<Link href={"/profile/myShop/products/edit/" + productId}>
     <tr className="cursor-default w-full h-20 bg-white font-semibold">
       <td className="rounded-l-2xl bg-white">
         <Link

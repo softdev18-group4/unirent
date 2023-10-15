@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import CartCard from "./components/cartCard";
-import TableHeader from "./components/tableHeader";
+import CartCard from "./components/CartCard";
+import TableHeader from "./components/TableHeader";
 
 function Cart() {
   const handleSelected = async (productId: string) => {
@@ -13,7 +13,7 @@ function Cart() {
   };
   return (
     <div className="px-[5%]">
-      <div className="relative overflow-x-auto mt-4">
+      <div className="relative overflow-x-auto mt-4 min-">
         <table className="w-full border-separate border-spacing-y-4 text-xs md:text-sm lg:text-base table-fixed">
           <TableHeader></TableHeader>
 
@@ -35,7 +35,7 @@ function Cart() {
           ))}
         </table>
       </div>
-      <div className="sticky pb-16 bottom-0 h-48 lg:h-52 z-40 bg-[#f1f6f9] border-t-2 border-slate-200 flex justify-between items-end">
+      <div className="sticky pb-8 bottom-0 h-40 lg:h-40 lg:pb-4 z-40 bg-[#f1f6f9] border-t-2 border-slate-200 flex justify-between items-end">
         <Link href="/product/recommend" className="font-bold text-slate-400">
           &lt; Continue Shopping
         </Link>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Explore from "./components/explore";
-import FindYourParter from "./components/findYourPartner";
-import ProductList from "./components/productList";
+import Explore from "./components/Explore";
+import FindYourParter from "./components/FindYourPartner";
+import ProductList from "./components/ProductList";
 
 export const metadata: Metadata = {
   //title: "Recommend",

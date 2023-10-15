@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 
-import LocationBox from "../../../components/locationBox";
-import PeriodBox from "../../../components/periodBox";
-import PictureBox from "../../../components/pictureBox";
-import SpecificationBox from "../../../components/specificationBox";
+import LocationBox from "../../../components/LocationBox";
+import PeriodBox from "../../../components/PeriodBox";
+import PictureBox from "../../../components/PictureBox";
+import SpecificationBox from "../../../components/SpecificationBox";
 import { useRouter } from "next/navigation";
-import DescriptionBox from "../../../components/descriptionBox";
+import DescriptionBox from "../../../components/DescriptionBox";
 import { API_HOST } from "@/app/config";
 
 function From({ productId }: { productId: string }) {
@@ -191,7 +191,7 @@ function From({ productId }: { productId: string }) {
         errorUpdate.classList.add("flex");
       }
     } else {
-      push("/profile/myShop/products");
+      push("/profile/my-shop/products");
     }
   };
   return (
@@ -258,7 +258,7 @@ function From({ productId }: { productId: string }) {
             id="updateLoadingSvg"
           >
             <g fill="none" fill-rule="evenodd">
-              <g transform="translate(2 1)" stroke="#FFF" stroke-width="1.5">
+              <g transform="translate(2 1)" stroke="#FFF" strokeWidth="1.5">
                 <circle
                   cx="42.601"
                   cy="11.462"

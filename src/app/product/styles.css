@@ -23,7 +23,7 @@
   background-color: var(--theme-color2);
 }
 * {
-  @apply font-['Inter'];
+  @apply font-inter;
 }
 
 /* Main */
@@ -239,7 +239,7 @@
   text-slate-600
   text-lg
   font-normal
-  font-['Inter']
+  font-inter
   capitalize
   justify-center;
 }

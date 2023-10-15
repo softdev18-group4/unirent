@@ -1,4 +1,4 @@
-import PeriodInput from "./periodInput";
+import PeriodInput from "./PeriodInput";
 import Datepicker from "react-tailwindcss-datepicker";
 function PeriodBox({
   availableDaysName,

@@ -14,7 +14,7 @@ function Navbar() {
     setIsOpen(false);
   };
   return (
-    <div className="px-[5%] sticky top-0 z-50 bg-[#f1f6f9]">
+    <div className="px-[5%] sticky top-0 z-50 bg-[#f1f6f9] font-inter">
       <nav>
         {/* >md size  */}
         <div className="hidden md:flex justify-between items-center py-4">
@@ -25,7 +25,7 @@ function Navbar() {
             </a>
           </div>
 
-          <div className="grow-[3] flex items-center justify-evenly theme-bg-color1 rounded-full font-medium px-3 py-2">
+          <div className="grow-[3] flex items-center justify-evenly theme-bg-color1 rounded-full font-medium font-inter px-3 py-2">
             {[
               ["Recommend", "/product/recommend"],
               ["Method", "/product/recommend"],
@@ -36,7 +36,7 @@ function Navbar() {
               <a
                 key={index}
                 href={url}
-                className="grow rounded-full px-1 py-1 text-white text-center font-thin hover:bg-[color:var(--theme-color2)] hover:font-normal"
+                className="grow rounded-full px-1 py-1 text-white text-center font-inter font-thin hover:bg-[color:var(--theme-color2)] hover:font-normal"
               >
                 {title}
               </a>

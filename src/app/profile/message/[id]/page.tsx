@@ -1,5 +1,5 @@
-import Chatbox from "./components/chatbox";
-import MessageEnter from "./components/messageEnter";
+import Chatbox from "./components/Chatbox";
+import MessageEnter from "./components/MessageEnter";
 
 function MessagePage() {
   return (

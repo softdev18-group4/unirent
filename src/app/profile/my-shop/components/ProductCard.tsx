@@ -25,7 +25,7 @@ function ProductCard({
   handleDelete: (productId: string) => void;
 }) {
   return (
-    //<Link href={"/profile/myShop/products/edit/" + productId}>
+    //<Link href={"/profile/my-shop/products/edit/" + productId}>
     <tr className="cursor-default w-full h-20 bg-white font-semibold">
       <td className="rounded-l-2xl bg-white">
         <div className="flex items-center justify-left truncate">
@@ -52,7 +52,7 @@ function ProductCard({
               </svg>
             </div>
             <Link
-              href={"/profile/myShop/products/edit/" + productId}
+              href={"/profile/my-shop/products/edit/" + productId}
               className="flex gap-2 items-center h-[80px] w-full truncate"
               style={
                 canDelete
@@ -76,7 +76,7 @@ function ProductCard({
 
       <td>
         <Link
-          href={"/profile/myShop/products/edit/" + productId}
+          href={"/profile/my-shop/products/edit/" + productId}
           className={
             status == "ว่าง" || status == "กำลังดำเนินการ"
               ? "text-yellow-500 text-left bg-white truncate flex items-center justify-start w-full h-[80px]"
@@ -91,7 +91,7 @@ function ProductCard({
       </td>
       <td>
         <Link
-          href={"/profile/myShop/products/edit/" + productId}
+          href={"/profile/my-shop/products/edit/" + productId}
           className="text-slate-400 text-left bg-white truncate  flex items-center justify-start w-full h-[80px]"
           style={
             canDelete ? {} : { pointerEvents: "none", textDecoration: "none" }
@@ -102,7 +102,7 @@ function ProductCard({
       </td>
       <td>
         <Link
-          href={"/profile/myShop/products/edit/" + productId}
+          href={"/profile/my-shop/products/edit/" + productId}
           className="bg-white text-left truncate  flex items-center justify-start w-full h-[80px]"
           style={
             canDelete ? {} : { pointerEvents: "none", textDecoration: "none" }
@@ -113,7 +113,7 @@ function ProductCard({
       </td>
       <td>
         <Link
-          href={"/profile/myShop/products/edit/" + productId}
+          href={"/profile/my-shop/products/edit/" + productId}
           className="text-slate-400 text-left bg-white truncate  flex items-center justify-start w-full h-[80px]"
           style={
             canDelete ? {} : { pointerEvents: "none", textDecoration: "none" }
@@ -124,7 +124,7 @@ function ProductCard({
       </td>
       <td className="rounded-r-2xl text-left bg-white truncate">
         <Link
-          href={"/profile/myShop/products/edit/" + productId}
+          href={"/profile/my-shop/products/edit/" + productId}
           className="rounded-r-2xl text-left bg-white truncate flex items-center justify-start w-full h-[80px]"
           style={
             canDelete ? {} : { pointerEvents: "none", textDecoration: "none" }
