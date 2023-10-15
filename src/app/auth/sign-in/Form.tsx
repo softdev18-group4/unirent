@@ -30,7 +30,7 @@ const Form: React.FC = () => {
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") ?? "/reservation";
+  const callbackUrl = searchParams.get("callbackUrl") ?? "/";
 
   const onSubmit: SubmitHandler<LoginSchema> = async (data, e) => {
     e?.preventDefault();
@@ -135,7 +135,10 @@ const Form: React.FC = () => {
         <line x1="290" y1="10.5" x2="504" y2="10.5" stroke="#394867" />
       </svg>
 
-      <button className="transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer text-[#212A3E] bg-white md:w-[30rem] uppercase font-bold rounded-full w-96 h-12 flex justify-center items-center gap-2">
+      <button
+        onClick={() => signIn("google", { callbackUrl })}
+        className="transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer text-[#212A3E] bg-white md:w-[30rem] uppercase font-bold rounded-full w-96 h-12 flex justify-center items-center gap-2"
+      >
         <svg
           width="27"
           height="25"

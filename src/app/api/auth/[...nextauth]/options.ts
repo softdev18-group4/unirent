@@ -1,6 +1,6 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions, Profile } from "next-auth";
 
 export const options: NextAuthOptions = {
   providers: [
@@ -23,12 +23,23 @@ export const options: NextAuthOptions = {
           },
         });
         const response = await res.json();
-        // const accessToken = res.headers.get("authorization");
-        const accessToken = response?.access_token;
+        const accessToken = res.headers.get("Authorization");
         if (res.ok && response) {
-          return { ...response, accessToken };
+          const res = await fetch(`${process.env.API_URL}/auth/profile`, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+          const profile = (await res.json()) as Profile; // Update the profile type
+
+          return { ...response, data: profile, accessToken };
         } else {
-          return null;
+          return {
+            ...response,
+            data: null,
+            accessToken: null,
+          };
         }
       },
     }),
@@ -38,6 +49,24 @@ export const options: NextAuthOptions = {
     }),
   ],
   callbacks: {
+    async signIn({ account, profile }) {
+      if (account?.provider === "google") {
+
+        // verify a user's with google account jwt token
+        const res = await fetch(
+          `https://oauth2.googleapis.com/tokeninfo?id_token=${account?.idToken}`
+        );
+        const googleAccount = await res.json();
+        if (!res.ok || !googleAccount) {
+          return false;
+        }
+
+        return (
+          profile?.email_verified && profile.email?.endsWith("@kmitl.ac.th")
+        ); 
+      }
+      return true; // Do different verification for other providers that don't have `email_verified`
+    },
     async jwt({ token, user }) {
       return { ...token, ...user };
     },

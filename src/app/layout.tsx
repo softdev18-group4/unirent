@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Providers } from "@/redux/provider";
+import Providers from "@/redux/provider";
+import AuthProvider from "./context/auth";
 
 export const metadata: Metadata = {
   title: "Unirent",
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="main ">
-        <Providers>{children}</Providers>
+        <AuthProvider>
+          <Providers>{children}</Providers>
+        </AuthProvider>
       </body>
     </html>
   );
