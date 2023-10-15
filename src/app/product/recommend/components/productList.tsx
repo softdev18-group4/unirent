@@ -7,6 +7,9 @@ import SearchBar from "./bars/searchBar";
 import { use, useCallback, useEffect, useState } from "react";
 import { product } from "@/redux/features/productSlice";
 import LoadingCard from "./cards/loadingCard";
+
+import { API_URL } from "@/app/config";
+
 //============================================================Data===========================================================================
 interface product {
   id: string;
@@ -46,12 +49,7 @@ function ProductList() {
   //pagination
   const getData = async (page: number) => {
     const query = await fetch(
-      "https://api-unirent.1tpp.dev/products/?page=" +
-        page +
-        "&perPage=6&searchBy=" +
-        searchBy +
-        "&keyword=" +
-        inputValue,
+      `${API_URL}/products/?page=${page}&perPage=6&searchBy=${searchBy}&keyword=${inputValue}`,
       {
         method: "GET",
       }

@@ -2,6 +2,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import type { NextAuthOptions, Profile } from "next-auth";
 
+import { API_URL } from "@/app/config";
+
 export const options: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -12,20 +14,20 @@ export const options: NextAuthOptions = {
         password: { label: "password", type: "password" },
       },
       async authorize(credentials) {
-        const res = await fetch(`${process.env.API_URL}/auth/sign-in`, {
+        const res = await fetch(`${API_URL}/auth/sign-in`, {
           method: "POST",
           body: JSON.stringify({
             email: credentials?.email,
             password: credentials?.password,
           }),
           headers: {
-            "Content-Type": "application/json", // Set the content type header
+            "Content-Type": "application/json",
           },
         });
         const response = await res.json();
         const accessToken = res.headers.get("Authorization");
         if (res.ok && response) {
-          const res = await fetch(`${process.env.API_URL}/auth/profile`, {
+          const res = await fetch(`${API_URL}/auth/profile`, {
             method: "GET",
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -51,7 +53,6 @@ export const options: NextAuthOptions = {
   callbacks: {
     async signIn({ account, profile }) {
       if (account?.provider === "google") {
-
         // verify a user's with google account jwt token
         const res = await fetch(
           `https://oauth2.googleapis.com/tokeninfo?id_token=${account?.idToken}`
@@ -63,7 +64,7 @@ export const options: NextAuthOptions = {
 
         return (
           profile?.email_verified && profile.email?.endsWith("@kmitl.ac.th")
-        ); 
+        );
       }
       return true; // Do different verification for other providers that don't have `email_verified`
     },

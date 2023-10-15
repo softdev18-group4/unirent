@@ -8,6 +8,7 @@ import PictureBox from "../../../components/pictureBox";
 import SpecificationBox from "../../../components/specificationBox";
 import { useRouter } from "next/navigation";
 import DescriptionBox from "../../../components/descriptionBox";
+import { API_URL } from "@/app/config";
 
 function From({ productId }: { productId: string }) {
   const { push } = useRouter();
@@ -59,12 +60,9 @@ function From({ productId }: { productId: string }) {
   }, []);
   //get product data
   const getProduct = async () => {
-    const query = await fetch(
-      "https://api-unirent.1tpp.dev/products/" + productId,
-      {
-        method: "GET",
-      }
-    );
+    const query = await fetch(`${API_URL}/products/${productId}`, {
+      method: "GET",
+    });
     const response = await query.json();
     //  console.log(response);
     if (response.statusCode == 500) router.back();
@@ -162,31 +160,28 @@ function From({ productId }: { productId: string }) {
       priceRate: Number(formData.monthPrice),
       isSelected: formData.monthPrice != "" ? true : false,
     });
-    const query = await fetch(
-      "https://api-unirent.1tpp.dev/products/" + productId,
-      {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
+    const query = await fetch(`${API_URL}/products/${productId}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify({
+        name: formData.name,
+        description: formData.description,
+        specifications: {
+          brand: formData.brand,
+          model: formData.model,
+          processor: formData.processor,
+          graphicCard: formData.graphicCard,
+          ramSize: Number(formData.RAM),
+          storageSize: Number(formData.avaliableStorage),
         },
-        body: JSON.stringify({
-          name: formData.name,
-          description: formData.description,
-          specifications: {
-            brand: formData.brand,
-            model: formData.model,
-            processor: formData.processor,
-            graphicCard: formData.graphicCard,
-            ramSize: Number(formData.RAM),
-            storageSize: Number(formData.avaliableStorage),
-          },
-          availableDays: formData.availableDays,
-          rentalOptions: rentalOptions,
-        }),
-      }
-    );
+        availableDays: formData.availableDays,
+        rentalOptions: rentalOptions,
+      }),
+    });
     const response = await query.json();
     // console.log(response);
     if (response.statusCode == 400) {
