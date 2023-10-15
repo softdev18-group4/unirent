@@ -6,11 +6,11 @@ services:
       dockerfile: Dockerfile
     environment:
       - PORT
-      - API_URL
       - NEXTAUTH_URL
       - NEXTAUTH_SECRET
       - GOOGLE_CLIENT_ID
       - GOOGLE_CLIENT_SECRET
+      - NEXT_PUBLIC_API_HOST
       - NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
     ports:
       - "${PORT}:${PORT}"

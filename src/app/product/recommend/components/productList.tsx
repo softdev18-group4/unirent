@@ -8,7 +8,7 @@ import { use, useCallback, useEffect, useState } from "react";
 import { product } from "@/redux/features/productSlice";
 import LoadingCard from "./cards/loadingCard";
 
-import { API_URL } from "@/app/config";
+import { API_HOST } from "@/app/config";
 
 //============================================================Data===========================================================================
 interface product {
@@ -49,7 +49,7 @@ function ProductList() {
   //pagination
   const getData = async (page: number) => {
     const query = await fetch(
-      `${API_URL}/products/?page=${page}&perPage=6&searchBy=${searchBy}&keyword=${inputValue}`,
+      `${API_HOST}/products/?page=${page}&perPage=6&searchBy=${searchBy}&keyword=${inputValue}`,
       {
         method: "GET",
       }

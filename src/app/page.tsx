@@ -1,6 +1,7 @@
+import SignOutButton from "@/components/SignOutButton";
+
 import { getServerSession } from "next-auth/next";
 import { options } from "@/app/api/auth/[...nextauth]/options";
-import SignOutButton from "@/components/SignOutButton";
 
 const Page = async () => {
   const session = await getServerSession(options);
@@ -9,7 +10,8 @@ const Page = async () => {
     <div className="main_container">
       {session && <SignOutButton />}
 
-      {JSON.stringify(session, null, 2)}
+      {session && <p>Token: {session.user.accessToken}</p>}
+      {session && <p>Profile {JSON.stringify(session.user.data)}</p>}
     </div>
   );
 };
