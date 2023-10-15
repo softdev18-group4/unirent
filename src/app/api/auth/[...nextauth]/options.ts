@@ -55,7 +55,7 @@ export const options: NextAuthOptions = {
       if (account?.provider === "google") {
         console.log(account);
         // verify google account token id
-        const res = await fetch(`{API_URL}/auth/google`, {
+        const res = await fetch(`${API_URL}/auth/google`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
