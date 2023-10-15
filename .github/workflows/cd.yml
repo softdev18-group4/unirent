@@ -2,9 +2,9 @@ name: Deploy to Self-Hosted
 
 on:
   push:
-    branches: ["main", "dev"]
+    branches: ["main"]
   pull_request:
-    branches: ["main", "dev"]
+    branches: ["main"]
 
 env:
   PORT: ${{ secrets.PORT }}
