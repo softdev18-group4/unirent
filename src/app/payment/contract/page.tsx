@@ -3,7 +3,7 @@ import Link from "next/link";
 function Contract() {
   return (
     <div className="px-[5%]">
-      <div className="flex flex-col lg:w-[60%] gap-2">
+      <div className="flex flex-col lg:w-[60%] gap-2 ">
         <div className="font-bold text-slate-400">Pick up point</div>
         <div className="w-full h-0 border boerder-slate-400"></div>
         <div className="w-full flex items-center gap-6 p-6">
@@ -79,7 +79,7 @@ function Contract() {
       </div>
 
       {/* bottom */}
-      <div className="sticky pb-8 bottom-0 h-24 z-40 bg-[#f1f6f9] lg:w-[60%] flex justify-between items-end">
+      <div className="sticky pb-8 bottom-0 h-24 z-40 bg-[#f1f6f9] lg:w-2/3 lg:pr-[5%] flex justify-between items-end ">
         <Link href="/payment/cart" className="font-bold text-slate-400">
           &lt; Return To Cart
         </Link>
