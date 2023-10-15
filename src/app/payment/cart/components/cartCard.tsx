@@ -25,7 +25,7 @@ function CartCard({
   handleDelete: (productId: string) => void;
 }) {
   return (
-    //<Link href={"/profile/myShop/products/edit/" + productId}>
+    //<Link href={"/profile/my-shop/products/edit/" + productId}>
     <tr className="cursor-default w-full h-24 lg:h-48 bg-white font-semibold ">
       <td
         className={

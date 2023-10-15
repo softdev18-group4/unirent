@@ -15,8 +15,8 @@ export default function RootLayout({
     <div>
       <Sidebar
         dashboard="/profile/dashboard"
-        product="/profile/myShop/products"
-        orders="/profile/myShop/orders"
+        product="/profile/my-shop/products"
+        orders="/profile/my-shop/orders"
         message="/profile/message/0"
         history="/profile/history"
         reviews="/profile/reviews"

@@ -5,7 +5,7 @@ import AuthProvider from "./context/auth";
 import { Kanit } from "next/font/google";
 
 const kanit = Kanit({
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext", "thai"],
   weight: "400",
 });
 

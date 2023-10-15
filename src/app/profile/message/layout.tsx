@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import MessageSideBar from "./components/messageSideBar";
+import MessageSideBar from "./components/MessageSideBar";
 
 export const metadata: Metadata = {
   title: "Message",

@@ -1,5 +1,5 @@
-import Navbar from "./components/navbar";
-import Sidebar from "./components/sidebar";
+import Navbar from "./components/Navigation";
+import Sidebar from "./components/Sidebar";
 import "./styles.css";
 
 export default function RootLayout({
