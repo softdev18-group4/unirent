@@ -8,7 +8,7 @@ import PictureBox from "../../../components/pictureBox";
 import SpecificationBox from "../../../components/specificationBox";
 import { useRouter } from "next/navigation";
 import DescriptionBox from "../../../components/descriptionBox";
-import { API_URL } from "@/app/config";
+import { API_HOST } from "@/app/config";
 
 function From({ productId }: { productId: string }) {
   const { push } = useRouter();
@@ -60,7 +60,7 @@ function From({ productId }: { productId: string }) {
   }, []);
   //get product data
   const getProduct = async () => {
-    const query = await fetch(`${API_URL}/products/${productId}`, {
+    const query = await fetch(`${API_HOST}/products/${productId}`, {
       method: "GET",
     });
     const response = await query.json();
@@ -160,7 +160,7 @@ function From({ productId }: { productId: string }) {
       priceRate: Number(formData.monthPrice),
       isSelected: formData.monthPrice != "" ? true : false,
     });
-    const query = await fetch(`${API_URL}/products/${productId}`, {
+    const query = await fetch(`${API_HOST}/products/${productId}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",

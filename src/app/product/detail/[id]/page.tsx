@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useEffect } from "react";
 import { reset, updateProduct } from "@/redux/features/productSlice";
 import {imageList} from "@/constants"
-import { API_URL } from "@/app/config";
+import { API_HOST } from "@/app/config";
 
 const Detail = ({ params }: { params: { id: string } }) => {
   const dispatch = useAppDispatch();
@@ -18,7 +18,7 @@ const Detail = ({ params }: { params: { id: string } }) => {
   
   const getProduct = async () => {
     const res = await fetch(
-      `${API_URL}/products/${params.id}`
+      `${API_HOST}/products/${params.id}`
     );
     const product = await res.json();
     product.src = imageList

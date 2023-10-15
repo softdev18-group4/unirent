@@ -1,15 +1,14 @@
 name: Deploy to Self-Hosted
 
 on:
-  workflow_run:
-    workflows: [Build and Test]
-    branches: ["main"]
-    types:
-      - completed
+  push:
+    branches: ["main", "dev"]
+  pull_request:
+    branches: ["main", "dev"]
 
 env:
   PORT: ${{ secrets.PORT }}
-  API_URL: ${{ secrets.API_URL }}
+  NEXT_PUBLIC_API_HOST: ${{ secrets.NEXT_PUBLIC_API_HOST }}
   NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
   NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
   GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}

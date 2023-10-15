@@ -2,6 +2,12 @@ import "./globals.css";
 import type { Metadata } from "next";
 import Providers from "@/redux/provider";
 import AuthProvider from "./context/auth";
+import { Kanit } from "next/font/google";
+
+const kanit = Kanit({
+  subsets: ["latin"],
+  weight: "400",
+});
 
 export const metadata: Metadata = {
   title: "Unirent",
@@ -15,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="main ">
+      <body className={kanit.className}>
         <AuthProvider>
           <Providers>{children}</Providers>
         </AuthProvider>

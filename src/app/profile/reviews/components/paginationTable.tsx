@@ -6,7 +6,7 @@ import PaginaionBtn from "./paginationBtn";
 import SearchBar from "./searchBar";
 import { useCallback, useEffect, useState } from "react";
 import LoadingCard from "./loadingCard";
-import { API_URL } from "@/app/config";
+import { API_HOST } from "@/app/config";
 //========================================================Data=====================================================
 interface tableData {
   imgSrc: string;
@@ -34,7 +34,7 @@ function PaginationTable() {
   const getData = async (page: number) => {
     //if api is yourProduct fetch from your product
     const query = await fetch(
-      `${API_URL}/products/yourProduct/byUser/search?page=${page}&perPage=5&keyword=${inputValue}&searchBy=name`,
+      `${API_HOST}/products/yourProduct/byUser/search?page=${page}&perPage=5&keyword=${inputValue}&searchBy=name`,
       {
         method: "GET",
         headers: {

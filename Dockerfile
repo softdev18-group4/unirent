@@ -56,6 +56,6 @@ COPY --from=builder --link --chown=1001:1001 /app/.next/static ./.next/static
 USER nextjs
 
 ENV PORT 5050
-ENV HOSTNAME localhost
+ENV HOSTNAME "0.0.0.0"
 
 CMD ["node", "server.js"]
