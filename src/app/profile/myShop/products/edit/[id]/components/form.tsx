@@ -32,6 +32,7 @@ function From({ productId }: { productId: string }) {
     dayPrice: "",
     weekPrice: "",
     monthPrice: "",
+    location: "",
   });
   const handleInput = (e: any, name?: string) => {
     if (name) {
@@ -242,7 +243,7 @@ function From({ productId }: { productId: string }) {
         monthPriceValue={formData.monthPrice}
         handleInput={handleInput}
       ></PeriodBox>
-      <LocationBox></LocationBox>
+      <LocationBox handleInput={handleInput}></LocationBox>
       <div className="col-start-1 xl:col-start-2 justify-self-center xl:justify-self-end flex flex-col w-[60%] xl:w-40 h-12 xl:h-16">
         <div
           className="text-red-500 font-bold w-full justify-center hidden"

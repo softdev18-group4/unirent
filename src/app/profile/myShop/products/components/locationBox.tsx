@@ -1,11 +1,52 @@
-function LocationBox() {
+"use client";
+
+import { useState } from "react";
+import dynamic from "next/dynamic";
+
+function LocationBox({
+  handleInput,
+}: {
+  handleInput: (e: any, name?: string) => void;
+}) {
+  const MapComponent = dynamic(() => import("./map"), {
+    ssr: false,
+  });
+
+  const [isOpen, setOpen] = useState(false);
+  const [address, setaddress] = useState("");
+  const [selectedCoordinates, setSelectedCoordinates] = useState<
+    [number, number]
+  >([13.7291297, 100.7756406]);
+  const ReverseGeocoding = () => {
+    const url = `https://nominatim.openstreetmap.org/reverse?lat=${selectedCoordinates[0]}&lon=${selectedCoordinates[1]}&format=json`;
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        const address = data.display_name;
+        // console.log(address);
+        setaddress(address);
+      });
+  };
+  const setCordinate = ([lat, lng]: [number, number]) => {
+    setSelectedCoordinates([lat, lng]);
+    // console.log(lat, lng);
+    ReverseGeocoding();
+    handleInput(address, "location");
+    toggleOpen();
+  };
+  const toggleOpen = () => {
+    setOpen(!isOpen);
+  };
   return (
-    <div className="-z-50 w-full row-start-[25] col-start-1 row-span-2 col-span-1 xl:row-start-[11] xl:col-start-2 xl:row-span-2 xl:col-span-1">
+    <div className=" w-full row-start-[25] col-start-1 row-span-2 col-span-1 xl:row-start-[11] xl:col-start-2 xl:row-span-2 xl:col-span-1 relative">
       <div className="cursor-default font-bold text-xl lg:text-2xl mb-4">
         จุดรับสินค้า
       </div>
       <div className="flex bg-white w-full h-full rounded-2xl items-center justify-center drop-shadow-2xl p-4 lg:p-8">
-        <div className="w-full h-10 border border-slate-400 rounded-xl bg-slate-50 hover:bg-slate-100 flex px-3 justify-between items-center">
+        <div
+          className="w-full h-full border border-slate-400 rounded-xl bg-slate-50 hover:bg-slate-100 cursor-pointer flex px-3 justify-between items-center"
+          onClick={toggleOpen}
+        >
           <svg
             width="16"
             height="20"
@@ -30,6 +71,7 @@ function LocationBox() {
               strokeLinejoin="round"
             />
           </svg>
+          <div className="w-[90%]">{address}</div>
           <svg
             width="6"
             height="10"
@@ -43,6 +85,14 @@ function LocationBox() {
             />
           </svg>
         </div>
+        {isOpen && (
+          <div className="absolute -top-[20rem] left:0 xl:-top-[30rem] w-full aspect-square p-4 bg-white rounded-xl drop-shadow-lg">
+            <MapComponent
+              latlng={selectedCoordinates}
+              setSelectedCoordinates={setCordinate}
+            ></MapComponent>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -30,6 +30,7 @@ function From() {
     dayPrice: "",
     weekPrice: "",
     monthPrice: "",
+    location: "",
   });
 
   const handleInput = (e: any, name?: string) => {
@@ -182,7 +183,7 @@ function From() {
         monthPriceValue={formData.monthPrice}
         handleInput={handleInput}
       ></PeriodBox>
-      <LocationBox></LocationBox>
+      <LocationBox handleInput={handleInput}></LocationBox>
       <input
         type="submit"
         value="submit"
