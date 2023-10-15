@@ -30,7 +30,7 @@ function Sidebar() {
       <div className="flex gap-8">
         <input
           type="text"
-          placeholder="คูปองส่วนลด"
+          placeholder="Coupon"
           className="rounded-xl h-12 p-4 bg-[#f1f6f9] grow"
         ></input>
         <button className="transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer text-white bg-[color:var(--theme-color2)] w-36 uppercase font-bold rounded-xl h-12 flex justify-center items-center gap-2">
@@ -44,7 +44,7 @@ function Sidebar() {
           <div className="font-bold"> 2000 บาท</div>
         </div>
         <div className="flex justify-between">
-          <div className="font-bold">ส่วนลด</div>
+          <div className="font-bold">Discounted</div>
           <div className="font-bold"> 2000 บาท</div>
         </div>
       </div>

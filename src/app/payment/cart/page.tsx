@@ -43,7 +43,7 @@ function Cart() {
           <div className="font-bold text-slate-600">Subtotal</div>
           <div className="font-bold text-slate-600">1800</div>
           <button className="transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer text-white bg-[color:var(--theme-color2)] w-48 uppercase font-bold rounded-full h-12 flex justify-center items-center gap-2">
-            ดำเนินการต่อ
+            Next
           </button>
         </div>
       </div>

@@ -4,7 +4,7 @@ function Contract() {
   return (
     <div className="px-[5%]">
       <div className="flex flex-col lg:w-[60%] gap-2">
-        <div className="font-bold text-slate-400">จุดนัดรับ</div>
+        <div className="font-bold text-slate-400">Pick up point</div>
         <div className="w-full h-0 border boerder-slate-400"></div>
         <div className="w-full flex items-center gap-6 p-6">
           <svg
@@ -41,7 +41,7 @@ function Contract() {
           </div>
         </div>
         <div className="w-full h-0 border boerder-slate-400"></div>
-        <div className="font-bold text-slate-400">สัญญาเช่า</div>
+        <div className="font-bold text-slate-400">Contract</div>
         <div className="font-bold text-slate-800">
           Contrary to popular belief, Lorem Ipsum is not simply random text. It
           has roots in a piece of classical Latin literature from 45 BC, making
@@ -87,7 +87,7 @@ function Contract() {
           href="/payment/payment"
           className="transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer text-white bg-[color:var(--theme-color2)] w-48 uppercase font-bold rounded-full h-12 flex justify-center items-center gap-2"
         >
-          ไปยังหน้าชำระสินค้า
+          Next
         </Link>
       </div>
     </div>
