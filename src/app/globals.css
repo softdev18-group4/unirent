@@ -5,7 +5,3 @@
 .background {
   background-color: #f1f6f9;
 }
-
-* {
-  @apply font-inter;
-}

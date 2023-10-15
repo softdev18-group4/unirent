@@ -1,4 +1,4 @@
-import ExploreCard from "./cards/exploreCard";
+import ExploreCard from "./cards/ExploreCard";
 interface explore {
   id: number;
   description: string;

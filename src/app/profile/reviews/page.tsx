@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import PaginationTable from "./components/paginationTable";
+import PaginationTable from "./components/PaginationTable";
 
 export const metadata: Metadata = {
   title: "Reviews",

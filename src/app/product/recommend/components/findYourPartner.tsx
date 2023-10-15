@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import FindYourParterCard from "./cards/findYourPartnerCard";
+import FindYourParterCard from "./cards/FindYourPartnerCard";
 //============================================================Data===========================================================================
 interface partner {
   id: number;

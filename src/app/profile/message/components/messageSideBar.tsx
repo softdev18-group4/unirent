@@ -3,8 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import SearchBar from "./searchBar";
-import MessageCard from "./messageCard";
+import SearchBar from "./SearchBar";
+import MessageCard from "./MessageCard";
 
 function MessageSideBar() {
   const [inputValue, setInputValue] = useState<string>("");
