@@ -17,7 +17,7 @@ function Payment() {
     <div>
     <div className="px-[5%]">
     <div className="my-3 font-bold text-gray-500">Payment Method</div>  
-    <div className="flex flex-col space-y-5">    
+    <div className="flex flex-col space-y-5 lg:min-h-max">    
         <div className="lg:w-2/3 lg:pr-[5%]">
             <div onClick={()=>setPaymentMethod(1)} className="bg-white w-full h-28 rounded-2xl" style={{
               border : `${paymentMethod == 1 ? "3px solid coral" : "none"}`
@@ -78,7 +78,7 @@ function Payment() {
       </div>
       
       {/* bottom */}
-      <div className="sticky pb-8 bottom-0 h-24 z-40 bg-[#f1f6f9] lg:w-2/3 lg:pr-[5%] flex justify-between items-end">
+      <div className="sticky pb-8 bottom-0 h-24 z-40 bg-[#f1f6f9] lg:w-2/3 lg:pr-[5%] flex justify-between items-end ">
         <Link href="/payment/contract" className="font-bold text-slate-400">
           &lt; Return To Cart
         </Link>
