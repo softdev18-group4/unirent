@@ -6,7 +6,7 @@ import PaginaionBtn from "../components/paginationBtn";
 import SearchBar from "../components/searchBar";
 import { useCallback, useEffect, useState } from "react";
 import LoadingCard from "./loadingCard";
-import { API_URL } from "@/app/config";
+import { API_HOST } from "@/app/config";
 //========================================================Data=====================================================
 interface tableData {
   imgSrc: string;
@@ -38,7 +38,7 @@ function PaginationTable({ api }: { api: string }) {
     if (api == "yourProduct") {
       //if api is yourProduct fetch from your product
       const query = await fetch(
-        `${API_URL}/products/yourProduct/byUser/search?page=${page}&perPage=5&keyword=${inputValue}&searchBy=name`,
+        `${API_HOST}/products/yourProduct/byUser/search?page=${page}&perPage=5&keyword=${inputValue}&searchBy=name`,
         {
           method: "GET",
           headers: {
@@ -51,7 +51,7 @@ function PaginationTable({ api }: { api: string }) {
     } else if (api == "yourOrder") {
       const query = await fetch(
         //if api is yourOrder fetch from your order
-        `${API_URL}/orders/yourOrder/byUser/search?page=${page}&perPage=5&keyword=${inputValue}&searchBy=name`,
+        `${API_HOST}/orders/yourOrder/byUser/search?page=${page}&perPage=5&keyword=${inputValue}&searchBy=name`,
         {
           method: "GET",
           headers: {
@@ -68,7 +68,7 @@ function PaginationTable({ api }: { api: string }) {
   const handleDelete = async (productId: string) => {
     //fetch to delete
     setLoading(true);
-    const query = await fetch(`${API_URL}/products/${productId}`, {
+    const query = await fetch(`${API_HOST}/products/${productId}`, {
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + token,

@@ -8,9 +8,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-type LoginSchema = z.infer<typeof loginSchema>;
+type SignInSchema = z.infer<typeof signInSchema>;
 
-const loginSchema = z.object({
+const signInSchema = z.object({
   email: z.string().min(1, { message: "Email is required" }).email({
     message: "Must be a valid email",
   }),
@@ -24,15 +24,15 @@ const Form: React.FC = () => {
     register: handleSignIn,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginSchema>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<SignInSchema>({
+    resolver: zodResolver(signInSchema),
   });
 
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/";
 
-  const onSubmit: SubmitHandler<LoginSchema> = async (data, e) => {
+  const onSubmit: SubmitHandler<SignInSchema> = async (data, e) => {
     e?.preventDefault();
     const { email, password } = data;
     const result = await signIn("credentials", {
@@ -87,7 +87,6 @@ const Form: React.FC = () => {
           {...handleSignIn("password")}
           required
         ></input>
-
         {errors.password && (
           <p className="text-xs italic text-red-500 mt-2">
             {errors.password?.message}
@@ -114,11 +113,12 @@ const Form: React.FC = () => {
           sign up
         </Link>
       </div>
-      <input
+      <button
         type="submit"
-        value="sign in"
         className="transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer bg-[#212A3E] md:w-[30rem] text-white uppercase font-bold rounded-full w-96  h-12"
-      ></input>
+      >
+        sign in
+      </button>
       <svg
         width="504"
         height="21"
