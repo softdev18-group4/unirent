@@ -57,7 +57,6 @@ function ProductList() {
     const response = await query.json();
     setLoading(false);
     setProductInfo(response);
-    //  console.log("this is page " + page);
   };
   const childSetPage = (setpage: number) => {
     if (setpage != page) {
