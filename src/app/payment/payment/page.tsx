@@ -87,7 +87,7 @@ function Payment() {
           href=""
           className="transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer text-white bg-[color:var(--theme-color2)] w-48 uppercase font-bold rounded-full h-12 flex justify-center items-center gap-2"
         >
-          ชำระสินค้า
+          Next
         </Link>
       </div>
       

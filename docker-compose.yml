@@ -14,4 +14,3 @@ services:
       - NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
     ports:
       - "${PORT}:${PORT}"
-    command: ["node", "server.js"]

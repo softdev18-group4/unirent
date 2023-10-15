@@ -17,19 +17,19 @@ function Navbar() {
           <div className="flex w-full">
             <div className="grow-[1] flex items-center justify-evenly bg-[color:var(--theme-color1)] rounded-full font-medium px-3 py-2">
               {[
-                ["ตะกร้า", "/payment/cart"],
-                ["ข้อมูล", "/payment/contract"],
-                ["ชำระสินค้า", "/payment/payment"],
+                ["Cart", "/payment/cart"],
+                ["Information", "/payment/contract"],
+                ["Payment", "/payment/payment"],
               ].map(([title, url], index) => (
                 <Link
                   key={index}
                   href={url}
                   className={
-                    (pathname.includes("/payment/cart") && title == "ตะกร้า") ||
+                    (pathname.includes("/payment/cart") && title == "Cart") ||
                     (pathname.includes("/payment/contract") &&
-                      title == "ข้อมูล") ||
+                      title == "Information") ||
                     (pathname.includes("/payment/payment") &&
-                      title == "ชำระสินค้า")
+                      title == "Payment")
                       ? "grow rounded-full px-1 py-1 text-white text-center font-thin bg-slate-400 hover:font-normal"
                       : "grow rounded-full px-1 py-1 text-white text-center font-thin hover:bg-slate-400 hover:font-normal"
                   }

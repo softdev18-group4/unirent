@@ -4,13 +4,13 @@ function TableHeader() {
       <tr className="w-full h-16 font-bold ">
         <th className="cursor-default text-left w-[60%] border-b-2 border-slate-300"></th>
         <th className="cursor-default text-left border-b-2 border-slate-300">
-          ประเภท
+          Type
         </th>
         <th className="cursor-default text-left border-b-2 border-slate-300">
-          ระยะเวลาเช่า
+        Rental period
         </th>
         <th className="cursor-default text-left border-b-2 border-slate-300">
-          ราคา
+          Price
         </th>
         <th className="cursor-default text-left border-b-2 border-slate-300 w-[5%]"></th>
       </tr>
