@@ -53,18 +53,8 @@ export const options: NextAuthOptions = {
   callbacks: {
     async signIn({ account, profile }) {
       if (account?.provider === "google") {
-        // verify a user's with google account jwt token
-        const res = await fetch(
-          `https://oauth2.googleapis.com/tokeninfo?id_token=${account?.idToken}`
-        );
-        const googleAccount = await res.json();
-        if (!res.ok || !googleAccount) {
-          return false;
-        }
-
-        return (
-          profile?.email_verified && profile.email?.endsWith("@kmitl.ac.th")
-        );
+        console.log(account);
+        return true
       }
       return true; // Do different verification for other providers that don't have `email_verified`
     },

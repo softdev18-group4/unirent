@@ -1,8 +1,8 @@
-import type { NextRequest } from "next/server"; 
 import { getServerSession } from "next-auth/next";
 import { options } from "@/app/api/auth/[...nextauth]/options";
 import SignOutButton from "@/components/SignOutButton";
-const Page = async (req: NextRequest) => {
+
+const Page = async () => {
   const session = await getServerSession(options);
 
   return (
