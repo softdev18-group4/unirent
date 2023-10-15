@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import From from "./components/form";
+import From from "./components/Form";
 export const metadata: Metadata = {
   // title: "Add Product",
 };
