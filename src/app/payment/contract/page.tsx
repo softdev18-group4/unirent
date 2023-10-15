@@ -1,6 +1,19 @@
+"use client";
+
+import { totalSelectedProduct } from "@/redux/features/cartSlice";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 function Contract() {
+  const { push } = useRouter();
+  const totalselect = useSelector(totalSelectedProduct);
+  useEffect(() => {
+    if (totalselect != 1) {
+      push("/payment/cart");
+    }
+  }, []);
   return (
     <div className="px-[5%]">
       <div className="flex flex-col lg:w-[60%] gap-2">

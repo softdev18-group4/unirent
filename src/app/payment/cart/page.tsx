@@ -6,15 +6,22 @@ import TableHeader from "./components/tableHeader";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import {
+  SelectedProduct,
   addToCart,
   removeFromCart,
   selectProduct,
   setCart,
+  totalSelectedProduct,
 } from "@/redux/features/cartSlice";
 import { useEffect, useState } from "react";
 import { CartItem } from "@/types";
+import { useRouter } from "next/navigation";
 
 function Cart() {
+  const { push } = useRouter();
+  const [error, setError] = useState(false);
+  const totalselect = useSelector(totalSelectedProduct);
+  const selectedProduct = useSelector(SelectedProduct);
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cart.items);
   useEffect(() => {
@@ -24,7 +31,7 @@ function Cart() {
       if (cartData) dispatch(setCart(data));
     }
   }, []);
-
+  //for testing
   const handleAddToCart = () => {
     dispatch(
       addToCart({
@@ -38,30 +45,12 @@ function Cart() {
         price: 1000,
       })
     );
-    dispatch(
-      addToCart({
-        isSelected: false,
-        productid: "asdsadasd",
-        imgSrc: "/product.png",
-        name: "notebook",
-        description: "test redux",
-        type: "Daily",
-        period: 8,
-        price: 1000,
-      })
-    );
-    dispatch(
-      addToCart({
-        isSelected: true,
-        productid: "aaaaaaaaaaaaaaa",
-        imgSrc: "/product.png",
-        name: "notebook11111",
-        description: "test redux",
-        type: "Daily",
-        period: 8,
-        price: 1000,
-      })
-    );
+  };
+  const handleNextPage = () => {
+    if (totalselect == 1) {
+      push("/payment/contract");
+      setError(false);
+    } else setError(true);
   };
   const handleSelected = async (productId: string) => {
     dispatch(selectProduct(productId));
@@ -111,11 +100,19 @@ function Cart() {
         <Link href="/product/recommend" className="font-bold text-slate-400">
           &lt; Continue Shopping
         </Link>
+        {error && (
+          <div className="justify-self-center text-red-500 font-bold">
+            โปรดเลือกสินค้า
+          </div>
+        )}
+
         <div className="flex flex-col items-end gap-4">
           <div className="font-bold text-slate-600">Subtotal</div>
-          <div className="font-bold text-slate-600">1800</div>
+          <div className="font-bold text-slate-600">
+            {selectedProduct != null ? selectedProduct.price : 0} {" บาท"}
+          </div>
           <button
-            onClick={handleAddToCart}
+            onClick={handleNextPage}
             className="transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer text-white bg-[color:var(--theme-color2)] w-48 uppercase font-bold rounded-full h-12 flex justify-center items-center gap-2"
           >
             ดำเนินการต่อ

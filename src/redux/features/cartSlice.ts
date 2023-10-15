@@ -1,5 +1,6 @@
 import { CartItem } from "@/types";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
 interface CartState {
   items: CartItem[];
@@ -63,10 +64,17 @@ const cartSlice = createSlice({
   },
 });
 
-// export const cartItems = (state: RootState) => state.cart.items;
+const cartItems = (state: RootState) => state.cart.items;
 // export const totalPriceSelector = createSelector([cartItems], (cartItems) =>
 //   cartItems.reduce((total: number, curr: CartItem) => (total += curr.price), 0)
 // );
+export const totalSelectedProduct = createSelector([cartItems], (items) =>
+  items.reduce((total, item) => (item.isSelected ? total + 1 : total), 0)
+);
+export const SelectedProduct = createSelector(
+  [cartItems],
+  (items) => items.find((item) => item.isSelected === true) || null
+);
 
 export const { addToCart, selectProduct, removeFromCart, setCart } =
   cartSlice.actions;

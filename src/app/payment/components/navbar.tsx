@@ -21,21 +21,21 @@ function Navbar() {
                 ["ข้อมูล", "/payment/contract"],
                 ["ชำระสินค้า", "/payment/payment"],
               ].map(([title, url], index) => (
-                <Link
+                <div
                   key={index}
-                  href={url}
+                  // href={url}
                   className={
                     (pathname.includes("/payment/cart") && title == "ตะกร้า") ||
                     (pathname.includes("/payment/contract") &&
                       title == "ข้อมูล") ||
                     (pathname.includes("/payment/payment") &&
                       title == "ชำระสินค้า")
-                      ? "grow rounded-full px-1 py-1 text-white text-center font-thin bg-slate-400 hover:font-normal"
-                      : "grow rounded-full px-1 py-1 text-white text-center font-thin hover:bg-slate-400 hover:font-normal"
+                      ? "grow rounded-full px-1 py-1 text-white text-center font-thin bg-slate-400 cursor-default"
+                      : "grow rounded-full px-1 py-1 text-white text-center font-thin cursor-default"
                   }
                 >
                   {title}
-                </Link>
+                </div>
               ))}
             </div>
             <div className="lg:grow-[3]"></div>
