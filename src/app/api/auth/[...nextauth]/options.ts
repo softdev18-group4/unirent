@@ -53,16 +53,19 @@ export const options: NextAuthOptions = {
   callbacks: {
     async signIn({ account, profile }) {
       if (account?.provider === "google") {
+        console.log(account);
         // verify google account token id
-        const res = await fetch(`{API_URL}/auth/google`, {
+        const res = await fetch(`${API_URL}/auth/google`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${account?.tokenId}`,
+            Authorization: `Bearer ${account?.id_token}`,
           },
         });
         const response = await res.json();
-        return true;
+        if (res.ok && response) {
+          return true;
+        }
       }
       return true; // Do different verification for other providers that don't have `email_verified`
     },
