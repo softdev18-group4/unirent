@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 
 function CartCard({
   imgSrc,
@@ -26,8 +25,9 @@ function CartCard({
 }) {
   return (
     //<Link href={"/profile/myShop/products/edit/" + productId}>
-    <tr className="cursor-default w-full h-24 lg:h-48 bg-white font-semibold ">
+    <tr className="cursor-default w-full h-24 lg:h-48 bg-white font-semibold transition ease-in-out delay-150 duration-200 scale-[0.99] hover:scale-[1]">
       <td
+        onClick={() => handleSelected(productId)}
         className={
           isSelected
             ? "rounded-l-2xl bg-white w-[60%] border-l-2 border-y-2 border-[coral]"
@@ -42,12 +42,8 @@ function CartCard({
                   ? "w-6 h-6 rounded-full border-2 bg-[coral] cursor-pointer"
                   : "w-6 h-6 rounded-full border-2  cursor-pointer"
               }
-              onClick={() => handleSelected(productId)}
             ></div>
-            <Link
-              href={"/product/detail/" + productId}
-              className="flex gap-6 items-center w-[60%] break-words"
-            >
+            <div className="flex gap-6 items-center w-[60%] break-words">
               <Image
                 src={imgSrc}
                 width={800}
@@ -62,35 +58,35 @@ function CartCard({
                   {description}
                 </div>
               </div>
-            </Link>
+            </div>
           </div>
         </div>
       </td>
 
-      <td className={isSelected ? "border-y-2 border-[coral]" : ""}>
-        <Link
-          href={"/product/detail/" + productId}
-          className="text-slate-400 text-left bg-white truncate flex items-center justify-start w-full h-24 lg:h-48"
-        >
+      <td
+        onClick={() => handleSelected(productId)}
+        className={isSelected ? "border-y-2 border-[coral]" : ""}
+      >
+        <div className="text-slate-400 text-left bg-white truncate flex items-center justify-start w-full h-24 lg:h-48">
           {type}
-        </Link>
+        </div>
       </td>
-      <td className={isSelected ? "border-y-2 border-[coral]" : ""}>
-        <Link
-          href={"/product/detail/" + productId}
-          className="text-slate-400 text-left bg-white truncate  flex items-center justify-start w-full h-24 lg:h-48"
-        >
+      <td
+        onClick={() => handleSelected(productId)}
+        className={isSelected ? "border-y-2 border-[coral]" : ""}
+      >
+        <div className="text-slate-400 text-left bg-white truncate  flex items-center justify-start w-full h-24 lg:h-48">
           {period}
           {" วัน"}
-        </Link>
+        </div>
       </td>
-      <td className={isSelected ? "border-y-2 border-[coral]" : ""}>
-        <Link
-          href={"/product/detail/" + productId}
-          className="text-left truncate flex items-center justify-start w-full h-24 lg:h-48"
-        >
+      <td
+        onClick={() => handleSelected(productId)}
+        className={isSelected ? "border-y-2 border-[coral]" : ""}
+      >
+        <div className="text-left truncate flex items-center justify-start w-full h-24 lg:h-48">
           {price}
-        </Link>
+        </div>
       </td>
       <td
         className={

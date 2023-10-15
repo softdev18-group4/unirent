@@ -9,18 +9,29 @@ import {
   addToCart,
   removeFromCart,
   selectProduct,
+  setCart,
 } from "@/redux/features/cartSlice";
+import { useEffect, useState } from "react";
+import { CartItem } from "@/types";
 
 function Cart() {
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cart.items);
+  useEffect(() => {
+    let cartData = localStorage.getItem("cart");
+    if (cartData) {
+      const data: CartItem[] = JSON.parse(cartData);
+      if (cartData) dispatch(setCart(data));
+    }
+  }, []);
+
   const handleAddToCart = () => {
     dispatch(
       addToCart({
         isSelected: true,
         productid: "sadasdasdas",
         imgSrc: "/product.png",
-        name: "notebook",
+        name: "notebook123",
         description: "test redux",
         type: "Daily",
         period: 8,
@@ -33,6 +44,18 @@ function Cart() {
         productid: "asdsadasd",
         imgSrc: "/product.png",
         name: "notebook",
+        description: "test redux",
+        type: "Daily",
+        period: 8,
+        price: 1000,
+      })
+    );
+    dispatch(
+      addToCart({
+        isSelected: true,
+        productid: "aaaaaaaaaaaaaaa",
+        imgSrc: "/product.png",
+        name: "notebook11111",
         description: "test redux",
         type: "Daily",
         period: 8,

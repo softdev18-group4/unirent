@@ -1,5 +1,5 @@
 import { MouseEventHandler } from "react";
-import { product } from '@/redux/features/productSlice';
+import { product } from "@/redux/features/productSlice";
 export interface ProductState {
   specifications: {
     brand: string;
@@ -8,25 +8,25 @@ export interface ProductState {
     graphicCard: string;
     ramSize: number;
     storageSize: number;
-  },
+  };
   availableDays: {
     startDate: string;
     endDate: string;
-  },
+  };
   id: string;
   name: string;
   description: string;
   ownerId: string;
   availability: boolean;
-  rentalOptions: RentalOption[],
-  src   : string[];
+  rentalOptions: RentalOption[];
+  src: string[];
 }
 
 interface RentalOption {
   id: string;
   productId: string;
   type: string; // Daily, Weekly, Monthly
-  priceRate : number;
+  priceRate: number;
 }
 
 export interface InitialState {
@@ -49,5 +49,16 @@ export interface ProductSelectorProps {
 }
 
 export interface CardDetailProps {
-  detail: string
+  detail: string;
+}
+
+export interface CartItem {
+  isSelected: boolean;
+  productid: string;
+  imgSrc: string;
+  name: string;
+  description: string;
+  type: string;
+  period: number;
+  price: number;
 }

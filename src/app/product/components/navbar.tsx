@@ -1,15 +1,24 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { setCart } from "@/redux/features/cartSlice";
+import { CartItem } from "@/types";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { push } = useRouter();
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cart.items);
+  useEffect(() => {
+    let cartData = localStorage.getItem("cart");
+    if (cartData) {
+      const data: CartItem[] = JSON.parse(cartData);
+      if (cartData) dispatch(setCart(data));
+    }
+  }, []);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
