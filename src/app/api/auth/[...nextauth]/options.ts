@@ -5,7 +5,7 @@ import type { NextAuthOptions, Profile } from "next-auth";
 import { API_HOST } from "@/config";
 
 async function fetchProfile(accessToken: string) {
-  const res = await fetch(`/api/services/auth/profile`, {
+  const res = await fetch(`${API_HOST}/auth/profile`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -15,7 +15,7 @@ async function fetchProfile(accessToken: string) {
 }
 
 async function verifyGoogleAccount(idToken: string) {
-  const res = await fetch(`/api/services/auth/google`, {
+  const res = await fetch(`${API_HOST}/auth/google`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${idToken}`,
@@ -34,7 +34,7 @@ export const options: NextAuthOptions = {
         password: { label: "password", type: "password" },
       },
       authorize: async (credentials) => {
-        const res = await fetch(`/api/services/auth/sign-in`, {
+        const res = await fetch(`${API_HOST}/auth/sign-in`, {
           method: "POST",
           body: JSON.stringify(credentials),
           headers: {
