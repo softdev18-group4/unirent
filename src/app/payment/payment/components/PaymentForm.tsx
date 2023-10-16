@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useSession } from "next-auth/react";
 import { API_HOST } from "@/config";
+import PaymentConfirm from "./PaymentConfirm";
 
 interface Props {
     setPayment: (value: boolean) => void

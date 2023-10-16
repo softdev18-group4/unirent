@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import CartCard from "./components/cartCard";
-import TableHeader from "./components/tableHeader";
+import CartCard from "./components/CartCard";
+import TableHeader from "./components/TableHeader";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import {
