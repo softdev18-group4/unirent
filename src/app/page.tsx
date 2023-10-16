@@ -1,11 +1,19 @@
-import Image from "next/image"
+import SignOutButton from "@/components/SignOutButton";
 
-const page = () => {
+import { getServerSession } from "next-auth/next";
+import { options } from "@/app/api/auth/[...nextauth]/options";
+
+const Page = async () => {
+  const session = await getServerSession(options);
+
   return (
     <div className="main_container">
-      page
-    </div>
-  )
-}
+      {session && <SignOutButton />}
 
-export default page
+      {session && <p>Token: {session.user.accessToken}</p>}
+      {session && <p>Profile {JSON.stringify(session.user.data)}</p>}
+    </div>
+  );
+};
+
+export default Page;

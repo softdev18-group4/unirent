@@ -5,6 +5,12 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      - PORT=3000
+      - PORT
+      - NEXTAUTH_URL
+      - NEXTAUTH_SECRET
+      - GOOGLE_CLIENT_ID
+      - GOOGLE_CLIENT_SECRET
+      - NEXT_PUBLIC_API_HOST
+      - NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
     ports:
-      - "3000:3000"
+      - "${PORT}:${PORT}"
