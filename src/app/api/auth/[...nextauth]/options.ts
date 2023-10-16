@@ -2,7 +2,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import type { NextAuthOptions, Profile } from "next-auth";
 
-import { API_HOST } from "@/app/config";
+import { API_HOST } from "@/config";
 
 async function fetchProfile(accessToken: string) {
   const res = await fetch(`${API_HOST}/auth/profile`, {

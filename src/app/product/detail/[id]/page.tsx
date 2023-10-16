@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useEffect } from "react";
 import { reset, updateProduct } from "@/redux/features/productSlice";
 import {imageList} from "@/constants"
-import { API_HOST } from "@/app/config";
+import { API_HOST } from "@/config";
 
 const Detail = ({ params }: { params: { id: string } }) => {
   const dispatch = useAppDispatch();

@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-.background {
+body {
   background-color: #f1f6f9;
+}
+
+.main {
+  @apply bg-[#F1F6F9];
 }

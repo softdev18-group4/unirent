@@ -1,13 +1,15 @@
 "use client";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 function Sidebar({
   dashboard,
   product,
   orders,
-  message,
+  messages,
   history,
   reviews,
   settings,
@@ -18,7 +20,7 @@ function Sidebar({
   dashboard: string;
   product: string;
   orders: string;
-  message: string;
+  messages: string;
   history: string;
   reviews: string;
   settings: string;
@@ -49,11 +51,19 @@ function Sidebar({
   };
 
   const pathname = usePathname();
+  const { data: session, status } = useSession();
+  useEffect(() => {
+    if (status == "unauthenticated") push("/auth/sign-in");
+  }, [session]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     //clear user data
-    push("/");
+    await signOut();
+    localStorage.clear();
+    resetNavhead();
+    push("/auth/sign-in");
   };
+
   return (
     <div className="sticky top-0 z-40">
       <div
@@ -82,13 +92,14 @@ function Sidebar({
           id="unirent"
           className="flex justify-center items-center grow uppercase pr-3 py-3 font-extrabold text-3xl"
         >
-          <a
+          <Link
             className="flex justify-center items-center cursor-pointer pr-5"
             href="/product/recommend"
+            onClick={resetNavhead}
           >
             <div className="theme-text-color2">uni</div>
             <div className="theme-text-color1">rent</div>
-          </a>
+          </Link>
         </div>
       </div>
 
@@ -100,15 +111,16 @@ function Sidebar({
         <div className="flex justify-center h-full px-3 pt-10 py-4 overflow-y-auto bg-white">
           <ul className="space-y-3 font-medium">
             <li>
-              <a
+              <Link
                 className="flex cursor-pointer grow-[1] items-center justifiy-center uppercase pr-3 py-3 font-extrabold text-3xl"
                 href="/product/recommend"
+                onClick={resetNavhead}
               >
                 <div className="theme-text-color2">uni</div>
                 <div className="theme-text-color1">rent</div>
-              </a>
+              </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 href={dashboard}
                 onClick={resetNavhead}
@@ -133,7 +145,7 @@ function Sidebar({
                 </svg>
                 <span className="ml-3">Dashboard</span>
               </Link>
-            </li>
+            </li> */}
             <li>
               <button
                 type="button"
@@ -208,7 +220,7 @@ function Sidebar({
             </li>
             <li>
               <Link
-                href={message}
+                href={messages}
                 className={
                   pathname.includes("message")
                     ? "flex items-center w-full p-2 text-base text-[color:var(--theme-color2)] transition duration-75 rounded-lg group"
@@ -231,7 +243,7 @@ function Sidebar({
                 <span className="flex-1 ml-3 whitespace-nowrap">Message</span>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 onClick={resetNavhead}
                 href={history}
@@ -257,7 +269,7 @@ function Sidebar({
 
                 <span className="flex-1 ml-3 whitespace-nowrap">History</span>
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
                 onClick={resetNavhead}
@@ -291,7 +303,7 @@ function Sidebar({
                 <span className="flex-1 ml-3 whitespace-nowrap">Reviews</span>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 onClick={resetNavhead}
                 href={settings}
@@ -317,7 +329,7 @@ function Sidebar({
 
                 <span className="flex-1 ml-3 whitespace-nowrap">Settings</span>
               </Link>
-            </li>
+            </li> */}
             <li>
               <div className="h-20"></div>
             </li>
@@ -325,7 +337,7 @@ function Sidebar({
               <div className="flex gap-2 items-center justify-start">
                 <div className="w-[30%]">
                   <Image
-                    src={profileImg}
+                    src="https://storage-unirent.1tpp.dev/unirent/c9ce6bb785610a6e50ae135a21b3b34c.png"
                     width={800}
                     height={800}
                     objectFit="none"
@@ -334,9 +346,17 @@ function Sidebar({
                   />
                 </div>
 
-                <div className="cursor-default justify-self-end grow flex flex-col items-start justify-center">
-                  <div className="text-slate-600 text-sm">{name}</div>
-                  <div className="text-slate-400 text-sm">{email}</div>
+                <div className="cursor-default justify-self-end w-[70%] flex flex-col items-start justify-center truncate">
+                  <div className="text-slate-600 text-sm">
+                    {session?.user.data != null
+                      ? `${session.user.data.firstName} ${session.user.data.lastName}`
+                      : "loading"}
+                  </div>
+                  <div className="text-slate-400 text-sm truncate">
+                    {session?.user.data != null
+                      ? `${session.user.data.email}`
+                      : "loading"}
+                  </div>
                 </div>
                 <svg
                   width="16"
@@ -357,4 +377,5 @@ function Sidebar({
     </div>
   );
 }
+
 export default Sidebar;

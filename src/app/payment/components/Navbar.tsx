@@ -9,10 +9,10 @@ function Navbar() {
       <nav>
         <div className="flex justify-center items-center lg:items-start py-4 flex-col gap-6 lg:gap-12 z-30">
           <div className="flex grow-[1] items-center justifiy-center uppercase pr-3 py-3 font-extrabold text-3xl">
-            <a href="/product/recommend" className="cursor-pointer flex">
+            <Link href="/product/recommend" className="cursor-pointer flex">
               <div className="text-[color:var(--theme-color2)]">uni</div>
               <div className="text-[color:var(--theme-color1)]">rent</div>
-            </a>
+            </Link>
           </div>
           <div className="flex w-full">
             <div className="grow-[1] flex items-center justify-evenly bg-[color:var(--theme-color1)] rounded-full font-medium px-3 py-2">
@@ -21,21 +21,21 @@ function Navbar() {
                 ["Information", "/payment/contract"],
                 ["Payment", "/payment/payment"],
               ].map(([title, url], index) => (
-                <Link
+                <div
                   key={index}
-                  href={url}
+                  // href={url}
                   className={
                     (pathname.includes("/payment/cart") && title == "Cart") ||
                     (pathname.includes("/payment/contract") &&
                       title == "Information") ||
                     (pathname.includes("/payment/payment") &&
                       title == "Payment")
-                      ? "grow rounded-full px-1 py-1 text-white text-center font-thin bg-slate-400 hover:font-normal"
-                      : "grow rounded-full px-1 py-1 text-white text-center font-thin hover:bg-slate-400 hover:font-normal"
+                      ? "grow rounded-full px-1 py-1 text-white text-center font-thin bg-slate-400 cursor-default"
+                      : "grow rounded-full px-1 py-1 text-white text-center font-thin cursor-default"
                   }
                 >
                   {title}
-                </Link>
+                </div>
               ))}
             </div>
             <div className="lg:grow-[3]"></div>

@@ -8,13 +8,15 @@ import PictureBox from "../../../components/PictureBox";
 import SpecificationBox from "../../../components/SpecificationBox";
 import { useRouter } from "next/navigation";
 import DescriptionBox from "../../../components/DescriptionBox";
-import { API_HOST } from "@/app/config";
+import { API_HOST } from "@/config";
+import { useSession } from "next-auth/react";
 
 function From({ productId }: { productId: string }) {
   const { push } = useRouter();
+  const [error, setError] = useState(false);
   const router = useRouter();
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTA3ZDczMzg4ZDdhYzlkMmFkNzFmYjUiLCJyb2xlIjoidXNlciIsImlhdCI6MTY5Njk1OTQwOCwiZXhwIjoxNjk3MDQ1ODA4fQ.zrkll4H4kIRcmw7cPW0EjGobuYXf7PRCaYe624b9vs0";
+  const { data: session, status } = useSession();
+  const token = session?.user.accessToken;
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -33,10 +35,13 @@ function From({ productId }: { productId: string }) {
     dayPrice: "",
     weekPrice: "",
     monthPrice: "",
+    location: "",
   });
+  const [fileArray, setFileArray] = useState<File[]>([]);
+  const [oldImg, setOldImg] = useState<string[]>([]);
   const handleInput = (e: any, name?: string) => {
     if (name) {
-      if (e.startDate != null && e.endDate != null) {
+      if (e && e.startDate != null && e.endDate != null) {
         e.startDate = new Date(e.startDate);
         e.endDate = new Date(e.endDate);
       }
@@ -56,8 +61,9 @@ function From({ productId }: { productId: string }) {
   };
   //initial fetch
   useEffect(() => {
-    getProduct();
-  }, []);
+    if (status === "unauthenticated") push("/auth/sign-in");
+    if (status === "authenticated" && session) getProduct();
+  }, [session]);
   //get product data
   const getProduct = async () => {
     const query = await fetch(`${API_HOST}/products/${productId}`, {
@@ -76,6 +82,8 @@ function From({ productId }: { productId: string }) {
     handleInput(response.specifications.storageSize, "summaryStorage");
     handleInput(response.specifications.ramSize, "RAM");
     handleInput(response.availableDays, "availableDays");
+    handleInput(response.location, "location");
+    setOldImg(response.imageName);
     const checkboxday = document.getElementById(
       "checkboxday checkbox"
     ) as HTMLInputElement;
@@ -85,17 +93,28 @@ function From({ productId }: { productId: string }) {
     const checkboxmonth = document.getElementById(
       "checkboxmonth checkbox"
     ) as HTMLInputElement;
+    const inputDay = document.getElementById("dayPrice") as HTMLInputElement;
+    const inputWeek = document.getElementById("weekPrice") as HTMLInputElement;
+    const inputMonth = document.getElementById(
+      "monthPrice"
+    ) as HTMLInputElement;
     for (const rentalOption of response.rentalOptions) {
       if (rentalOption.type == "Daily") {
         checkboxday.checked = true;
+        inputDay.disabled = false;
+        inputDay.classList.remove("cursor-not-allowed");
         handleInput(rentalOption.priceRate, "dayPrice");
       }
       if (rentalOption.type == "Weekly") {
         checkboxweek.checked = true;
+        inputWeek.disabled = false;
+        inputWeek.classList.remove("cursor-not-allowed");
         handleInput(rentalOption.priceRate, "weekPrice");
       }
       if (rentalOption.type == "Monthly") {
         checkboxmonth.checked = true;
+        inputMonth.disabled = false;
+        inputMonth.classList.remove("cursor-not-allowed");
         handleInput(rentalOption.priceRate, "monthPrice");
       }
     }
@@ -130,13 +149,16 @@ function From({ productId }: { productId: string }) {
         ) ||
         (checkboxday.checked && formData.dayPrice == "") ||
         (checkboxweek.checked && formData.weekPrice == "") ||
-        (checkboxmonth.checked && formData.monthPrice == "")
+        (checkboxmonth.checked && formData.monthPrice == "") ||
+        formData.location == "" ||
+        (fileArray.length == 0 && oldImg.length == 0)
       ) {
-        if (errorPeriod) errorPeriod.classList.remove("hidden");
+        //  if (errorPeriod) errorPeriod.classList.remove("hidden");
+        setError(true);
         return;
       }
     }
-    if (errorPeriod) errorPeriod.classList.add("hidden");
+    // if (errorPeriod) errorPeriod.classList.add("hidden");
     // const data = new FormData();
     // Object.entries(formData).forEach(([key, value]) => {
     //   data.append(key, value);
@@ -160,6 +182,23 @@ function From({ productId }: { productId: string }) {
       priceRate: Number(formData.monthPrice),
       isSelected: formData.monthPrice != "" ? true : false,
     });
+    //handle picture
+    const imagename: string[] = oldImg;
+    for (const file of fileArray) {
+      const data = new FormData();
+      data.append("image", file);
+      const query = await fetch(`${API_HOST}/upload`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: data,
+      });
+      const response = await query.json();
+      // console.log(response);
+      imagename.push(response.imageUrl.split("/")[2]);
+    }
     const query = await fetch(`${API_HOST}/products/${productId}`, {
       method: "PUT",
       headers: {
@@ -170,10 +209,13 @@ function From({ productId }: { productId: string }) {
       body: JSON.stringify({
         name: formData.name,
         description: formData.description,
+        imageName: imagename,
+        location: formData.location,
         specifications: {
           brand: formData.brand,
           model: formData.model,
           processor: formData.processor,
+          os: formData.operatingSystem,
           graphicCard: formData.graphicCard,
           ramSize: Number(formData.RAM),
           storageSize: Number(formData.avaliableStorage),
@@ -183,7 +225,7 @@ function From({ productId }: { productId: string }) {
       }),
     });
     const response = await query.json();
-    // console.log(response);
+    console.log(response);
     if (response.statusCode == 400) {
       const errorUpdate = document.getElementById("errorUpdate");
       if (errorUpdate) {
@@ -206,7 +248,12 @@ function From({ productId }: { productId: string }) {
         descriptionValue={formData.description}
         handleInput={handleInput}
       ></DescriptionBox>
-      <PictureBox></PictureBox>
+      <PictureBox
+        fileArray={fileArray}
+        setFileArray={setFileArray}
+        oldImg={oldImg}
+        setOldImg={setOldImg}
+      ></PictureBox>
       <SpecificationBox
         brandName="brand"
         brandValue={formData.brand}
@@ -237,7 +284,10 @@ function From({ productId }: { productId: string }) {
         monthPriceValue={formData.monthPrice}
         handleInput={handleInput}
       ></PeriodBox>
-      <LocationBox></LocationBox>
+      <LocationBox
+        address={formData.location}
+        handleInput={handleInput}
+      ></LocationBox>
       <div className="col-start-1 xl:col-start-2 justify-self-center xl:justify-self-end flex flex-col w-[60%] xl:w-40 h-12 xl:h-16">
         <div
           className="text-red-500 font-bold w-full justify-center hidden"
@@ -245,6 +295,11 @@ function From({ productId }: { productId: string }) {
         >
           update ไม่สำเร็จ
         </div>
+        {error && (
+          <div className="text-red-400 flex col-start-1 items-center justify-center xl:col-start-2 uppercase font-semibold rounded-xl xl:rounded-md w-full ">
+            โปรดกรอกข้อมูลให้ครบ
+          </div>
+        )}
         <div
           onClick={onSubmit}
           className="transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer bg-[color:var(--theme-color2)] text-white uppercase font-semibold rounded-xl xl:rounded-md xl:w-40 h-8 xl:h-12 flex items-center justify-center gap-3"
@@ -257,17 +312,17 @@ function From({ productId }: { productId: string }) {
             className="hidden"
             id="updateLoadingSvg"
           >
-            <g fill="none" fill-rule="evenodd">
+            <g fill="none" fillRule="evenodd">
               <g transform="translate(2 1)" stroke="#FFF" strokeWidth="1.5">
                 <circle
                   cx="42.601"
                   cy="11.462"
                   r="5"
-                  fill-opacity="1"
+                  fillOpacity="1"
                   fill="#fff"
                 >
                   <animate
-                    attributeName="fill-opacity"
+                    attributeName="fillOpacity"
                     begin="0s"
                     dur="1.3s"
                     values="1;0;0;0;0;0;0;0"
@@ -279,11 +334,11 @@ function From({ productId }: { productId: string }) {
                   cx="49.063"
                   cy="27.063"
                   r="5"
-                  fill-opacity="0"
+                  fillOpacity="0"
                   fill="#fff"
                 >
                   <animate
-                    attributeName="fill-opacity"
+                    attributeName="fillOpacity"
                     begin="0s"
                     dur="1.3s"
                     values="0;1;0;0;0;0;0;0"
@@ -295,11 +350,11 @@ function From({ productId }: { productId: string }) {
                   cx="42.601"
                   cy="42.663"
                   r="5"
-                  fill-opacity="0"
+                  fillOpacity="0"
                   fill="#fff"
                 >
                   <animate
-                    attributeName="fill-opacity"
+                    attributeName="fillOpacity"
                     begin="0s"
                     dur="1.3s"
                     values="0;0;1;0;0;0;0;0"
@@ -307,9 +362,9 @@ function From({ productId }: { productId: string }) {
                     repeatCount="indefinite"
                   />
                 </circle>
-                <circle cx="27" cy="49.125" r="5" fill-opacity="0" fill="#fff">
+                <circle cx="27" cy="49.125" r="5" fillOpacity="0" fill="#fff">
                   <animate
-                    attributeName="fill-opacity"
+                    attributeName="fillOpacity"
                     begin="0s"
                     dur="1.3s"
                     values="0;0;0;1;0;0;0;0"
@@ -321,11 +376,11 @@ function From({ productId }: { productId: string }) {
                   cx="11.399"
                   cy="42.663"
                   r="5"
-                  fill-opacity="0"
+                  fillOpacity="0"
                   fill="#fff"
                 >
                   <animate
-                    attributeName="fill-opacity"
+                    attributeName="fillOpacity"
                     begin="0s"
                     dur="1.3s"
                     values="0;0;0;0;1;0;0;0"
@@ -337,11 +392,11 @@ function From({ productId }: { productId: string }) {
                   cx="4.938"
                   cy="27.063"
                   r="5"
-                  fill-opacity="0"
+                  fillOpacity="0"
                   fill="#fff"
                 >
                   <animate
-                    attributeName="fill-opacity"
+                    attributeName="fillOpacity"
                     begin="0s"
                     dur="1.3s"
                     values="0;0;0;0;0;1;0;0"
@@ -353,11 +408,11 @@ function From({ productId }: { productId: string }) {
                   cx="11.399"
                   cy="11.462"
                   r="5"
-                  fill-opacity="0"
+                  fillOpacity="0"
                   fill="#fff"
                 >
                   <animate
-                    attributeName="fill-opacity"
+                    attributeName="fillOpacity"
                     begin="0s"
                     dur="1.3s"
                     values="0;0;0;0;0;0;1;0"
@@ -365,9 +420,9 @@ function From({ productId }: { productId: string }) {
                     repeatCount="indefinite"
                   />
                 </circle>
-                <circle cx="27" cy="5" r="5" fill-opacity="0" fill="#fff">
+                <circle cx="27" cy="5" r="5" fillOpacity="0" fill="#fff">
                   <animate
-                    attributeName="fill-opacity"
+                    attributeName="fillOpacity"
                     begin="0s"
                     dur="1.3s"
                     values="0;0;0;0;0;0;0;1"

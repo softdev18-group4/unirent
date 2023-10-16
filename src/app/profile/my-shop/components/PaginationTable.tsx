@@ -6,7 +6,10 @@ import PaginaionBtn from "./PaginationBtn";
 import SearchBar from "./SearchBar";
 import { useCallback, useEffect, useState } from "react";
 import LoadingCard from "./LoadingCard";
-import { API_HOST } from "@/app/config";
+import { API_HOST } from "@/config";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 //========================================================Data=====================================================
 interface tableData {
   imgSrc: string;
@@ -24,45 +27,49 @@ function PaginationTable({ api }: { api: string }) {
   const [tableInfo, setTableInfo] = useState<tableData[]>([]);
   const [isLoading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
+  const { push } = useRouter();
+  //token
+  const { data: session, status } = useSession();
+  const token = session?.user.accessToken;
+
   const childSetPage = (setpage: number) => {
     if (setpage != page) {
       setPage(setpage);
       setLoading(true);
     }
   };
-  //manully token
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTA3ZDczMzg4ZDdhYzlkMmFkNzFmYjUiLCJyb2xlIjoidXNlciIsImlhdCI6MTY5NzI2MTYyNSwiZXhwIjoxNjk3MzQ4MDI1fQ.HI94R0Xu0QLHBIvAaW5j2QhK7nNQJ2HcjwF8M48KaLI";
   //fetch data
   const getData = async (page: number) => {
-    if (api == "yourProduct") {
-      //if api is yourProduct fetch from your product
-      const query = await fetch(
-        `${API_HOST}/products/yourProduct/byUser/search?page=${page}&perPage=5&keyword=${inputValue}&searchBy=name`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
-      const response = await query.json();
-      getTableData(response);
-    } else if (api == "yourOrder") {
-      const query = await fetch(
-        //if api is yourOrder fetch from your order
-        `${API_HOST}/orders/yourOrder/byUser/search?page=${page}&perPage=5&keyword=${inputValue}&searchBy=name`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
-      const response = await query.json();
-      getTableData(response);
+    if (session) {
+      if (api == "yourProduct") {
+        //if api is yourProduct fetch from your product
+        const query = await fetch(
+          `${API_HOST}/products/yourProduct/byUser/search?page=${page}&perPage=5&keyword=${inputValue}&searchBy=name`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        const response = await query.json();
+        getTableData(response);
+      } else if (api == "yourOrder") {
+        const query = await fetch(
+          //if api is yourOrder fetch from your order
+          `${API_HOST}/orders/yourOrder/byUser/search?page=${page}&perPage=5&keyword=${inputValue}&searchBy=name`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        const response = await query.json();
+        getTableData(response);
+      }
+      setLoading(false);
     }
-    setLoading(false);
   };
   //handle delete product
   const handleDelete = async (productId: string) => {
@@ -111,11 +118,13 @@ function PaginationTable({ api }: { api: string }) {
         if (period != "") period = period.slice(0, -1);
         if (price != "") price = price.slice(0, -1);
         let day, month, year;
-        day = new Date(tmp.availableDays.startDate).getDay() + 1;
+        day = new Date(tmp.availableDays.startDate).getDate();
         month = monthToString(new Date(tmp.availableDays.startDate).getMonth());
         year = new Date(tmp.availableDays.startDate).getFullYear();
         const onedata: tableData = {
-          imgSrc: "/product.png",
+          imgSrc: tmp.imageName[0]
+            ? "https://storage-unirent.1tpp.dev/unirent/" + tmp.imageName[0]
+            : "/product.png",
           name: tmp.name,
           status: tmp.availability ? "ว่าง" : "กำลังปล่อยเช่า",
           period: period,
@@ -131,14 +140,16 @@ function PaginationTable({ api }: { api: string }) {
     else if (api == "yourOrder") {
       data.map((tmp: any) => {
         let day, month, year;
-        day = new Date(tmp.product.availableDays.startDate).getDay() + 1;
+        day = new Date(tmp.product.availableDays.startDate).getDate();
         month = monthToString(
           new Date(tmp.product.availableDays.startDate).getMonth()
         );
         year = new Date(tmp.product.availableDays.startDate).getFullYear();
         //get Product of the order
         const onedata: tableData = {
-          imgSrc: "/product.png",
+          imgSrc: tmp.imageName[0]
+            ? "https://storage-unirent.1tpp.dev/unirent/" + tmp.imageName[0]
+            : "/product.png",
           name: tmp.product.name,
           status: tmp.status == "wait" ? "กำลังดำเนินการ" : "ได้รับแล้ว",
           period: tmp.rentalOption.type,
@@ -165,12 +176,12 @@ function PaginationTable({ api }: { api: string }) {
       getData(page);
     }
   }, [inputValue]);
-  //if inputvalue change set page=1
+  //initial fetch
   useEffect(() => {
     //setLoading(true);
-
-    getData(page);
-  }, [page]);
+    if (status === "unauthenticated") push("/auth/sign-in");
+    if (status === "authenticated" && session) getData(page);
+  }, [page, session]);
   // check if inputvalue change every 300 millisec
   useEffect(() => {
     const timer = setTimeout(() => {

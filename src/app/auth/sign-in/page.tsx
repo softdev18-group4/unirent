@@ -2,7 +2,7 @@ import Image from "next/image";
 import Form from "./Form";
 const Page = () => {
   return (
-    <div className="main_container">
+    <div className="main_container fixed">
       <div className="flex w-screen h-screen min-h-[40rem] bg-[#F1F6F9]">
         <Image
           src="/loginPic.png"
