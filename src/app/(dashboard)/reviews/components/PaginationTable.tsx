@@ -37,7 +37,7 @@ function PaginationTable() {
   const getData = async (page: number) => {
     //if api is yourProduct fetch from your product
     const query = await fetch(
-      `${API_HOST}/products/yourProduct/byUser/search?page=${page}&perPage=5&keyword=${inputValue}&searchBy=name`,
+      `/api/services/products/yourProduct/byUser/search?page=${page}&perPage=5&keyword=${inputValue}&searchBy=name`,
       {
         method: "GET",
         headers: {

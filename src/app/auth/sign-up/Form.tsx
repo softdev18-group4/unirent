@@ -46,7 +46,7 @@ const Form: React.FC = () => {
     e?.preventDefault();
     const { email, password, firstName, lastName } = data;
 
-    const result = await fetch(`${API_HOST}/auth/sign-up`, {
+    const result = await fetch(`/api/services/auth/sign-up`, {
       method: "POST",
       body: JSON.stringify({
         email,

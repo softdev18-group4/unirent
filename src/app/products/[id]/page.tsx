@@ -18,7 +18,7 @@ const Detail = ({ params }: { params: { id: string } }) => {
   
   const getProduct = async () => {
     const res = await fetch(
-      `${API_HOST}/products/${params.id}`
+      `/api/services/products/${params.id}`
     );
     const product = await res.json();
     product.src = imageList

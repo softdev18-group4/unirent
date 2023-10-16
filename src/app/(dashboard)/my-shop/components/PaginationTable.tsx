@@ -44,7 +44,7 @@ function PaginationTable({ api }: { api: string }) {
       if (api == "yourProduct") {
         //if api is yourProduct fetch from your product
         const query = await fetch(
-          `${API_HOST}/products/yourProduct/byUser/search?page=${page}&perPage=5&keyword=${inputValue}&searchBy=name`,
+          `/api/services/products/yourProduct/byUser/search?page=${page}&perPage=5&keyword=${inputValue}&searchBy=name`,
           {
             method: "GET",
             headers: {
@@ -57,7 +57,7 @@ function PaginationTable({ api }: { api: string }) {
       } else if (api == "yourOrder") {
         const query = await fetch(
           //if api is yourOrder fetch from your order
-          `${API_HOST}/orders/yourOrder/byUser/search?page=${page}&perPage=5&keyword=${inputValue}&searchBy=name`,
+          `/api/services/orders/yourOrder/byUser/search?page=${page}&perPage=5&keyword=${inputValue}&searchBy=name`,
           {
             method: "GET",
             headers: {
@@ -75,7 +75,7 @@ function PaginationTable({ api }: { api: string }) {
   const handleDelete = async (productId: string) => {
     //fetch to delete
     setLoading(true);
-    const query = await fetch(`${API_HOST}/products/${productId}`, {
+    const query = await fetch(`/api/services/products/${productId}`, {
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + token,

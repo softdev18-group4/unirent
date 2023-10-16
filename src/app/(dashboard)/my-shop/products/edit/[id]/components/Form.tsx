@@ -66,7 +66,7 @@ function From({ productId }: { productId: string }) {
   }, [session]);
   //get product data
   const getProduct = async () => {
-    const query = await fetch(`${API_HOST}/products/${productId}`, {
+    const query = await fetch(`/api/services/products/${productId}`, {
       method: "GET",
     });
     const response = await query.json();
@@ -187,7 +187,7 @@ function From({ productId }: { productId: string }) {
     for (const file of fileArray) {
       const data = new FormData();
       data.append("image", file);
-      const query = await fetch(`${API_HOST}/upload`, {
+      const query = await fetch(`/api/services/upload`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -199,7 +199,7 @@ function From({ productId }: { productId: string }) {
       // console.log(response);
       imagename.push(response.imageUrl.split("/")[2]);
     }
-    const query = await fetch(`${API_HOST}/products/${productId}`, {
+    const query = await fetch(`/api/services/products/${productId}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",

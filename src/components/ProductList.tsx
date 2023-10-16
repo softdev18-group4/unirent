@@ -50,7 +50,7 @@ function ProductList() {
   //pagination
   const getData = async (page: number) => {
     const query = await fetch(
-      `${API_HOST}/products/?page=${page}&perPage=6&searchBy=${searchBy}&keyword=${inputValue}`,
+      `/api/services/products/?page=${page}&perPage=6&searchBy=${searchBy}&keyword=${inputValue}`,
       {
         method: "GET",
       }
