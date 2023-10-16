@@ -3,7 +3,9 @@ import type { Metadata } from "next";
 import { Kanit } from "next/font/google";
 import ReduxProviders from "@/redux/provider";
 import AuthProvider from "../contexts/auth";
-// import SocketProvider from "@/contexts/socket";
+import SocketProvider from "@/contexts/socket";
+
+import Navbar from "@/components/Navbar";
 
 const kanit = Kanit({
   subsets: ["latin", "latin-ext", "thai"],
@@ -25,9 +27,9 @@ export default function RootLayout({
       <body className={kanit.className}>
         <ReduxProviders>
           <AuthProvider>
-            {/* <SocketProvider> */}
-            {children}
-            {/* </SocketProvider> */}
+            <SocketProvider>
+              {children}
+            </SocketProvider>
           </AuthProvider>
         </ReduxProviders>
       </body>
