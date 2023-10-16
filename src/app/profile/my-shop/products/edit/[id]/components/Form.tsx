@@ -200,7 +200,7 @@ function From({ productId }: { productId: string }) {
       imagename.push(response.imageUrl.split("/")[2]);
     }
     const query = await fetch(`${API_HOST}/products/${productId}`, {
-      method: "PUT",
+      method: "PATCH",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
