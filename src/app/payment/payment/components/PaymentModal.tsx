@@ -1,7 +1,7 @@
 import { loadStripe } from "@stripe/stripe-js";
 import PaymentForm from "./PaymentForm";
 import { Elements } from "@stripe/react-stripe-js";
-import { STRIPE_PUBLISHABLE_KEY } from "@/app/config";
+import { STRIPE_PUBLISHABLE_KEY } from "@/config";
 
 interface Mordal {
   showModal: (show: boolean) => void;

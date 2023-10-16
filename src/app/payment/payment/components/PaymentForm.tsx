@@ -2,9 +2,8 @@
 
 import React from "react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import axios from "axios";
 import { useSession } from "next-auth/react";
-import { API_HOST } from "@/app/config";
+import { API_HOST } from "@/config";
 
 export default function PaymentForm() {
     const stripe = useStripe();

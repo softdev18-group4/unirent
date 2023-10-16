@@ -7,7 +7,7 @@ import SearchBar from "./SearchBar";
 import { useCallback, useEffect, useState } from "react";
 import LoadingCard from "./LoadingCard";
 
-import { API_HOST } from "@/app/config";
+import { API_HOST } from "@/config";
 //========================================================Data=====================================================
 interface tableData {
   imgSrc: string;

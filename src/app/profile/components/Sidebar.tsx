@@ -7,7 +7,7 @@ function Sidebar({
   dashboard,
   product,
   orders,
-  message,
+  messages,
   history,
   reviews,
   settings,
@@ -18,7 +18,7 @@ function Sidebar({
   dashboard: string;
   product: string;
   orders: string;
-  message: string;
+  messages: string;
   history: string;
   reviews: string;
   settings: string;
@@ -51,7 +51,6 @@ function Sidebar({
   const pathname = usePathname();
 
   const handleLogout = () => {
-    //clear user data
     push("/");
   };
   return (
@@ -208,7 +207,7 @@ function Sidebar({
             </li>
             <li>
               <Link
-                href={message}
+                href={messages}
                 className={
                   pathname.includes("message")
                     ? "flex items-center w-full p-2 text-base text-[color:var(--theme-color2)] transition duration-75 rounded-lg group"

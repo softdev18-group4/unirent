@@ -8,7 +8,7 @@ import PictureBox from "../../../components/PictureBox";
 import SpecificationBox from "../../../components/SpecificationBox";
 import { useRouter } from "next/navigation";
 import DescriptionBox from "../../../components/DescriptionBox";
-import { API_HOST } from "@/app/config";
+import { API_HOST } from "@/config";
 
 function From({ productId }: { productId: string }) {
   const { push } = useRouter();

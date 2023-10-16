@@ -7,7 +7,7 @@ import PeriodBox from "./PeriodBox";
 import PictureBox from "./PictureBox";
 import SpecificationBox from "./SpecificationBox";
 import { useRouter } from "next/navigation";
-import { API_HOST } from "@/app/config";
+import { API_HOST } from "@/config";
 
 function From() {
   const { push } = useRouter();

@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { API_HOST } from "@/app/config";
+import { API_HOST } from "@/config";
 
 type SignUpSchema = z.infer<typeof signUpSchema>;
 

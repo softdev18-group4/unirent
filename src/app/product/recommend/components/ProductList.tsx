@@ -8,7 +8,7 @@ import { use, useCallback, useEffect, useState } from "react";
 import { product } from "@/redux/features/productSlice";
 import LoadingCard from "./cards/LoadingCard";
 
-import { API_HOST } from "@/app/config";
+import { API_HOST } from "@/config";
 
 //============================================================Data===========================================================================
 interface product {

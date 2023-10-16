@@ -17,7 +17,7 @@ export default function RootLayout({
         dashboard="/profile/dashboard"
         product="/profile/my-shop/products"
         orders="/profile/my-shop/orders"
-        message="/profile/message/0"
+        messages="/profile/messages"
         history="/profile/history"
         reviews="/profile/reviews"
         settings="/profile/settings"
