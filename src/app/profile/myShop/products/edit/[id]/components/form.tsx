@@ -38,6 +38,7 @@ function From({ productId }: { productId: string }) {
     location: "",
   });
   const [fileArray, setFileArray] = useState<File[]>([]);
+  const [oldImg, setOldImg] = useState<string[]>([]);
   const handleInput = (e: any, name?: string) => {
     if (name) {
       if (e && e.startDate != null && e.endDate != null) {
@@ -81,6 +82,8 @@ function From({ productId }: { productId: string }) {
     handleInput(response.specifications.storageSize, "summaryStorage");
     handleInput(response.specifications.ramSize, "RAM");
     handleInput(response.availableDays, "availableDays");
+    handleInput(response.location, "location");
+    setOldImg(response.imageName);
     const checkboxday = document.getElementById(
       "checkboxday checkbox"
     ) as HTMLInputElement;
@@ -90,17 +93,28 @@ function From({ productId }: { productId: string }) {
     const checkboxmonth = document.getElementById(
       "checkboxmonth checkbox"
     ) as HTMLInputElement;
+    const inputDay = document.getElementById("dayPrice") as HTMLInputElement;
+    const inputWeek = document.getElementById("weekPrice") as HTMLInputElement;
+    const inputMonth = document.getElementById(
+      "monthPrice"
+    ) as HTMLInputElement;
     for (const rentalOption of response.rentalOptions) {
       if (rentalOption.type == "Daily") {
         checkboxday.checked = true;
+        inputDay.disabled = false;
+        inputDay.classList.remove("cursor-not-allowed");
         handleInput(rentalOption.priceRate, "dayPrice");
       }
       if (rentalOption.type == "Weekly") {
         checkboxweek.checked = true;
+        inputWeek.disabled = false;
+        inputWeek.classList.remove("cursor-not-allowed");
         handleInput(rentalOption.priceRate, "weekPrice");
       }
       if (rentalOption.type == "Monthly") {
         checkboxmonth.checked = true;
+        inputMonth.disabled = false;
+        inputMonth.classList.remove("cursor-not-allowed");
         handleInput(rentalOption.priceRate, "monthPrice");
       }
     }
@@ -137,14 +151,14 @@ function From({ productId }: { productId: string }) {
         (checkboxweek.checked && formData.weekPrice == "") ||
         (checkboxmonth.checked && formData.monthPrice == "") ||
         formData.location == "" ||
-        fileArray.length == 0
+        (fileArray.length == 0 && oldImg.length == 0)
       ) {
-        if (errorPeriod) errorPeriod.classList.remove("hidden");
+        //  if (errorPeriod) errorPeriod.classList.remove("hidden");
         setError(true);
         return;
       }
     }
-    if (errorPeriod) errorPeriod.classList.add("hidden");
+    // if (errorPeriod) errorPeriod.classList.add("hidden");
     // const data = new FormData();
     // Object.entries(formData).forEach(([key, value]) => {
     //   data.append(key, value);
@@ -168,8 +182,25 @@ function From({ productId }: { productId: string }) {
       priceRate: Number(formData.monthPrice),
       isSelected: formData.monthPrice != "" ? true : false,
     });
+    //handle picture
+    const imagename: string[] = oldImg;
+    for (const file of fileArray) {
+      const data = new FormData();
+      data.append("image", file);
+      const query = await fetch(`${API_HOST}/upload`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: data,
+      });
+      const response = await query.json();
+      // console.log(response);
+      imagename.push(response.imageUrl.split("/")[2]);
+    }
     const query = await fetch(`${API_HOST}/products/${productId}`, {
-      method: "PUT",
+      method: "PATCH",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -178,11 +209,13 @@ function From({ productId }: { productId: string }) {
       body: JSON.stringify({
         name: formData.name,
         description: formData.description,
+        imageName: imagename,
         location: formData.location,
         specifications: {
           brand: formData.brand,
           model: formData.model,
           processor: formData.processor,
+          os: formData.operatingSystem,
           graphicCard: formData.graphicCard,
           ramSize: Number(formData.RAM),
           storageSize: Number(formData.avaliableStorage),
@@ -192,7 +225,7 @@ function From({ productId }: { productId: string }) {
       }),
     });
     const response = await query.json();
-    // console.log(response);
+    console.log(response);
     if (response.statusCode == 400) {
       const errorUpdate = document.getElementById("errorUpdate");
       if (errorUpdate) {
@@ -218,6 +251,8 @@ function From({ productId }: { productId: string }) {
       <PictureBox
         fileArray={fileArray}
         setFileArray={setFileArray}
+        oldImg={oldImg}
+        setOldImg={setOldImg}
       ></PictureBox>
       <SpecificationBox
         brandName="brand"
@@ -249,7 +284,10 @@ function From({ productId }: { productId: string }) {
         monthPriceValue={formData.monthPrice}
         handleInput={handleInput}
       ></PeriodBox>
-      <LocationBox handleInput={handleInput}></LocationBox>
+      <LocationBox
+        address={formData.location}
+        handleInput={handleInput}
+      ></LocationBox>
       <div className="col-start-1 xl:col-start-2 justify-self-center xl:justify-self-end flex flex-col w-[60%] xl:w-40 h-12 xl:h-16">
         <div
           className="text-red-500 font-bold w-full justify-center hidden"

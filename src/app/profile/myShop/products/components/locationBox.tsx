@@ -5,15 +5,16 @@ import dynamic from "next/dynamic";
 
 function LocationBox({
   handleInput,
+  address,
 }: {
   handleInput: (e: any, name?: string) => void;
+  address: string;
 }) {
   const MapComponent = dynamic(() => import("./map"), {
     ssr: false,
   });
 
   const [isOpen, setOpen] = useState(false);
-  const [address, setaddress] = useState("");
   const [selectedCoordinates, setSelectedCoordinates] = useState<
     [number, number]
   >([13.7291297, 100.7756406]);
@@ -24,7 +25,6 @@ function LocationBox({
       .then((data) => {
         const address = data.display_name;
         // console.log(address);
-        setaddress(address);
         handleInput(address, "location");
       });
   };

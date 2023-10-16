@@ -6,9 +6,13 @@ import Image from "next/image";
 function PictureBox({
   fileArray,
   setFileArray,
+  oldImg,
+  setOldImg,
 }: {
   fileArray: File[];
   setFileArray: Dispatch<SetStateAction<File[]>>;
+  oldImg?: string[];
+  setOldImg?: Dispatch<SetStateAction<string[]>>;
 }) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [indexMap, setIndexMap] = useState<{ [key: number]: number }>({});
@@ -66,6 +70,13 @@ function PictureBox({
       });
       setFileArray([...fileArray, ...files]);
       setNextId(nextId + files.length);
+    }
+  };
+  const handleDeleteOldImage = (id: number) => {
+    if (oldImg && setOldImg) {
+      const updateArray = [...oldImg];
+      updateArray.splice(id, 1);
+      setOldImg(updateArray);
     }
   };
   const handleDeleteImage = (id: number) => {
@@ -131,6 +142,36 @@ function PictureBox({
           </label>
         </div>
         <div className="flex flex-wrap w-full gap-2">
+          {oldImg?.map((image, index) => (
+            <div key={index} className="w-24 h-24 relative">
+              <Image
+                src={"https://storage-unirent.1tpp.dev/unirent/" + image}
+                width={400}
+                height={400}
+                alt={`Selected Image ${index}`}
+                className=" aspect-square"
+              ></Image>
+              <div
+                className="absolute top-0 right-0 w-4 h-4 bg-white hover:bg-slate-400 rounded-full cursor-pointer"
+                onClick={() => handleDeleteOldImage(index)}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </div>
+            </div>
+          ))}
           {selectedImages.map((image, index) => (
             <div key={index} className="w-24 h-24 relative">
               <Image

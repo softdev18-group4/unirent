@@ -219,7 +219,10 @@ function From() {
         monthPriceValue={formData.monthPrice}
         handleInput={handleInput}
       ></PeriodBox>
-      <LocationBox handleInput={handleInput}></LocationBox>
+      <LocationBox
+        address={formData.location}
+        handleInput={handleInput}
+      ></LocationBox>
       {error && (
         <div className="text-red-400 flex col-start-1 items-center justify-center xl:col-start-2 uppercase font-semibold rounded-xl xl:rounded-md w-full ">
           โปรดกรอกข้อมูลให้ครบ
