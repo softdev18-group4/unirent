@@ -15,6 +15,7 @@ interface product {
   id: string;
   name: string;
   description: string;
+  imageName: string[];
   ownerId: string;
   availability: boolean;
   availableDays: {
@@ -126,6 +127,7 @@ function ProductList() {
                 {
                   id,
                   name,
+                  imageName,
                   description,
                   ownerId,
                   availability,
@@ -147,6 +149,7 @@ function ProductList() {
                   key={index}
                   id={id}
                   name={name}
+                  imgSrc={imageName[0]}
                   description={description}
                   ownerId={ownerId}
                   availability={availability}

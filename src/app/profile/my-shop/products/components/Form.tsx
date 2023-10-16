@@ -8,11 +8,13 @@ import PictureBox from "./PictureBox";
 import SpecificationBox from "./SpecificationBox";
 import { useRouter } from "next/navigation";
 import { API_HOST } from "@/config";
+import { useSession } from "next-auth/react";
 
 function From() {
   const { push } = useRouter();
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTA3ZDczMzg4ZDdhYzlkMmFkNzFmYjUiLCJyb2xlIjoidXNlciIsImlhdCI6MTY5Njk1OTQwOCwiZXhwIjoxNjk3MDQ1ODA4fQ.zrkll4H4kIRcmw7cPW0EjGobuYXf7PRCaYe624b9vs0";
+  const [error, setError] = useState(false);
+  const { data: session, status } = useSession();
+  const token = session?.user.accessToken;
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -31,11 +33,16 @@ function From() {
     dayPrice: "",
     weekPrice: "",
     monthPrice: "",
+    location: "",
   });
+  const [fileArray, setFileArray] = useState<File[]>([]);
+  // useEffect(() => {
+  //   console.log(fileArray);
+  // }, [fileArray]);
 
   const handleInput = (e: any, name?: string) => {
     if (name) {
-      if (e.startDate != null && e.endDate != null) {
+      if (e && e.startDate != null && e.endDate != null) {
         e.startDate = new Date(e.startDate);
         e.endDate = new Date(e.endDate);
       }
@@ -85,18 +92,24 @@ function From() {
         ) ||
         (checkboxday.checked && formData.dayPrice == "") ||
         (checkboxweek.checked && formData.weekPrice == "") ||
-        (checkboxmonth.checked && formData.monthPrice == "")
+        (checkboxmonth.checked && formData.monthPrice == "") ||
+        formData.location == "" ||
+        fileArray.length == 0
       ) {
-        if (errorPeriod) errorPeriod.classList.remove("hidden");
+        //if (errorPeriod) errorPeriod.classList.remove("hidden");
+
+        setError(true);
         return;
       }
     }
-    if (errorPeriod) errorPeriod.classList.add("hidden");
+    setError(false);
+    // if (errorPeriod) errorPeriod.classList.add("hidden");
     // const data = new FormData();
     // Object.entries(formData).forEach(([key, value]) => {
     //   data.append(key, value);
     // });
 
+    //handle rental opions
     let rentalOptions: any[] = [];
     if (formData.dayPrice != "")
       rentalOptions.push({
@@ -113,6 +126,23 @@ function From() {
         type: "Monthly",
         priceRate: Number(formData.monthPrice),
       });
+    //handle picture
+    const imagename: string[] = [];
+    for (const file of fileArray) {
+      const data = new FormData();
+      data.append("image", file);
+      const query = await fetch(`${API_HOST}/upload`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: data,
+      });
+      const response = await query.json();
+      // console.log(response);
+      imagename.push(response.imageUrl.split("/")[2]);
+    }
     const query = await fetch(`${API_HOST}/products`, {
       method: "POST",
       headers: {
@@ -123,10 +153,13 @@ function From() {
       body: JSON.stringify({
         name: formData.name,
         description: formData.description,
+        imageName: imagename,
+        location: formData.location,
         specifications: {
           brand: formData.brand,
           model: formData.model,
           processor: formData.processor,
+          os: formData.operatingSystem,
           graphicCard: formData.graphicCard,
           ramSize: Number(formData.RAM),
           storageSize: Number(formData.avaliableStorage),
@@ -136,7 +169,7 @@ function From() {
       }),
     });
     const response = await query.json();
-    // console.log(response);
+    console.log(response);
 
     push("/profile/my-shop/products");
   };
@@ -152,7 +185,10 @@ function From() {
         descriptionValue={formData.description}
         handleInput={handleInput}
       ></DescriptionBox>
-      <PictureBox></PictureBox>
+      <PictureBox
+        fileArray={fileArray}
+        setFileArray={setFileArray}
+      ></PictureBox>
       <SpecificationBox
         brandName="brand"
         brandValue={formData.brand}
@@ -183,7 +219,15 @@ function From() {
         monthPriceValue={formData.monthPrice}
         handleInput={handleInput}
       ></PeriodBox>
-      <LocationBox></LocationBox>
+      <LocationBox
+        address={formData.location}
+        handleInput={handleInput}
+      ></LocationBox>
+      {error && (
+        <div className="text-red-400 flex col-start-1 items-center justify-center xl:col-start-2 uppercase font-semibold rounded-xl xl:rounded-md w-full ">
+          โปรดกรอกข้อมูลให้ครบ
+        </div>
+      )}
       <input
         type="submit"
         value="submit"
