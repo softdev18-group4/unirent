@@ -1,12 +1,12 @@
 "use client";
 
-import ProductListCard from "./cards/productListCard";
-import PaginaionBtn from "./button/paginationBtn";
-import FilterBtn from "./button/filterBtn";
-import SearchBar from "./bars/searchBar";
+import ProductListCard from "./cards/ProductListCard";
+import PaginaionBtn from "./button/PaginationBtn";
+import FilterBtn from "./button/FilterBtn";
+import SearchBar from "./bars/SearchBar";
 import { use, useCallback, useEffect, useState } from "react";
 import { product } from "@/redux/features/productSlice";
-import LoadingCard from "./cards/loadingCard";
+import LoadingCard from "./cards/LoadingCard";
 
 import { API_HOST } from "@/app/config";
 
@@ -58,7 +58,6 @@ function ProductList() {
     const response = await query.json();
     setLoading(false);
     setProductInfo(response);
-    //  console.log("this is page " + page);
   };
   const childSetPage = (setpage: number) => {
     if (setpage != page) {

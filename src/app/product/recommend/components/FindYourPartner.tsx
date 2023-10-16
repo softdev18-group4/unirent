@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import FindYourParterCard from "./cards/findYourPartnerCard";
+import FindYourParterCard from "./cards/FindYourPartnerCard";
 import Link from "next/link";
 //============================================================Data===========================================================================
 interface partner {

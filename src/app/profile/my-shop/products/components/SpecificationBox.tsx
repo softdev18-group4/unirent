@@ -1,4 +1,4 @@
-import Dropdown from "./dropDown";
+import Dropdown from "./DropDown";
 
 function SpecificationBox({
   brandName,

@@ -1,11 +1,12 @@
 "use client";
 
-import TableHeader from "./tableHeader";
-import ProductCard from "./productCard";
-import PaginaionBtn from "./paginationBtn";
-import SearchBar from "./searchBar";
+import TableHeader from "./TableHeader";
+import ProductCard from "./ProductCard";
+import PaginaionBtn from "./PaginationBtn";
+import SearchBar from "./SearchBar";
 import { useCallback, useEffect, useState } from "react";
-import LoadingCard from "./loadingCard";
+import LoadingCard from "./LoadingCard";
+
 import { API_HOST } from "@/app/config";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";

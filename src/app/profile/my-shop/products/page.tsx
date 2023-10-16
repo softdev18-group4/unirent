@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import PaginationTable from "../components/paginationTable";
+import PaginationTable from "../components/PaginationTable";
 
 export const metadata: Metadata = {
   // title: "Your Products",
@@ -15,7 +15,7 @@ function ProductsPage() {
         </div>
         <Link
           className="theme-text-color2 font-extrabold"
-          href="/profile/myShop/products/add"
+          href="/profile/my-shop/products/add"
         >
           + เพิ่มสินค้า
         </Link>

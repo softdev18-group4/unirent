@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 
-import LocationBox from "../../../components/locationBox";
-import PeriodBox from "../../../components/periodBox";
-import PictureBox from "../../../components/pictureBox";
-import SpecificationBox from "../../../components/specificationBox";
+import LocationBox from "../../../components/LocationBox";
+import PeriodBox from "../../../components/PeriodBox";
+import PictureBox from "../../../components/PictureBox";
+import SpecificationBox from "../../../components/SpecificationBox";
 import { useRouter } from "next/navigation";
-import DescriptionBox from "../../../components/descriptionBox";
+import DescriptionBox from "../../../components/DescriptionBox";
 import { API_HOST } from "@/app/config";
 import { useSession } from "next-auth/react";
 
@@ -233,7 +233,7 @@ function From({ productId }: { productId: string }) {
         errorUpdate.classList.add("flex");
       }
     } else {
-      push("/profile/myShop/products");
+      push("/profile/my-shop/products");
     }
   };
   return (

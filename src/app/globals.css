@@ -6,6 +6,6 @@
   background-color: #f1f6f9;
 }
 
-* {
-  @apply font-inter;
+.main {
+  @apply bg-[#F1F6F9];
 }

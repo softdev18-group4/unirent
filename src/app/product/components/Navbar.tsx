@@ -91,7 +91,7 @@ function Navbar() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              onClick={() => push("/profile/myShop/products")}
+              onClick={() => push("/profile/my-shop/products")}
               className="cursor-pointer rounded-full w-28 h-12 fill-white theme-bg-color1 p-3 mx-2 hover:bg-[color:var(--theme-color2)]"
             >
               <path
@@ -139,7 +139,7 @@ function Navbar() {
                         ["Rents", "/product/recommend"],
                         ["FAQ", "/product/recommend"],
                         ["Cart", "/payment/cart"],
-                        ["Profile", "/profile/myShop/products"],
+                        ["Profile", "/profile/my-shop/products"],
                       ].map(([title, url], index) => (
                         <li key={index}>
                           <Link

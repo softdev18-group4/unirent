@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import DescriptionBox from "./descriptionBox";
-import LocationBox from "./locationBox";
-import PeriodBox from "./periodBox";
-import PictureBox from "./pictureBox";
-import SpecificationBox from "./specificationBox";
+import { useState } from "react";
+import DescriptionBox from "./DescriptionBox";
+import LocationBox from "./LocationBox";
+import PeriodBox from "./PeriodBox";
+import PictureBox from "./PictureBox";
+import SpecificationBox from "./SpecificationBox";
 import { useRouter } from "next/navigation";
 import { API_HOST } from "@/app/config";
 import { useSession } from "next-auth/react";
@@ -171,7 +171,7 @@ function From() {
     const response = await query.json();
     console.log(response);
 
-    push("/profile/myShop/products");
+    push("/profile/my-shop/products");
   };
   return (
     <form

@@ -231,7 +231,13 @@ function Payment() {
         </div>
       </div>
 
-      {showModal && <PaymentModal showModal={setShowModal} />}
+      {showModal && (
+        <PaymentModal
+          showModal={setShowModal}
+          setPayment={setShowModal}
+          paymentMethod={paymentMethod}
+        />
+      )}
     </div>
   );
 }

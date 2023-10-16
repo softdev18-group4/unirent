@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import From from "./components/form";
+import From from "./components/Form";
 export const metadata: Metadata = {
   // title: "Add Product",
 };
@@ -14,7 +14,7 @@ function AddProduct({ params }: { params: { id: string } }) {
       <div className="flex items-center justify-start gap-3">
         <Link
           className="w-12 h-12 rounded-xl bg-white hover:bg-slate-200 border border-slate-400 flex items-center justify-center"
-          href="/profile/myShop/products"
+          href="/profile/my-shop/products"
         >
           <svg
             width="10"
