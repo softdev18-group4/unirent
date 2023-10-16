@@ -1,6 +1,25 @@
+"use client";
+
+import {
+  SelectedProduct,
+  setCart,
+  totalSelectedProduct,
+} from "@/redux/features/cartSlice";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 function Contract() {
+  const { push } = useRouter();
+  const totalselect = useSelector(totalSelectedProduct);
+  const selectedProduct = useSelector(SelectedProduct);
+  useEffect(() => {
+    if (totalselect != 1) {
+      push("/payment/cart");
+    }
+  }, []);
+
   return (
     <div className="px-[5%]">
       <div className="flex flex-col lg:w-[60%] gap-2 ">
@@ -32,8 +51,7 @@ function Contract() {
           </svg>
           <div className="flex flex-col">
             <div className="font-bold text-slate-700">
-              ECC Building Moo1 Ladkrabang 1 ถนนฉลองกรุง 22 แขวงบลาๆๆ
-              เขตลาดกระบัง กรุงเทพมหานคร 10520
+              {selectedProduct?.location}
             </div>
             <div className="self-end font-bold text-slate-400">
               Open in Google Map
