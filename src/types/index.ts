@@ -22,7 +22,7 @@ export interface ProductState {
   src   : string[];
 }
 
-interface RentalOption {
+export interface RentalOption {
   id: string;
   productId: string;
   type: string; // Daily, Weekly, Monthly
