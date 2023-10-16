@@ -56,6 +56,7 @@ export interface CartItem {
   isSelected: boolean;
   productid: string;
   imgSrc: string;
+  location: string;
   name: string;
   description: string;
   type: string;

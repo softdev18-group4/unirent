@@ -38,6 +38,7 @@ function Cart() {
         isSelected: true,
         productid: "sadasdasdas",
         imgSrc: "/product.png",
+        location: "stasadsad",
         name: "notebook123",
         description: "test redux",
         type: "Daily",
