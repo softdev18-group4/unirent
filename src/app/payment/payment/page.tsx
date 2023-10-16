@@ -93,7 +93,7 @@ function Payment() {
       
     </div>
 
-      {showModal && <PaymentModal showModal={setShowModal} paymentMethod={paymentMethod}/>}
+      {showModal && <PaymentModal showModal={setShowModal} setPayment={setShowModal} paymentMethod={paymentMethod}/>}
       
     </div>
   );
