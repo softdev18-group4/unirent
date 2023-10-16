@@ -25,7 +25,7 @@ export default function PaymentForm({ setPayment }: Props) {
         try {
             if (!stripe || !CardElement) return null;
             const orderId = "652badcae6839f6ce48b174a"
-            const res = await fetch(`${API_HOST}/payment/${orderId}`, {
+            const res = await fetch(`/api/services/payment/${orderId}`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${session?.user.accessToken}`

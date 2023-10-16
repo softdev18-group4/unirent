@@ -131,7 +131,7 @@ function From() {
     for (const file of fileArray) {
       const data = new FormData();
       data.append("image", file);
-      const query = await fetch(`${API_HOST}/upload`, {
+      const query = await fetch(`/api/services/upload`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -143,7 +143,7 @@ function From() {
       // console.log(response);
       imagename.push(response.imageUrl.split("/")[2]);
     }
-    const query = await fetch(`${API_HOST}/products`, {
+    const query = await fetch(`/api/services/products`, {
       method: "POST",
       headers: {
         Accept: "application/json",
