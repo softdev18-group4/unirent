@@ -51,14 +51,11 @@ function Sidebar({
   };
 
   const pathname = usePathname();
-
-  const handleLogout = () => {
-    push("/");
   const { data: session, status } = useSession();
   useEffect(() => {
     if (status == "unauthenticated") push("/auth/sign-in");
   }, [session]);
-  //console.log(session?.user.data);
+
   const handleLogout = async () => {
     //clear user data
     await signOut();
@@ -66,7 +63,7 @@ function Sidebar({
     resetNavhead();
     push("/auth/sign-in");
   };
-  
+
   return (
     <div className="sticky top-0 z-40">
       <div
@@ -382,4 +379,5 @@ function Sidebar({
     </div>
   );
 }
+
 export default Sidebar;
