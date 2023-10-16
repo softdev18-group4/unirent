@@ -174,13 +174,13 @@ function SpecificationBox({
             required
           ></input>
         </div>
-        {/* <Dropdown
+        <Dropdown
           name={operatingSystemName}
           value={operatingSystemValue}
           title="Operating System"
           dropdownList={[operatingSystemValue, "MacOS", "Linux"]}
           handleInput={handleInput}
-        ></Dropdown> */}
+        ></Dropdown>
       </div>
     </div>
   );

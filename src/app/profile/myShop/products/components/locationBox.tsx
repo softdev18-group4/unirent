@@ -25,20 +25,20 @@ function LocationBox({
         const address = data.display_name;
         // console.log(address);
         setaddress(address);
+        handleInput(address, "location");
       });
   };
   const setCordinate = ([lat, lng]: [number, number]) => {
     setSelectedCoordinates([lat, lng]);
     // console.log(lat, lng);
     ReverseGeocoding([lat, lng]);
-    handleInput(address, "location");
     toggleOpen();
   };
   const toggleOpen = () => {
     setOpen(!isOpen);
   };
   return (
-    <div className=" w-full row-start-[25] col-start-1 row-span-2 col-span-1 xl:row-start-[11] xl:col-start-2 xl:row-span-2 xl:col-span-1 relative">
+    <div className="z-0 w-full row-start-[25] col-start-1 row-span-2 col-span-1 xl:row-start-[11] xl:col-start-2 xl:row-span-2 xl:col-span-1 relative">
       <div className="cursor-default font-bold text-xl lg:text-2xl mb-4">
         จุดรับสินค้า
       </div>

@@ -7,11 +7,15 @@ import SearchBar from "./bars/searchBar";
 import { use, useCallback, useEffect, useState } from "react";
 import { product } from "@/redux/features/productSlice";
 import LoadingCard from "./cards/loadingCard";
+
+import { API_HOST } from "@/app/config";
+
 //============================================================Data===========================================================================
 interface product {
   id: string;
   name: string;
   description: string;
+  imageName: string[];
   ownerId: string;
   availability: boolean;
   availableDays: {
@@ -46,12 +50,7 @@ function ProductList() {
   //pagination
   const getData = async (page: number) => {
     const query = await fetch(
-      "https://api-unirent.1tpp.dev/products/?page=" +
-        page +
-        "&perPage=6&searchBy=" +
-        searchBy +
-        "&keyword=" +
-        inputValue,
+      `${API_HOST}/products/?page=${page}&perPage=6&searchBy=${searchBy}&keyword=${inputValue}`,
       {
         method: "GET",
       }
@@ -129,6 +128,7 @@ function ProductList() {
                 {
                   id,
                   name,
+                  imageName,
                   description,
                   ownerId,
                   availability,
@@ -150,6 +150,7 @@ function ProductList() {
                   key={index}
                   id={id}
                   name={name}
+                  imgSrc={imageName[0]}
                   description={description}
                   ownerId={ownerId}
                   availability={availability}

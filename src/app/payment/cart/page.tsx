@@ -60,7 +60,7 @@ function Cart() {
   };
   return (
     <div className="px-[5%]">
-      <div className="relative overflow-x-auto mt-4">
+      <div className="relative overflow-x-auto mt-4 min-">
         <table className="w-full border-separate border-spacing-y-4 text-xs md:text-sm lg:text-base table-fixed">
           <TableHeader></TableHeader>
 
@@ -96,7 +96,7 @@ function Cart() {
           )}
         </table>
       </div>
-      <div className="sticky pb-16 bottom-0 h-48 lg:h-52 z-40 bg-[#f1f6f9] border-t-2 border-slate-200 flex justify-between items-end">
+      <div className="sticky pb-8 bottom-0 h-40 lg:h-40 lg:pb-4 z-40 bg-[#f1f6f9] border-t-2 border-slate-200 flex justify-between items-end">
         <Link href="/product/recommend" className="font-bold text-slate-400">
           &lt; Continue Shopping
         </Link>
@@ -115,7 +115,7 @@ function Cart() {
             onClick={handleNextPage}
             className="transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer text-white bg-[color:var(--theme-color2)] w-48 uppercase font-bold rounded-full h-12 flex justify-center items-center gap-2"
           >
-            ดำเนินการต่อ
+            Next
           </button>
         </div>
       </div>

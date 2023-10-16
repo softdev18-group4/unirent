@@ -1,6 +1,28 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions, Profile } from "next-auth";
+
+import { API_HOST } from "@/app/config";
+
+async function fetchProfile(accessToken: string) {
+  const res = await fetch(`${API_HOST}/auth/profile`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return (await res.json()) as Profile;
+}
+
+async function verifyGoogleAccount(idToken: string) {
+  const res = await fetch(`${API_HOST}/auth/google`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+    },
+  });
+  return res;
+}
 
 export const options: NextAuthOptions = {
   providers: [
@@ -11,24 +33,25 @@ export const options: NextAuthOptions = {
         email: { label: "email", type: "text" },
         password: { label: "password", type: "password" },
       },
-      async authorize(credentials) {
-        const res = await fetch(`${process.env.API_URL}/auth/sign-in`, {
+      authorize: async (credentials) => {
+        const res = await fetch(`${API_HOST}/auth/sign-in`, {
           method: "POST",
-          body: JSON.stringify({
-            email: credentials?.email,
-            password: credentials?.password,
-          }),
+          body: JSON.stringify(credentials),
           headers: {
-            "Content-Type": "application/json", // Set the content type header
+            "Content-Type": "application/json",
           },
         });
         const response = await res.json();
-        // const accessToken = res.headers.get("authorization");
-        const accessToken = response?.access_token;
+        const accessToken = res.headers.get("Authorization") as string;
         if (res.ok && response) {
-          return { ...response, accessToken };
+          const profile = await fetchProfile(accessToken);
+          return { ...response, data: profile, accessToken };
         } else {
-          return null;
+          return {
+            ...response,
+            data: null,
+            accessToken: null,
+          };
         }
       },
     }),
@@ -38,10 +61,26 @@ export const options: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      return { ...token, ...user };
+    async signIn({ account }) {
+      if (account?.provider === "google") {
+        console.log(account);
+        const response = await verifyGoogleAccount(account.id_token as string);
+        return response && response.ok;
+      }
+      return true; // Do different verification for other providers that don't have `email_verified`
     },
-    async session({ session, token, user }) {
+    async jwt({ token, user, account }) {
+      if (account?.provider === "google") {
+        const response = await verifyGoogleAccount(account.id_token as string);
+        if (response && response.ok) {
+          const accessToken = response.headers.get("Authorization");
+          const profile = await fetchProfile(accessToken as string);
+          return { ...token, ...user, account, accessToken, data: profile };
+        }
+      }
+      return { ...token, ...user, account };
+    },
+    async session({ session, token }) {
       session.user = token as any;
       return session;
     },

@@ -1,4 +1,5 @@
 "use client";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -49,9 +50,12 @@ function Sidebar({
   };
 
   const pathname = usePathname();
-
-  const handleLogout = () => {
+  const { data: session, status } = useSession();
+  //console.log(session?.user.data);
+  const handleLogout = async () => {
     //clear user data
+    await signOut();
+    localStorage.clear();
     resetNavhead();
     push("/auth/sign-in");
   };
@@ -111,7 +115,7 @@ function Sidebar({
                 <div className="theme-text-color1">rent</div>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 href={dashboard}
                 onClick={resetNavhead}
@@ -136,7 +140,7 @@ function Sidebar({
                 </svg>
                 <span className="ml-3">Dashboard</span>
               </Link>
-            </li>
+            </li> */}
             <li>
               <button
                 type="button"
@@ -235,7 +239,7 @@ function Sidebar({
                 <span className="flex-1 ml-3 whitespace-nowrap">Message</span>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 onClick={resetNavhead}
                 href={history}
@@ -261,7 +265,7 @@ function Sidebar({
 
                 <span className="flex-1 ml-3 whitespace-nowrap">History</span>
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
                 onClick={resetNavhead}
@@ -295,7 +299,7 @@ function Sidebar({
                 <span className="flex-1 ml-3 whitespace-nowrap">Reviews</span>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 onClick={resetNavhead}
                 href={settings}
@@ -321,7 +325,7 @@ function Sidebar({
 
                 <span className="flex-1 ml-3 whitespace-nowrap">Settings</span>
               </Link>
-            </li>
+            </li> */}
             <li>
               <div className="h-20"></div>
             </li>
@@ -329,7 +333,7 @@ function Sidebar({
               <div className="flex gap-2 items-center justify-start">
                 <div className="w-[30%]">
                   <Image
-                    src={profileImg}
+                    src="https://storage-unirent.1tpp.dev/unirent/c9ce6bb785610a6e50ae135a21b3b34c.png"
                     width={800}
                     height={800}
                     objectFit="none"
@@ -338,9 +342,19 @@ function Sidebar({
                   />
                 </div>
 
-                <div className="cursor-default justify-self-end grow flex flex-col items-start justify-center">
-                  <div className="text-slate-600 text-sm">{name}</div>
-                  <div className="text-slate-400 text-sm">{email}</div>
+                <div className="cursor-default justify-self-end w-[70%] flex flex-col items-start justify-center truncate">
+                  <div className="text-slate-600 text-sm">
+                    {session?.user.data != null
+                      ? session.user.data.firstName +
+                        " " +
+                        session.user.data.lastName
+                      : "loading"}
+                  </div>
+                  <div className="text-slate-400 text-sm truncate">
+                    {session?.user.data != null
+                      ? session.user.data.email
+                      : "loading"}
+                  </div>
                 </div>
                 <svg
                   width="16"

@@ -8,12 +8,15 @@ import PictureBox from "../../../components/pictureBox";
 import SpecificationBox from "../../../components/specificationBox";
 import { useRouter } from "next/navigation";
 import DescriptionBox from "../../../components/descriptionBox";
+import { API_HOST } from "@/app/config";
+import { useSession } from "next-auth/react";
 
 function From({ productId }: { productId: string }) {
   const { push } = useRouter();
+  const [error, setError] = useState(false);
   const router = useRouter();
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTA3ZDczMzg4ZDdhYzlkMmFkNzFmYjUiLCJyb2xlIjoidXNlciIsImlhdCI6MTY5Njk1OTQwOCwiZXhwIjoxNjk3MDQ1ODA4fQ.zrkll4H4kIRcmw7cPW0EjGobuYXf7PRCaYe624b9vs0";
+  const { data: session, status } = useSession();
+  const token = session?.user.accessToken;
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -34,9 +37,10 @@ function From({ productId }: { productId: string }) {
     monthPrice: "",
     location: "",
   });
+  const [fileArray, setFileArray] = useState<File[]>([]);
   const handleInput = (e: any, name?: string) => {
     if (name) {
-      if (e.startDate != null && e.endDate != null) {
+      if (e && e.startDate != null && e.endDate != null) {
         e.startDate = new Date(e.startDate);
         e.endDate = new Date(e.endDate);
       }
@@ -56,16 +60,14 @@ function From({ productId }: { productId: string }) {
   };
   //initial fetch
   useEffect(() => {
-    getProduct();
-  }, []);
+    if (status === "unauthenticated") push("/auth/sign-in");
+    if (status === "authenticated" && session) getProduct();
+  }, [session]);
   //get product data
   const getProduct = async () => {
-    const query = await fetch(
-      "https://api-unirent.1tpp.dev/products/" + productId,
-      {
-        method: "GET",
-      }
-    );
+    const query = await fetch(`${API_HOST}/products/${productId}`, {
+      method: "GET",
+    });
     const response = await query.json();
     //  console.log(response);
     if (response.statusCode == 500) router.back();
@@ -133,9 +135,12 @@ function From({ productId }: { productId: string }) {
         ) ||
         (checkboxday.checked && formData.dayPrice == "") ||
         (checkboxweek.checked && formData.weekPrice == "") ||
-        (checkboxmonth.checked && formData.monthPrice == "")
+        (checkboxmonth.checked && formData.monthPrice == "") ||
+        formData.location == "" ||
+        fileArray.length == 0
       ) {
         if (errorPeriod) errorPeriod.classList.remove("hidden");
+        setError(true);
         return;
       }
     }
@@ -163,32 +168,29 @@ function From({ productId }: { productId: string }) {
       priceRate: Number(formData.monthPrice),
       isSelected: formData.monthPrice != "" ? true : false,
     });
-    const query = await fetch(
-      "https://api-unirent.1tpp.dev/products/" + productId,
-      {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
+    const query = await fetch(`${API_HOST}/products/${productId}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify({
+        name: formData.name,
+        description: formData.description,
+        location: formData.location,
+        specifications: {
+          brand: formData.brand,
+          model: formData.model,
+          processor: formData.processor,
+          graphicCard: formData.graphicCard,
+          ramSize: Number(formData.RAM),
+          storageSize: Number(formData.avaliableStorage),
         },
-        body: JSON.stringify({
-          name: formData.name,
-          description: formData.description,
-          location: formData.location,
-          specifications: {
-            brand: formData.brand,
-            model: formData.model,
-            processor: formData.processor,
-            graphicCard: formData.graphicCard,
-            ramSize: Number(formData.RAM),
-            storageSize: Number(formData.avaliableStorage),
-          },
-          availableDays: formData.availableDays,
-          rentalOptions: rentalOptions,
-        }),
-      }
-    );
+        availableDays: formData.availableDays,
+        rentalOptions: rentalOptions,
+      }),
+    });
     const response = await query.json();
     // console.log(response);
     if (response.statusCode == 400) {
@@ -213,7 +215,10 @@ function From({ productId }: { productId: string }) {
         descriptionValue={formData.description}
         handleInput={handleInput}
       ></DescriptionBox>
-      <PictureBox></PictureBox>
+      <PictureBox
+        fileArray={fileArray}
+        setFileArray={setFileArray}
+      ></PictureBox>
       <SpecificationBox
         brandName="brand"
         brandValue={formData.brand}
@@ -252,6 +257,11 @@ function From({ productId }: { productId: string }) {
         >
           update ไม่สำเร็จ
         </div>
+        {error && (
+          <div className="text-red-400 flex col-start-1 items-center justify-center xl:col-start-2 uppercase font-semibold rounded-xl xl:rounded-md w-full ">
+            โปรดกรอกข้อมูลให้ครบ
+          </div>
+        )}
         <div
           onClick={onSubmit}
           className="transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer bg-[color:var(--theme-color2)] text-white uppercase font-semibold rounded-xl xl:rounded-md xl:w-40 h-8 xl:h-12 flex items-center justify-center gap-3"
@@ -264,17 +274,17 @@ function From({ productId }: { productId: string }) {
             className="hidden"
             id="updateLoadingSvg"
           >
-            <g fill="none" fill-rule="evenodd">
-              <g transform="translate(2 1)" stroke="#FFF" stroke-width="1.5">
+            <g fill="none" fillRule="evenodd">
+              <g transform="translate(2 1)" stroke="#FFF" strokeWidth="1.5">
                 <circle
                   cx="42.601"
                   cy="11.462"
                   r="5"
-                  fill-opacity="1"
+                  fillOpacity="1"
                   fill="#fff"
                 >
                   <animate
-                    attributeName="fill-opacity"
+                    attributeName="fillOpacity"
                     begin="0s"
                     dur="1.3s"
                     values="1;0;0;0;0;0;0;0"
@@ -286,11 +296,11 @@ function From({ productId }: { productId: string }) {
                   cx="49.063"
                   cy="27.063"
                   r="5"
-                  fill-opacity="0"
+                  fillOpacity="0"
                   fill="#fff"
                 >
                   <animate
-                    attributeName="fill-opacity"
+                    attributeName="fillOpacity"
                     begin="0s"
                     dur="1.3s"
                     values="0;1;0;0;0;0;0;0"
@@ -302,11 +312,11 @@ function From({ productId }: { productId: string }) {
                   cx="42.601"
                   cy="42.663"
                   r="5"
-                  fill-opacity="0"
+                  fillOpacity="0"
                   fill="#fff"
                 >
                   <animate
-                    attributeName="fill-opacity"
+                    attributeName="fillOpacity"
                     begin="0s"
                     dur="1.3s"
                     values="0;0;1;0;0;0;0;0"
@@ -314,9 +324,9 @@ function From({ productId }: { productId: string }) {
                     repeatCount="indefinite"
                   />
                 </circle>
-                <circle cx="27" cy="49.125" r="5" fill-opacity="0" fill="#fff">
+                <circle cx="27" cy="49.125" r="5" fillOpacity="0" fill="#fff">
                   <animate
-                    attributeName="fill-opacity"
+                    attributeName="fillOpacity"
                     begin="0s"
                     dur="1.3s"
                     values="0;0;0;1;0;0;0;0"
@@ -328,11 +338,11 @@ function From({ productId }: { productId: string }) {
                   cx="11.399"
                   cy="42.663"
                   r="5"
-                  fill-opacity="0"
+                  fillOpacity="0"
                   fill="#fff"
                 >
                   <animate
-                    attributeName="fill-opacity"
+                    attributeName="fillOpacity"
                     begin="0s"
                     dur="1.3s"
                     values="0;0;0;0;1;0;0;0"
@@ -344,11 +354,11 @@ function From({ productId }: { productId: string }) {
                   cx="4.938"
                   cy="27.063"
                   r="5"
-                  fill-opacity="0"
+                  fillOpacity="0"
                   fill="#fff"
                 >
                   <animate
-                    attributeName="fill-opacity"
+                    attributeName="fillOpacity"
                     begin="0s"
                     dur="1.3s"
                     values="0;0;0;0;0;1;0;0"
@@ -360,11 +370,11 @@ function From({ productId }: { productId: string }) {
                   cx="11.399"
                   cy="11.462"
                   r="5"
-                  fill-opacity="0"
+                  fillOpacity="0"
                   fill="#fff"
                 >
                   <animate
-                    attributeName="fill-opacity"
+                    attributeName="fillOpacity"
                     begin="0s"
                     dur="1.3s"
                     values="0;0;0;0;0;0;1;0"
@@ -372,9 +382,9 @@ function From({ productId }: { productId: string }) {
                     repeatCount="indefinite"
                   />
                 </circle>
-                <circle cx="27" cy="5" r="5" fill-opacity="0" fill="#fff">
+                <circle cx="27" cy="5" r="5" fillOpacity="0" fill="#fff">
                   <animate
-                    attributeName="fill-opacity"
+                    attributeName="fillOpacity"
                     begin="0s"
                     dur="1.3s"
                     values="0;0;0;0;0;0;0;1"

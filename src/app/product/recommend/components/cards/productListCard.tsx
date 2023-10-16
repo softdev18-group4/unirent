@@ -6,6 +6,7 @@ import Link from "next/link";
 function ProductListCard({
   id,
   name,
+  imgSrc,
   description,
   ownerId,
   availability,
@@ -23,6 +24,7 @@ function ProductListCard({
 }: {
   id: string;
   name: string;
+  imgSrc: string;
   description: string;
   ownerId: string;
   availability: boolean;
@@ -75,14 +77,18 @@ function ProductListCard({
       href={"/product/detail/" + id}
       className="cursor-pointer drop-shadow-lg bg-white rounded-xl"
     >
-      <div className="flex flex-col justify-center h-[100%]">
+      <div className="flex flex-col justify-center h-full w-full">
         {
           <Image
-            src={"/product.png"}
-            width={1000}
-            height={1000}
-            alt="Picture of the author"
-            className="w-[100%] rounded-t-xl"
+            src={
+              imgSrc
+                ? "https://storage-unirent.1tpp.dev/unirent/" + imgSrc
+                : "/product.png"
+            }
+            width={300}
+            height={200}
+            alt="Picture of the product"
+            className="w-full rounded-t-xl"
           />
         }
 

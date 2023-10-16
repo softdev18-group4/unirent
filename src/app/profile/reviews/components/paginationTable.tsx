@@ -6,6 +6,9 @@ import PaginaionBtn from "./paginationBtn";
 import SearchBar from "./searchBar";
 import { useCallback, useEffect, useState } from "react";
 import LoadingCard from "./loadingCard";
+import { API_HOST } from "@/app/config";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 //========================================================Data=====================================================
 interface tableData {
   imgSrc: string;
@@ -20,24 +23,20 @@ function PaginationTable() {
   const [tableInfo, setTableInfo] = useState<tableData[]>([]);
   const [isLoading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
+  const { push } = useRouter();
   const childSetPage = (setpage: number) => {
     if (setpage != page) {
       setPage(setpage);
       setLoading(true);
     }
   };
-  //manully token
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTA3ZDczMzg4ZDdhYzlkMmFkNzFmYjUiLCJyb2xlIjoidXNlciIsImlhdCI6MTY5NzI2MTYyNSwiZXhwIjoxNjk3MzQ4MDI1fQ.HI94R0Xu0QLHBIvAaW5j2QhK7nNQJ2HcjwF8M48KaLI";
+  const { data: session, status } = useSession();
+  const token = session?.user.accessToken;
   //fetch data
   const getData = async (page: number) => {
     //if api is yourProduct fetch from your product
     const query = await fetch(
-      "https://api-unirent.1tpp.dev/products/yourProduct/byUser/search?page=" +
-        page +
-        "&perPage=5&keyword=" +
-        inputValue +
-        "&searchBy=name",
+      `${API_HOST}/products/yourProduct/byUser/search?page=${page}&perPage=5&keyword=${inputValue}&searchBy=name`,
       {
         method: "GET",
         headers: {
@@ -68,7 +67,9 @@ function PaginationTable() {
     const tabledata: tableData[] = [];
     data.map((tmp: any) => {
       const onedata: tableData = {
-        imgSrc: "/product.png",
+        imgSrc: tmp.imageName[0]
+          ? "https://storage-unirent.1tpp.dev/unirent/" + tmp.imageName[0]
+          : "/product.png",
         name: tmp.name,
         status: tmp.availability ? "ว่าง" : "กำลังปล่อยเช่า",
         productId: tmp.id,
@@ -95,8 +96,9 @@ function PaginationTable() {
   //if inputvalue change set page=1
   useEffect(() => {
     //setLoading(true);
-    getData(page);
-  }, [page]);
+    if (status === "unauthenticated") push("/auth/sign-in");
+    if (status === "authenticated" && session) getData(page);
+  }, [page, session]);
   // check if inputvalue change every 300 millisec
   useEffect(() => {
     const timer = setTimeout(() => {

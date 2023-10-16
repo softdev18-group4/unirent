@@ -1,14 +1,20 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import Image from "next/image";
 
-function PictureBox() {
+function PictureBox({
+  fileArray,
+  setFileArray,
+}: {
+  fileArray: File[];
+  setFileArray: Dispatch<SetStateAction<File[]>>;
+}) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [indexMap, setIndexMap] = useState<{ [key: number]: number }>({});
   const [selectedImages, setSelectedImages] = useState<
     { id: number; url: string }[]
   >([]);
-  const [fileArray, setFileArray] = useState<File[]>([]);
   const [nextId, setNextId] = useState(0);
 
   const handleLabelClick = () => {
@@ -21,13 +27,20 @@ function PictureBox() {
     event.preventDefault();
     if (fileInputRef.current && event.dataTransfer.files.length > 0) {
       const files = Array.from(event.dataTransfer.files);
-      const imageUrls = files.map((file) => ({
-        id: nextId,
+      const imageUrls = files.map((file, index) => ({
+        id: nextId + index,
         url: URL.createObjectURL(file),
       }));
       setSelectedImages([...selectedImages, ...imageUrls]);
+      files.forEach((_, index) => {
+        const newId = nextId + index;
+        setIndexMap((prevState) => ({
+          ...prevState,
+          [newId]: fileArray.length + index,
+        }));
+      });
       setFileArray([...fileArray, ...files]);
-      setNextId(nextId + 1);
+      setNextId(nextId + files.length);
       fileInputRef.current.files = event.dataTransfer.files;
     }
   };
@@ -39,22 +52,39 @@ function PictureBox() {
       fileInputRef.current.files.length > 0
     ) {
       const files = Array.from(fileInputRef.current.files);
-      const imageUrls = files.map((file) => ({
-        id: nextId,
+      const imageUrls = files.map((file, index) => ({
+        id: nextId + index,
         url: URL.createObjectURL(file),
       }));
       setSelectedImages([...selectedImages, ...imageUrls]);
+      files.forEach((_, index) => {
+        const newId = nextId + index;
+        setIndexMap((prevState) => ({
+          ...prevState,
+          [newId]: fileArray.length + index,
+        }));
+      });
       setFileArray([...fileArray, ...files]);
-      setNextId(nextId + 1);
+      setNextId(nextId + files.length);
     }
   };
   const handleDeleteImage = (id: number) => {
     const updatedImages = selectedImages.filter((image) => image.id !== id);
     setSelectedImages(updatedImages);
-    const updatedFileArray = fileArray.filter(
-      (file) => fileArray.indexOf(file) !== id
-    );
-    setFileArray(updatedFileArray);
+
+    const fileIndex = indexMap[id];
+    if (fileIndex !== undefined) {
+      const updatedFileArray = [...fileArray];
+      updatedFileArray.splice(fileIndex, 1);
+      setFileArray(updatedFileArray);
+
+      // Update indexMap for remaining images
+      const newIndexMap: { [key: number]: number } = {};
+      updatedImages.forEach((image) => {
+        newIndexMap[image.id] = updatedFileArray.findIndex((file) => file);
+      });
+      setIndexMap(newIndexMap);
+    }
   };
 
   return (
@@ -118,13 +148,13 @@ function PictureBox() {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   stroke="currentColor"
                   className="w-4 h-4"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M6 18L18 6M6 6l12 12"
                   />
                 </svg>
