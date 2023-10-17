@@ -15,16 +15,17 @@ export default function RootLayout({
     <div>
       <Sidebar
         dashboard="/dashboard"
-        product="/my-shop/products"
+        products="/my-shop/products"
         orders="/my-shop/orders"
         messages="/messages"
+        profile="/profile"
         history="/history"
         reviews="/reviews"
         settings="/settings"
         profileImg="/product.png"
         name="Tylor Swift"
         email="tylor@gmail.com"
-      ></Sidebar>
+      />
       <div className="md:ml-64 z-30">
         <main>{children}</main>
       </div>

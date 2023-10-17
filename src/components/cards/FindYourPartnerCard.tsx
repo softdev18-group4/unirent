@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 function FindYourParterCard({
   id,
@@ -6,23 +7,25 @@ function FindYourParterCard({
   topic,
   description,
 }: {
-  id: number;
+  id: string;
   imgSrc: string;
   topic: string;
   description: string;
 }) {
   return (
-    <div className="grow-[3] cursor-pointer items-stretch ">
-      <div className="flex gap-4 items-center justify-start drop-shadow-lg h-full bg-white p-3 rounded-xl">
-        <div>
+    <Link
+      className="grow-[3] cursor-pointer items-stretch"
+      href={"/profile/" + id}
+    >
+      <div className="flex gap-4 items-center justify-start drop-shadow-lg h-24 bg-white p-3 rounded-xl">
+        <div className="h-full aspect-square">
           <Image
             src={imgSrc}
-            width={60}
-            height={60}
+            width={200}
+            height={200}
             // layout="fill"
-            objectFit="none"
             alt="Picture of the author"
-            className="rounded-full w-[100%] aspect-square"
+            className="rounded-full w-[100%]"
           />
         </div>
         <div className="flex flex-col items-stretch">
@@ -30,7 +33,7 @@ function FindYourParterCard({
           <div>{description}</div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 export default FindYourParterCard;
