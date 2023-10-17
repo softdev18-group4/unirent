@@ -145,7 +145,7 @@ function PictureBox({
           {oldImg?.map((image, index) => (
             <div key={index} className="w-24 h-24 relative">
               <Image
-                src={"https://storage-unirent.1tpp.dev/unirent/" + image}
+                src={image}
                 width={400}
                 height={400}
                 alt={`Selected Image ${index}`}

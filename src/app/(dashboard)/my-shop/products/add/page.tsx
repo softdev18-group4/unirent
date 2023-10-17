@@ -34,7 +34,7 @@ function AddProduct() {
         </div>
       </div>
       <div className="my-20">
-        <From></From>
+        <From />
       </div>
     </div>
   );
