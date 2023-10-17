@@ -1,7 +1,7 @@
 import { ProductSelectorProps } from "@/types"
 import { useState } from "react";
 
-const ProductSelector = ({title , price , handleClick , select , key} : ProductSelectorProps) => {
+const ProductSelector = ({title , price , handleClick , select } : ProductSelectorProps) => {
 
   const handleSelectorClick = () => {
     if (handleClick) {

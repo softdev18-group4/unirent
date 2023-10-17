@@ -2,14 +2,15 @@
 
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { reset, updateProduct } from "@/redux/features/productSlice";
+import { addToCart} from "@/redux/features/cartSlice";
 import { Star, CustomButton, ProductSelector } from "..";
 import { SetStateAction, useEffect, useState } from "react";
-import { RentalOption } from "@/types/index";
+import { ProductState, RentalOption } from "@/types/index";
 import { days } from "@/constants";
 
 const ProductSelect = () => {
   const dispatch = useAppDispatch();
-  const product =  useAppSelector(
+  const product : ProductState=  useAppSelector(
     (state: { productReducer: { value: any } }) => state.productReducer.value
   );
   const [average, setAverage] = useState(0);
@@ -18,6 +19,25 @@ const ProductSelect = () => {
   const [total , setTotal] = useState(0);
   const [selectedOption, setSelectedOption] = useState(-1);
 
+  const handleAddToCart = () => {
+    if (selectedOption !== -1){
+      dispatch(
+        addToCart({
+          isSelected: true,
+          productid: product.id,
+          rentalId: product.rentalOptions[selectedOption].id ,
+          imgSrc:  product.imageName[0],
+          location: product.location,
+          name: product.name,
+          description: product.description,
+          type: product.rentalOptions[selectedOption].type,
+          period: count * days[product.rentalOptions[selectedOption].type as keyof typeof days],
+          price: total
+        })
+      );
+    }
+    
+  };
   const handleOptionChange = (index : number) => {
     setSelectedOption(index);
   };
@@ -57,7 +77,7 @@ const ProductSelect = () => {
     <div className="product_select">
       <div className="product_select_title">
         <h1>{product.name}</h1>
-        <CustomButton title="เพิ่มไปยังตะกร้า" customBtn="btn_custom1" />
+        <CustomButton title="เพิ่มไปยังตะกร้า" handleClick={handleAddToCart} customBtn="btn_custom1" />
       </div>
       <div className="product_select_tag">
         <p>Macbook</p>
@@ -91,7 +111,7 @@ const ProductSelect = () => {
         <h1>{count}</h1>
         <CustomButton title="+" handleClick={handleIncrease} />
       </div>
-      <CustomButton title="เช่า" customBtn="btn_custom2" />
+      <CustomButton title="เช่า" handleClick={handleAddToCart} customBtn="btn_custom2" />
     </div>
   );
 };

@@ -1,6 +1,12 @@
+import { useAppSelector } from '@/redux/hooks';
 import { CustomButton } from '..';
+import { ProductState } from '@/types';
 
 const CardSeller = () => {
+  const product : ProductState=  useAppSelector(
+    (state: { productReducer: { value: any } }) => state.productReducer.value
+  );
+  
   return (
     <div className="card_seller">
       <div className="left">
@@ -12,7 +18,7 @@ const CardSeller = () => {
           alt="avatar"
         />
         <div className="avatar_title">
-            <h1>{"Prayut D. Monkey"}</h1>
+            <h1>{product.owner.firstName}</h1>
             <CustomButton customBtn="btn_custom3" title="แชทพูดคุย"/>
         </div>
       </div>

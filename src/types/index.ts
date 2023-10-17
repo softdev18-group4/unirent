@@ -13,6 +13,11 @@ export interface ProductState {
     startDate: string;
     endDate: string;
   };
+  owner : {
+    email : string;
+    firstName : string;
+    lastName : string;
+  }
   id: string;
   name: string;
   description: string;
@@ -21,6 +26,7 @@ export interface ProductState {
   rentalOptions: RentalOption[];
   src: string[];
   imageName : string[];
+  location : string;
 }
 
 export interface RentalOption {
@@ -49,7 +55,6 @@ export interface ProductSelectorProps {
   price: number;
   handleClick?: () => void;
   select : boolean;
-  key : number;
 }
 
 export interface CardDetailProps {
