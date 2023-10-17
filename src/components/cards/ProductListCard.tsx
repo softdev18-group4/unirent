@@ -2,6 +2,8 @@
 import Star from "../Star";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+
+
 function ProductListCard({
   id,
   name,

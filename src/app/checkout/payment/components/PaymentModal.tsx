@@ -18,8 +18,8 @@ export default function PaymentModal({ showModal, paymentMethod, setPayment }: M
 
   return (
     <div className="fixed top-0 left-0 right-0 z-40 h-full w-full bg-black bg-opacity-50 grid justify-items-center items-center">
-      <div className="bg-white rounded-xl shadow sm:w-1/2 sm:h-2/3 md:w-4/5 md:h-1/2 lg:w-1/2 lg:h-2/3 w-4/5 h-1/2">
-        <div className="grid justify-items-end px-4 py-4">
+      <div className="bg-white rounded-xl shadow sm:w-1/2 sm:h-2/3 md:w-4/5 md:h-1/2 lg:w-1/2 lg:h-2/3 w-4/5 h-1/2 grid">
+        <div className="grid justify-items-end px-4 py-4 h-0">
           <svg
             onClick={handleMordal}
             className="w-12 cursor-pointer"
@@ -41,8 +41,8 @@ export default function PaymentModal({ showModal, paymentMethod, setPayment }: M
               <PaymentForm setPayment={setPayment} />
             </Elements>
           </div>
-          <div style={{ display: `${paymentMethod != 3 ? "" : "none"}` }} className="w-full border-2">
-            <div className="font-semibold	text-4xl grid justify-items-center">Coming Soon!</div>
+          <div style={{ display: `${paymentMethod != 3 ? "" : "none"}` }} className=" grid justify-items-center items-center">
+            <div className="font-semibold	text-4xl">Coming Soon!</div>
           </div>
         </div>
 

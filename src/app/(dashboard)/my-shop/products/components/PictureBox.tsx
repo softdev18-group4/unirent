@@ -1,7 +1,7 @@
 "use client";
 
 import { Dispatch, SetStateAction, useRef, useState } from "react";
-import Image from "next/image";
+
 
 function PictureBox({
   fileArray,
@@ -148,7 +148,7 @@ function PictureBox({
                 src={image}
                 width={400}
                 height={400}
-                alt={`Selected Image ${index}`}
+                alt={`Selected img ${index}`}
                 className=" aspect-square"
              />
               <div
@@ -178,7 +178,7 @@ function PictureBox({
                 src={image.url}
                 width={400}
                 height={400}
-                alt={`Selected Image ${index}`}
+                alt={`Selected img ${index}`}
                 className=" aspect-square"
               />
               <div

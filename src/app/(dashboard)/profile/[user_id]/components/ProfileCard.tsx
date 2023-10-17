@@ -2,7 +2,6 @@
 
 import { API_HOST } from "@/config";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 //============================================================Data===========================================================================
