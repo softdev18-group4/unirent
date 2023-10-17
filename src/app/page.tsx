@@ -1,19 +1,23 @@
-import SignOutButton from "@/components/SignOutButton";
+import type { Metadata } from "next";
+import Explore from "../components/Explore";
+import FindYourParter from "../components/FindYourPartner";
+import ProductList from "../components/ProductList";
+import Navbar from "@/components/Navbar";
 
-import { getServerSession } from "next-auth/next";
-import { options } from "@/app/api/auth/[...nextauth]/options";
-
-const Page = async () => {
-  const session = await getServerSession(options);
-
-  return (
-    <div className="main_container">
-      {session && <SignOutButton />}
-
-      {session && <p>Token: {session.user.accessToken}</p>}
-      {session && <p>Profile {JSON.stringify(session.user.data)}</p>}
-    </div>
-  );
+export const metadata: Metadata = {
+  //title: "Recommend",
 };
 
-export default Page;
+function Recommend() {
+  return (
+    <>
+      <Navbar />
+      <div className="px-[5%]">
+        <Explore />
+        <FindYourParter />
+        <ProductList />
+      </div>
+    </>
+  );
+}
+export default Recommend;

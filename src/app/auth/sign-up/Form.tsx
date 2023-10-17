@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { API_HOST } from "@/app/config";
+import { API_HOST } from "@/config";
 
 type SignUpSchema = z.infer<typeof signUpSchema>;
 
@@ -46,7 +46,7 @@ const Form: React.FC = () => {
     e?.preventDefault();
     const { email, password, firstName, lastName } = data;
 
-    const result = await fetch(`${API_HOST}/auth/sign-up`, {
+    const result = await fetch(`/api/services/auth/sign-up`, {
       method: "POST",
       body: JSON.stringify({
         email,
