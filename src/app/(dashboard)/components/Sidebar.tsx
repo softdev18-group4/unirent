@@ -376,7 +376,7 @@ function Sidebar({
             <li className="fixed left-0 bottom-0 pb-5 px-4 bg-white w-64">
               <div className="flex gap-2 items-center justify-start">
                 <div className="w-[30%]">
-                  <img
+                  <Image
                     src={
                       session?.user.data != null
                         ? session.user.data.profileImage

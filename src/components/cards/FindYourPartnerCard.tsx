@@ -19,7 +19,7 @@ function FindYourParterCard({
     >
       <div className="flex gap-4 items-center justify-start drop-shadow-lg h-24 bg-white p-3 rounded-xl">
         <div className="h-full aspect-square">
-          <img
+          <Image
             src={imgSrc}
             width={200}
             height={200}

@@ -22,7 +22,7 @@ function MessageCard({
     >
       <Link href={herf} className="">
         <div className="flex items-center gap-2">
-          <img
+          <Image
             src={imgSrc}
             width={60}
             height={60}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 function ProductCard({
   imgSrc,
@@ -59,7 +60,7 @@ function ProductCard({
                   : { pointerEvents: "none", textDecoration: "none" }
               }
             >
-              <img
+              <Image
                 src={imgSrc}
                 width={60}
                 height={60}
