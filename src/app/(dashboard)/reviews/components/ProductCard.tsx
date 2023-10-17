@@ -20,11 +20,11 @@ function ProductCard({
       <td className="rounded-l-2xl bg-white">
         <Link
           className="flex items-center justify-left truncate"
-          href={"/product/detail/" + productId}
+          href={"/products/" + productId}
         >
           <div className="flex items-center gap-2 w-full ml-[calc(20%)]">
             <div className="flex gap-2 items-center h-[80px] w-full truncate">
-              <img
+              <Image
                 src={imgSrc}
                 width={60}
                 height={60}
@@ -39,7 +39,7 @@ function ProductCard({
 
       <td>
         <Link
-          href={"/product/detail/" + productId}
+          href={"/products/" + productId}
           className={
             status == "ว่าง" || status == "กำลังดำเนินการ"
               ? "text-yellow-500 text-left bg-white truncate flex items-center justify-start w-full h-[80px]"
@@ -51,7 +51,7 @@ function ProductCard({
       </td>
       <td className="rounded-r-2xl text-left bg-white truncate">
         <Link
-          href={"/product/detail/" + productId}
+          href={"/products/" + productId}
           className="rounded-r-2xl text-left bg-white truncate flex items-center justify-start w-full h-[80px]"
         >
           {rating == -1 ? "ไม่มีรีวิว" : <Star rating={rating}></Star>}

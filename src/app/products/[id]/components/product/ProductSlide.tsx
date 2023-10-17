@@ -24,7 +24,7 @@ const ProductSlide = () => {
     <div className="product_image">
       {product && (
         <>
-        <img
+        <Image
         src={product.imageName[currentIndex]}
         alt={`Image ${currentIndex + 1}`}
         className="image_fix object-cover"
@@ -38,7 +38,7 @@ const ProductSlide = () => {
               index === currentIndex ? "active" : ""
             }`}
           >
-            <img
+            <Image
               src={image}
               alt={`Image ${index + 1}`}
               className="image_fixv2"
