@@ -22,12 +22,10 @@ const ProductSlide = () => {
   };
   return (
     <div className="product_image">
-      <Image
+      <img
         src={product.src[currentIndex]}
         alt={`Image ${currentIndex + 1}`}
-        layout="fill"
-        objectFit="cover"
-        className="image_fix"
+        className="image_fix object-cover"
       />
 
       <div className="product_image_under">
@@ -38,11 +36,9 @@ const ProductSlide = () => {
               index === currentIndex ? "active" : ""
             }`}
           >
-            <Image
+            <img
               src={image}
               alt={`Image ${index + 1}`}
-              layout="fill"
-              objectFit="cover"
               className="image_fix"
               onClick={() => setCurrentIndex(index)}
             />

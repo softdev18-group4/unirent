@@ -15,11 +15,11 @@ function FindYourParterCard({
   return (
     <Link
       className="grow-[3] cursor-pointer items-stretch"
-      href={"/profile/" + id}
+      href={`/profile/${id}`}
     >
       <div className="flex gap-4 items-center justify-start drop-shadow-lg h-24 bg-white p-3 rounded-xl">
         <div className="h-full aspect-square">
-          <Image
+          <img
             src={imgSrc}
             width={200}
             height={200}

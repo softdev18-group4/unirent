@@ -44,11 +44,10 @@ function CartCard({
               }
             ></div>
             <div className="flex gap-6 items-center w-[60%] break-words">
-              <Image
+              <img
                 src={imgSrc}
                 width={800}
                 height={800}
-                objectFit="none"
                 alt="Picture of product"
                 className=" rounded-md h-10 sm:h-16 lg:h-40 w-[30%]"
               />
