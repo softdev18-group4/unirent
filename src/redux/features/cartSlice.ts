@@ -31,6 +31,7 @@ const cartSlice = createSlice({
         type,
         period,
         price,
+        rentTime
       } = action.payload;
       const existingItem = state.items.find(
         (item) => item.productid === productid
@@ -48,6 +49,8 @@ const cartSlice = createSlice({
           type,
           period,
           price,
+          rentTime
+          
         });
       }
       localStorage.setItem("cart", JSON.stringify(state.items));

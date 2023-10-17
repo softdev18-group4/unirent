@@ -33,6 +33,7 @@ const ProductSelect = () => {
           description: product.description,
           type: product.rentalOptions[selectedOption].type,
           period: count * days[product.rentalOptions[selectedOption].type as keyof typeof days],
+          rentTime : count,
           price: total
         })
       );

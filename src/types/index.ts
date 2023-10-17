@@ -72,4 +72,5 @@ export interface CartItem {
   type: string;
   period: number;
   price: number;
+  rentTime : number;
 }
