@@ -2,8 +2,8 @@
 
 import TableHeader from "./TableHeader";
 import ProductCard from "./ProductCard";
-import PaginaionBtn from "./PaginationBtn";
-import SearchBar from "./SearchBar";
+import PaginaionBtn from "../../components/PaginationBtn";
+import SearchBar from "../../components/SearchBar";
 import { useCallback, useEffect, useState } from "react";
 import LoadingCard from "./LoadingCard";
 import { API_HOST } from "@/config";
@@ -19,7 +19,7 @@ interface tableData {
   price: string;
   date: string;
   timeleft: string;
-  productId: string;
+  id: string;
 }
 //=================================================================================================================
 function PaginationTable() {
@@ -41,9 +41,9 @@ function PaginationTable() {
   //fetch data
   const getData = async (page: number) => {
     if (session) {
-      //if api is yourProduct fetch from your product
       const query = await fetch(
-        `/api/services/products/yourProduct/byUser/search?page=${page}&perPage=5&keyword=${inputValue}&searchBy=name`,
+        //if api is yourOrder fetch from your order
+        `/api/services/orders/yourOrder/byUser/search?page=${page}&perPage=5&keyword=${inputValue}&searchBy=name`,
         {
           method: "GET",
           headers: {
@@ -53,19 +53,23 @@ function PaginationTable() {
       );
       const response = await query.json();
       getTableData(response);
-
-      setLoading(false);
     }
+    setLoading(false);
   };
-  //handle delete product
-  const handleDelete = async (productId: string) => {
+  //handle verify product
+  const handleVerify = async (orderId: string) => {
     //fetch to delete
     setLoading(true);
-    const query = await fetch(`/api/services/products/${productId}`, {
-      method: "DELETE",
+    const query = await fetch(`/api/services/orders/${orderId}`, {
+      method: "PATCH",
       headers: {
+        Accept: "application/json",
         Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        status: "Done",
+      }),
     });
     const response = await query.json();
     // console.log(response);
@@ -93,36 +97,44 @@ function PaginationTable() {
     //transfrom array of product data to table data
     const tabledata: tableData[] = [];
 
+    //transfrom array of order data to table data
     data.map((tmp: any) => {
-      //period and price string
-      let period: string = "";
-      let price: string = "";
-      for (const rentalOption of tmp.rentalOptions) {
-        period += rentalOption.type + "/";
-        price += rentalOption.priceRate + "/";
-      }
-      if (period != "") period = period.slice(0, -1);
-      if (price != "") price = price.slice(0, -1);
       let day, month, year;
-      day = new Date(tmp.availableDays.startDate).getDate();
-      month = monthToString(new Date(tmp.availableDays.startDate).getMonth());
-      year = new Date(tmp.availableDays.startDate).getFullYear();
+      day = new Date(tmp.product.availableDays.startDate).getDate();
+      month = monthToString(
+        new Date(tmp.product.availableDays.startDate).getMonth()
+      );
+      year = new Date(tmp.product.availableDays.startDate).getFullYear();
+      //get Product of the order
       const onedata: tableData = {
         imgSrc: tmp.imageName[0]
           ? "https://storage-unirent.1tpp.dev/unirent/" + tmp.imageName[0]
           : "/product.png",
-        name: tmp.name,
-        status: tmp.availability ? "ว่าง" : "กำลังปล่อยเช่า",
-        period: period,
-        price: price,
+        name: tmp.product.name,
+        status: tmp.status == "wait" ? "กำลังดำเนินการ" : "ได้รับแล้ว",
+        period: tmp.rentalOption.type,
+        price: tmp.rentalOption.priceRate,
         date: day + " " + month + " " + year,
-        timeleft: "",
-        productId: tmp.id,
+        timeleft: tmp.rentTime + " ชั่วโมง",
+        id: tmp.id,
       };
       tabledata.push(onedata);
     });
 
     setTableInfo(tabledata);
+    //for testing
+    // setTableInfo([
+    //   {
+    //     imgSrc: "/product.png",
+    //     name: "test",
+    //     status: "เสร็จสิน",
+    //     period: "string",
+    //     price: "string",
+    //     date: "string",
+    //     timeleft: "string",
+    //     id: "string",
+    //   },
+    // ]);
   };
   // //initial fetch and if page change fetch again
   // useEffect(() => {
@@ -184,9 +196,9 @@ function PaginationTable() {
                   price={data.price}
                   date={data.date}
                   timeleft={data.timeleft}
-                  productId={data.productId}
-                  canDelete={true}
-                  handleDelete={handleDelete}
+                  orderId={data.id}
+                  canDelete={false}
+                  handleVerify={handleVerify}
                 ></ProductCard>
               </tbody>
             ))

@@ -10,7 +10,7 @@ function ReviewsPage() {
     <div className="p-8">
       <div className="flex justify-between items-end">
         <div className="cursor-default font-bold uppercase text-2xl lg:text-3xl">
-          reviews
+          Your Product reviews
         </div>
       </div>
       <PaginationTable></PaginationTable>

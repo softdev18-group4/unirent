@@ -94,7 +94,7 @@ function ProfileCard({ userId }: { userId: string }) {
               <div className="text-lg font-normal text-slate-400">
                 {user != null ? `${user.email}` : "loading"}
               </div>
-              {userId == "my-profile" ? (
+              {userId == "my-profile" || userId == session?.user.data.id ? (
                 //คิดก่อนว่าทำดีไหม
                 <div className="hidden w-24 h-10 bg-slate-300 hover:bg-slate-400 rounded-full flex justify-center items-center cursor-pointer">
                   แก้ไข
