@@ -37,6 +37,7 @@ function Cart() {
       addToCart({
         isSelected: true,
         productid: "sadasdasdas",
+        rentalId: "asdasdasd",
         imgSrc: "/product.png",
         location: "stasadsad",
         name: "notebook123",
