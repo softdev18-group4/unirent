@@ -72,7 +72,7 @@ function ProfileCard({ userId }: { userId: string }) {
         <div className="w-full h-full flex-col lg:flex-row flex justify-evenly items-center p-4 gap-2">
           <div className="h-[40%] lg:h-full w-fit lg:w-[40%] flex items-center justify-center gap-4">
             <div className="w-36 h-36 aspect-square">
-              <img
+              <Image
                 src={
                   user?.imgSrc != null
                     ? user.imgSrc

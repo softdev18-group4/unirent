@@ -144,7 +144,7 @@ function PictureBox({
         <div className="flex flex-wrap w-full gap-2">
           {oldImg?.map((image, index) => (
             <div key={index} className="w-24 h-24 relative">
-              <img
+              <Image
                 src={image}
                 width={400}
                 height={400}
@@ -174,7 +174,7 @@ function PictureBox({
           ))}
           {selectedImages.map((image, index) => (
             <div key={index} className="w-24 h-24 relative">
-              <img
+              <Image
                 src={image.url}
                 width={400}
                 height={400}

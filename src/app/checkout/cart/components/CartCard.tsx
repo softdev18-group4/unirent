@@ -44,7 +44,7 @@ function CartCard({
               }
             ></div>
             <div className="flex gap-6 items-center w-[60%] break-words">
-              <img
+              <Image
                 src={imgSrc}
                 width={800}
                 height={800}
