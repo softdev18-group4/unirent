@@ -144,13 +144,13 @@ function PictureBox({
         <div className="flex flex-wrap w-full gap-2">
           {oldImg?.map((image, index) => (
             <div key={index} className="w-24 h-24 relative">
-              <Image
-                src={"https://storage-unirent.1tpp.dev/unirent/" + image}
+              <img
+                src={image}
                 width={400}
                 height={400}
                 alt={`Selected Image ${index}`}
                 className=" aspect-square"
-              ></Image>
+             />
               <div
                 className="absolute top-0 right-0 w-4 h-4 bg-white hover:bg-slate-400 rounded-full cursor-pointer"
                 onClick={() => handleDeleteOldImage(index)}
@@ -174,13 +174,13 @@ function PictureBox({
           ))}
           {selectedImages.map((image, index) => (
             <div key={index} className="w-24 h-24 relative">
-              <Image
+              <img
                 src={image.url}
                 width={400}
                 height={400}
                 alt={`Selected Image ${index}`}
                 className=" aspect-square"
-              ></Image>
+              />
               <div
                 className="absolute top-0 right-0 w-4 h-4 bg-white hover:bg-slate-400 rounded-full cursor-pointer"
                 onClick={() => handleDeleteImage(image.id)}

@@ -1,5 +1,4 @@
 "use clients";
-import Image from "next/image";
 import Star from "../Star";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -79,12 +78,8 @@ function ProductListCard({
     >
       <div className="flex flex-col justify-center h-full w-full">
         {
-          <Image
-            src={
-              imgSrc
-                ? "https://storage-unirent.1tpp.dev/unirent/" + imgSrc
-                : "/product.png"
-            }
+          <img
+            src={imgSrc ? imgSrc : "/product.png"}
             width={300}
             height={200}
             alt="Picture of the product"

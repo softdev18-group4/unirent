@@ -62,7 +62,7 @@ function ProductListCard({
           <Image
             src={
               imgSrc
-                ? "https://storage-unirent.1tpp.dev/unirent/" + imgSrc
+                ? imgSrc
                 : "/product.png"
             }
             width={300}

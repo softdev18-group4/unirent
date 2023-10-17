@@ -24,11 +24,10 @@ function ProductCard({
         >
           <div className="flex items-center gap-2 w-full ml-[calc(20%)]">
             <div className="flex gap-2 items-center h-[80px] w-full truncate">
-              <Image
+              <img
                 src={imgSrc}
                 width={60}
                 height={60}
-                objectFit="none"
                 alt="Picture of the product"
                 className="hidden rounded-md lg:flex aspect-square"
               />

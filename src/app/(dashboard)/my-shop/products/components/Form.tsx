@@ -140,8 +140,7 @@ function From() {
         body: data,
       });
       const response = await query.json();
-      // console.log(response);
-      imagename.push(response.imageUrl.split("/")[2]);
+      imagename.push(response.imageUrl);
     }
     const query = await fetch(`/api/services/products`, {
       method: "POST",
@@ -184,11 +183,8 @@ function From() {
         productValue={formData.name}
         descriptionValue={formData.description}
         handleInput={handleInput}
-      ></DescriptionBox>
-      <PictureBox
-        fileArray={fileArray}
-        setFileArray={setFileArray}
-      ></PictureBox>
+      />
+      <PictureBox fileArray={fileArray} setFileArray={setFileArray} />
       <SpecificationBox
         brandName="brand"
         brandValue={formData.brand}
@@ -207,7 +203,7 @@ function From() {
         operatingSystemName="operatingSystem"
         operatingSystemValue={formData.operatingSystem}
         handleInput={handleInput}
-      ></SpecificationBox>
+      />
       <PeriodBox
         availableDaysName="availableDays"
         availableDaysValue={formData.availableDays}
@@ -232,7 +228,7 @@ function From() {
         type="submit"
         value="submit"
         className="transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer col-start-1 justify-self-center xl:col-start-2 xl:justify-self-end bg-[color:var(--theme-color2)] text-white uppercase font-semibold rounded-xl xl:rounded-md w-[60%] xl:w-40 h-8 xl:h-12"
-      ></input>
+      />
     </form>
   );
 }

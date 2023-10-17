@@ -19,7 +19,7 @@ export default function RootLayout({
         orders="/my-shop/orders"
         messages="/messages"
         profile="/profile/my-profile"
-        history="/history"
+        transactions="/transactions"
         reviews="/reviews"
         settings="/settings"
         profileImg="/product.png"

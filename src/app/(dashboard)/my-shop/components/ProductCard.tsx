@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 function ProductCard({
@@ -60,11 +59,10 @@ function ProductCard({
                   : { pointerEvents: "none", textDecoration: "none" }
               }
             >
-              <Image
+              <img
                 src={imgSrc}
                 width={60}
                 height={60}
-                objectFit="none"
                 alt="Picture of the author"
                 className="hidden rounded-md lg:flex aspect-square"
               />
