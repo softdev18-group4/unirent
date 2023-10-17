@@ -11,7 +11,7 @@ function Sidebar({
   products,
   orders,
   messages,
-  history,
+  transactions,
   reviews,
   settings,
   profileImg,
@@ -23,7 +23,7 @@ function Sidebar({
   products: string;
   orders: string;
   messages: string;
-  history: string;
+  transactions: string;
   reviews: string;
   settings: string;
   profileImg: string;
@@ -281,19 +281,19 @@ function Sidebar({
                 <span className="flex-1 ml-3 whitespace-nowrap">Message</span>
               </Link>
             </li>
-            {/* <li>
+            <li>
               <Link
                 onClick={resetNavhead}
-                href={history}
+                href={transactions}
                 className={
-                  pathname.includes(history)
+                  pathname.includes(transactions)
                     ? "flex items-center w-full p-2 text-base text-[color:var(--theme-color2)] transition duration-75 rounded-lg group"
                     : "flex items-center w-full p-2 text-base text-[color:var(--theme-color1)] transition duration-75 rounded-lg group hover:text-[color:var(--theme-color2)]"
                 }
               >
                 <svg
                   className={
-                    pathname.includes(history)
+                    pathname.includes(transactions)
                       ? "w-5 h-5 text-[color:var(--theme-color2)] transition duration-75"
                       : "w-5 h-5 text-[color:var(--theme-color1)] transition duration-75 group-hover:text-[color:var(--theme-color2)]"
                   }
@@ -305,9 +305,11 @@ function Sidebar({
                   <path d="M13.8 1.3C9.9 -0.9 5.1 -0.2 2 2.8V1C2 0.4 1.6 0 1 0C0.4 0 0 0.4 0 1V5.5C0 6.1 0.4 6.5 1 6.5H5.5C6.1 6.5 6.5 6.1 6.5 5.5C6.5 4.9 6.1 4.5 5.5 4.5H3.1C4.5 2.9 6.6 2 8.9 2C13.3 2 16.9 5.6 16.9 10C16.9 14.4 13.3 18 8.9 18C8.3 18 7.9 18.4 7.9 19C7.9 19.6 8.3 20 8.9 20C12.5 20 15.8 18.1 17.6 15C20.3 10.2 18.6 4.1 13.8 1.3ZM8.8 6C8.2 6 7.8 6.4 7.8 7V10C7.8 10.6 8.2 11 8.8 11H10.8C11.4 11 11.8 10.6 11.8 10C11.8 9.4 11.4 9 10.8 9H9.8V7C9.8 6.4 9.4 6 8.8 6Z" />
                 </svg>
 
-                <span className="flex-1 ml-3 whitespace-nowrap">History</span>
+                <span className="flex-1 ml-3 whitespace-nowrap">
+                  Transactions
+                </span>
               </Link>
-            </li> */}
+            </li>
             <li>
               <Link
                 onClick={resetNavhead}
@@ -374,7 +376,7 @@ function Sidebar({
             <li className="fixed left-0 bottom-0 pb-5 px-4 bg-white w-64">
               <div className="flex gap-2 items-center justify-start">
                 <div className="w-[30%]">
-                  <Image
+                  <img
                     src={
                       session?.user.data != null
                         ? session.user.data.profileImage
@@ -382,9 +384,8 @@ function Sidebar({
                     }
                     width={800}
                     height={800}
-                    objectFit="none"
                     alt="Picture of the author"
-                    className="rounded-full w-full aspect-square"
+                    className="rounded-full w-full aspect-square object-fit"
                   />
                 </div>
 

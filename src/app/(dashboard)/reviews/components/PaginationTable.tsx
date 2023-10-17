@@ -7,9 +7,9 @@ import SearchBar from "./SearchBar";
 import { useCallback, useEffect, useState } from "react";
 import LoadingCard from "./LoadingCard";
 
-import { API_HOST } from "@/config";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+
 //========================================================Data=====================================================
 interface tableData {
   imgSrc: string;
@@ -19,6 +19,7 @@ interface tableData {
   rating: number;
 }
 //=================================================================================================================
+
 function PaginationTable() {
   const [inputValue, setInputValue] = useState<string>("");
   const [tableInfo, setTableInfo] = useState<tableData[]>([]);
@@ -63,13 +64,13 @@ function PaginationTable() {
   };
   //transfrom array of product data to table data
   const getTableData = (data: any) => {
-    //data:any input depends on (Your Order) and (Your Product) api
-    //transfrom array of product data to table data
+    // data:any input depends on (Your Order) and (Your Product) api
+    // transfrom array of product data to table data
     const tabledata: tableData[] = [];
     data.map((tmp: any) => {
       const onedata: tableData = {
         imgSrc: tmp.imageName[0]
-          ? "https://storage-unirent.1tpp.dev/unirent/" + tmp.imageName[0]
+          ? tmp.imageName[0]
           : "/product.png",
         name: tmp.name,
         status: tmp.availability ? "ว่าง" : "กำลังปล่อยเช่า",
@@ -81,10 +82,6 @@ function PaginationTable() {
 
     setTableInfo(tabledata);
   };
-  // //initial fetch and if page change fetch again
-  // useEffect(() => {
-  //   if (inputValue == "") getData(page);
-  // }, [page]);
 
   //handle search
   const searchHandler = useCallback(async () => {
@@ -94,12 +91,14 @@ function PaginationTable() {
       getData(page);
     }
   }, [inputValue]);
+
   //if inputvalue change set page=1
   useEffect(() => {
     //setLoading(true);
     if (status === "unauthenticated") push("/auth/sign-in");
     if (status === "authenticated" && session) getData(page);
   }, [page, session]);
+
   // check if inputvalue change every 300 millisec
   useEffect(() => {
     const timer = setTimeout(() => {
