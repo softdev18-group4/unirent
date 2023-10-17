@@ -23,6 +23,7 @@ const cartSlice = createSlice({
       const {
         isSelected,
         productid,
+        rentalId,
         imgSrc,
         location,
         name,
@@ -39,6 +40,7 @@ const cartSlice = createSlice({
         state.items.push({
           isSelected,
           productid,
+          rentalId,
           imgSrc,
           location,
           name,
