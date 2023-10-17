@@ -5,8 +5,6 @@ import ReduxProviders from "@/redux/provider";
 import AuthProvider from "../contexts/auth";
 import SocketProvider from "@/contexts/socket";
 
-import Navbar from "@/components/Navbar";
-
 const kanit = Kanit({
   subsets: ["latin", "latin-ext", "thai"],
   weight: "400",

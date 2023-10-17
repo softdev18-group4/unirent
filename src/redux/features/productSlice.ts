@@ -43,7 +43,13 @@ const initialState = {
         priceRate: 149.99
       }
     ],
-    src: imageList
+    src: imageList,
+    imageName : imageList,
+    owner : {
+      email : "mew@example.com",
+      firstName: "John",
+      lastName: "Doe"
+    }
   } as ProductState
 } as InitialState
 

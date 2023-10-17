@@ -13,6 +13,11 @@ export interface ProductState {
     startDate: string;
     endDate: string;
   };
+  owner : {
+    email : string;
+    firstName : string;
+    lastName : string;
+  }
   id: string;
   name: string;
   description: string;
@@ -20,9 +25,11 @@ export interface ProductState {
   availability: boolean;
   rentalOptions: RentalOption[];
   src: string[];
+  imageName : string[];
+  location : string;
 }
 
-interface RentalOption {
+export interface RentalOption {
   id: string;
   productId: string;
   type: string; // Daily, Weekly, Monthly
@@ -46,6 +53,8 @@ export interface StarProps {
 export interface ProductSelectorProps {
   title: string;
   price: number;
+  handleClick?: () => void;
+  select : boolean;
 }
 
 export interface CardDetailProps {

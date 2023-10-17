@@ -1,6 +1,6 @@
 "use client"
 
-import Image from "next/image";
+
 import { ProductRent, CardSeller , ProductDetail ,ProductCharacteristics ,ProductReview} from "./components";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useEffect } from "react";
@@ -10,7 +10,7 @@ import { API_HOST } from "@/config";
 
 const Detail = ({ params }: { params: { id: string } }) => {
   const dispatch = useAppDispatch();
-  const product = useAppSelector((state) => state.productReducer.value);
+  const product = useAppSelector((state: { productReducer: { value: any; }; }) => state.productReducer.value);
 
   useEffect(() => {
     getProduct();

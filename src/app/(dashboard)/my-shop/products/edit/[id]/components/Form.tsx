@@ -196,7 +196,7 @@ function From({ productId }: { productId: string }) {
       });
       const response = await query.json();
       // console.log(response);
-      imagename.push(response.imageUrl.split("/")[2]);
+      imagename.push(response.imageUrl);
     }
     const query = await fetch(`/api/services/products/${productId}`, {
       method: "PUT",
