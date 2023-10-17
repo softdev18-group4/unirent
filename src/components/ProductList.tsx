@@ -1,17 +1,13 @@
 "use client";
 
+import React, { useCallback, useEffect, useState } from "react";
 import ProductListCard from "./cards/ProductListCard";
-import PaginaionBtn from "./button/PaginationBtn";
+import PaginationBtn from "./button/PaginationBtn";
 import FilterBtn from "./button/FilterBtn";
 import SearchBar from "./bars/SearchBar";
-import { use, useCallback, useEffect, useState } from "react";
-import { product } from "@/redux/features/productSlice";
 import LoadingCard from "./cards/LoadingCard";
 
-import { API_HOST } from "@/config";
-
-//============================================================Data===========================================================================
-interface product {
+interface Product {
   id: string;
   name: string;
   description: string;
@@ -40,166 +36,98 @@ interface product {
     rating: number;
   }[];
 }
-//============================================================================================================
+
 function ProductList() {
   const [inputValue, setInputValue] = useState<string>("");
-  const [searchBy, setsearchBy] = useState<string>("name");
-  const [productInfo, setProductInfo] = useState<product[]>([]);
+  const [searchBy, setSearchBy] = useState<string>("name");
+  const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  //pagination
-  const getData = async (page: number) => {
+  const [totalPage, setTotalPage] = useState(1);
+
+  // Pagination
+  const fetchData = async (pageNumber: number) => {
     const query = await fetch(
-      `/api/services/products/?page=${page}&perPage=6&searchBy=${searchBy}&keyword=${inputValue}`,
+      `/api/services/products/?page=${pageNumber}&perPage=6&searchBy=${searchBy}&keyword=${inputValue}`,
       {
         method: "GET",
       }
     );
     const response = await query.json();
+    setPage(response.currentPage);
+    setTotalPage(response.totalPages);
+    setProducts(response.data);
     setLoading(false);
-    setProductInfo(response);
   };
-  const childSetPage = (setpage: number) => {
-    if (setpage != page) {
-      setPage(setpage);
+
+  const childSetPage = (newPage: number) => {
+    if (newPage !== page) {
+      setPage(newPage);
       setLoading(true);
     }
   };
-  const setSearchBy = (keyword: string) => {
-    if (keyword != searchBy) {
-      setsearchBy(keyword);
+
+  const setSearchByValue = (keyword: string) => {
+    if (keyword !== searchBy) {
+      setSearchBy(keyword);
       setLoading(true);
     }
   };
-  const searchHandler = useCallback(async () => {
-    if (page != 1) childSetPage(1);
-    else {
-      setLoading(true);
-      getData(page);
-    }
+
+  const searchHandler = useCallback(() => {
+    childSetPage(1);
   }, [inputValue, searchBy]);
 
   useEffect(() => {
-    getData(page);
-  }, [page]);
+    fetchData(page);
+  }, [page, inputValue, searchBy]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      searchHandler();
-    }, 300);
-    return () => {
-      clearTimeout(timer);
-    };
+    const timer = setTimeout(searchHandler, 300);
+    return () => clearTimeout(timer);
   }, [searchHandler]);
-  //=========================================================================================
+
   return (
     <div>
       <div className="py-8 flex items-center">
-        <FilterBtn nowSearch={searchBy} setSearchBy={setSearchBy}></FilterBtn>
+        <FilterBtn nowSearch={searchBy} setSearchBy={setSearchByValue} />
         <div className="grow-[5] mx-4 md:mx-8 h-0 flex items-center justify-center border-dashed border border-black"></div>
-        <SearchBar
-          inputValue={inputValue}
-          setInputValue={setInputValue}
-        ></SearchBar>
+        <SearchBar inputValue={inputValue} setInputValue={setInputValue} />
       </div>
       {isLoading ? (
-        <div className="flex">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
-            <LoadingCard></LoadingCard>
-            <LoadingCard></LoadingCard>
-            <LoadingCard></LoadingCard>
-            <LoadingCard></LoadingCard>
-            <LoadingCard></LoadingCard>
-            <LoadingCard></LoadingCard>
-          </div>
-        </div>
-      ) : productInfo.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
-          {productInfo
-            .slice(0, 6)
-            .map(
-              (
-                {
-                  id,
-                  name,
-                  imageName,
-                  description,
-                  ownerId,
-                  availability,
-                  availableDays: { startDate, endDate },
-                  specifications: {
-                    brand,
-                    model,
-                    processor,
-                    graphicCard,
-                    ramSize,
-                    storageSize,
-                  },
-                  rentalOptions,
-                  reviews,
-                },
-                index
-              ) => (
-                <ProductListCard
-                  key={index}
-                  id={id}
-                  name={name}
-                  imgSrc={imageName[0]}
-                  description={description}
-                  ownerId={ownerId}
-                  availability={availability}
-                  availableDays={{ startDate, endDate }}
-                  specifications={{
-                    brand,
-                    model,
-                    processor,
-                    graphicCard,
-                    ramSize,
-                    storageSize,
-                  }}
-                  rentalOptions={rentalOptions}
-                  reviews={reviews}
-                ></ProductListCard>
-              )
-            )}
+          {Array.from({ length: 6 }).map((_, index) => (
+            <LoadingCard key={index} />
+          ))}
+        </div>
+      ) : products.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
+          {products.slice(0, 6).map((product, index) => (
+            <ProductListCard
+              key={product.id}
+              {...product}
+              imgSrc={product.imageName[0]}
+            />
+          ))}
         </div>
       ) : (
-        <div className="flex">
-          <div className="grow flex items-center justify-center text-3xl">
-            ไม่พบข้อมูล
-          </div>
-          {/* <div className="grid grid-cols-2 lg:grid-cols-3 gap-10 w-full">
-            <LoadingCard></LoadingCard>
-            <LoadingCard></LoadingCard>
-            <LoadingCard></LoadingCard>
-            <LoadingCard></LoadingCard>
-            <LoadingCard></LoadingCard>
-            <LoadingCard></LoadingCard>
-          </div> */}
+        <div className="grow flex items-center justify-center text-3xl">
+          ไม่พบข้อมูล
         </div>
       )}
 
       <div className="flex justify-end my-10">
-        {page <= 3
-          ? [1, 2, 3, 4, 5].map((num, index) => (
-              <PaginaionBtn
-                number={num}
-                ishighlight={num == page}
-                key={index}
-                childSetPage={childSetPage}
-              ></PaginaionBtn>
-            ))
-          : [page - 2, page - 1, page, page + 1, page + 2].map((num, index) => (
-              <PaginaionBtn
-                number={num}
-                ishighlight={num == page}
-                key={index}
-                childSetPage={childSetPage}
-              ></PaginaionBtn>
-            ))}
-        {}
+        {Array.from({ length: totalPage }).map((_, index) => (
+          <PaginationBtn
+            key={index}
+            number={index + 1}
+            ishighlight={index + 1 === page}
+            childSetPage={childSetPage}
+          />
+        ))}
       </div>
     </div>
   );
 }
+
 export default ProductList;

@@ -6,8 +6,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 function Sidebar({
+  profile,
   dashboard,
-  product,
+  products,
   orders,
   messages,
   history,
@@ -17,8 +18,9 @@ function Sidebar({
   name,
   email,
 }: {
+  profile: string;
   dashboard: string;
-  product: string;
+  products: string;
   orders: string;
   messages: string;
   history: string;
@@ -120,6 +122,42 @@ function Sidebar({
                 <div className="theme-text-color1">rent</div>
               </Link>
             </li>
+            <li>
+              <Link
+                href={profile}
+                className={
+                  pathname.includes("profile") &&
+                  !pathname.includes("my-shop") &&
+                  !pathname.includes("message") &&
+                  !pathname.includes("reviews")
+                    ? "flex items-center w-full p-2 text-base text-[color:var(--theme-color2)] transition duration-75 rounded-lg group"
+                    : "flex items-center w-full p-2 text-base text-[color:var(--theme-color1)] transition duration-75 rounded-lg group hover:text-[color:var(--theme-color2)]"
+                }
+              >
+                <svg
+                  className={
+                    pathname.includes("profile") &&
+                    !pathname.includes("my-shop") &&
+                    !pathname.includes("message") &&
+                    !pathname.includes("reviews")
+                      ? "w-5 h-5 text-[color:var(--theme-color2)] transition duration-75"
+                      : "w-5 h-5 text-[color:var(--theme-color1)] transition duration-75 group-hover:text-[color:var(--theme-color2)]"
+                  }
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                  />
+                </svg>
+                <span className="flex-1 ml-3 whitespace-nowrap">Profile</span>
+              </Link>
+            </li>
             {/* <li>
               <Link
                 href={dashboard}
@@ -150,7 +188,7 @@ function Sidebar({
               <button
                 type="button"
                 className={
-                  pathname.includes(product) || pathname.includes(orders)
+                  pathname.includes(products) || pathname.includes(orders)
                     ? "flex items-center w-full p-2 text-base text-[color:var(--theme-color2)] transition duration-75 rounded-lg group"
                     : "flex items-center w-full p-2 text-base text-[color:var(--theme-color1)] transition duration-75 rounded-lg group hover:text-[color:var(--theme-color2)]"
                 }
@@ -158,7 +196,7 @@ function Sidebar({
               >
                 <svg
                   className={
-                    pathname.includes(product) || pathname.includes(orders)
+                    pathname.includes(products) || pathname.includes(orders)
                       ? "w-5 h-5 text-[color:var(--theme-color2)] transition duration-75"
                       : "w-5 h-5 text-[color:var(--theme-color1)] transition duration-75 group-hover:text-[color:var(--theme-color2)]"
                   }
@@ -193,9 +231,9 @@ function Sidebar({
                 <li>
                   <Link
                     onClick={resetNavhead}
-                    href={product}
+                    href={products}
                     className={
-                      pathname.includes(product)
+                      pathname.includes(products)
                         ? "flex items-center w-full p-2 text-[color:var(--theme-color2)] transition duration-75 rounded-lg pl-11 group"
                         : "flex items-center w-full p-2 text-[color:var(--theme-color1)] transition duration-75 rounded-lg pl-11 group hover:text-[color:var(--theme-color2)]"
                     }
@@ -337,7 +375,11 @@ function Sidebar({
               <div className="flex gap-2 items-center justify-start">
                 <div className="w-[30%]">
                   <Image
-                    src="https://storage-unirent.1tpp.dev/unirent/c9ce6bb785610a6e50ae135a21b3b34c.png"
+                    src={
+                      session?.user.data != null
+                        ? session.user.data.profileImage
+                        : "https://storage-unirent.1tpp.dev/unirent/default-profile.svg"
+                    }
                     width={800}
                     height={800}
                     objectFit="none"

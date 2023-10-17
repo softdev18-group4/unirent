@@ -8,7 +8,6 @@ import PictureBox from "../../../components/PictureBox";
 import SpecificationBox from "../../../components/SpecificationBox";
 import { useRouter } from "next/navigation";
 import DescriptionBox from "../../../components/DescriptionBox";
-import { API_HOST } from "@/config";
 import { useSession } from "next-auth/react";
 
 function From({ productId }: { productId: string }) {

@@ -87,7 +87,7 @@ function Navbar() {
             </div>
 
             {session ? (
-              <button onClick={() => push("/my-shop/products")}>
+              <button onClick={() => push(`/profile/${session.user.data.id}`)}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
