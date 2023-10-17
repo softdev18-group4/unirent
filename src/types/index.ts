@@ -20,6 +20,7 @@ export interface ProductState {
   availability: boolean;
   rentalOptions: RentalOption[];
   src: string[];
+  imageName : string[];
 }
 
 export interface RentalOption {
