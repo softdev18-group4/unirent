@@ -1,11 +1,10 @@
-import Image from "next/image";
 import { CustomButton } from '..';
 
 const CardSeller = () => {
   return (
     <div className="card_seller">
       <div className="left">
-        <Image
+        <img
           src={"/product.png"}
           width={50}
           height={50}

@@ -1,7 +1,7 @@
 "use client";
 
 import { Dispatch, SetStateAction, useRef, useState } from "react";
-import Image from "next/image";
+
 
 function PictureBox({
   fileArray,
@@ -144,11 +144,11 @@ function PictureBox({
         <div className="flex flex-wrap w-full gap-2">
           {oldImg?.map((image, index) => (
             <div key={index} className="w-24 h-24 relative">
-              <Image
+              <img
                 src={image}
                 width={400}
                 height={400}
-                alt={`Selected Image ${index}`}
+                alt={`Selected img ${index}`}
                 className=" aspect-square"
              />
               <div
@@ -174,11 +174,11 @@ function PictureBox({
           ))}
           {selectedImages.map((image, index) => (
             <div key={index} className="w-24 h-24 relative">
-              <Image
+              <img
                 src={image.url}
                 width={400}
                 height={400}
-                alt={`Selected Image ${index}`}
+                alt={`Selected img ${index}`}
                 className=" aspect-square"
               />
               <div

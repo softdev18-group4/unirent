@@ -43,7 +43,8 @@ const initialState = {
         priceRate: 149.99
       }
     ],
-    src: imageList
+    src: imageList,
+    imageName : imageList
   } as ProductState
 } as InitialState
 

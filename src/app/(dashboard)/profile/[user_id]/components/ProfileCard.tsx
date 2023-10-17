@@ -2,7 +2,7 @@
 
 import { API_HOST } from "@/config";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
+
 import { useEffect, useState } from "react";
 
 //============================================================Data===========================================================================
@@ -72,13 +72,13 @@ function ProfileCard({ userId }: { userId: string }) {
         <div className="w-full h-full flex-col lg:flex-row flex justify-evenly items-center p-4 gap-2">
           <div className="h-[40%] lg:h-full w-fit lg:w-[40%] flex items-center justify-center gap-4">
             <div className="w-36 h-36 aspect-square">
-              <Image
+              <img
                 src={
                   user?.imgSrc != null
                     ? user.imgSrc
                     : "https://storage-unirent.1tpp.dev/unirent/default-profile.svg"
                 }
-                alt="Image of the author"
+                alt="img of the author"
                 width={200}
                 height={200}
                 className=" w-full h-full rounded-full"

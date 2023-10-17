@@ -41,9 +41,12 @@ body {
 .main_container {
   @apply container mx-auto;
 }
-/* Image Next js Fix */
+/* img Next js Fix */
 .image_fix {
-  @apply relative rounded-md  !important;
+  @apply w-full h-[500px] rounded-xl object-cover;
+}
+.image_fixv2{
+  @apply image_fix h-full !important;
 }
 
 /* product detail */

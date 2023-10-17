@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+
 function MessageCard({
   herf,
   name,
@@ -22,7 +22,7 @@ function MessageCard({
     >
       <Link href={herf} className="">
         <div className="flex items-center gap-2">
-          <Image
+          <img
             src={imgSrc}
             width={60}
             height={60}

@@ -2,7 +2,7 @@
 
 import { SelectedProduct, setCart } from "@/redux/features/cartSlice";
 import { CartItem } from "@/types";
-import Image from "next/image";
+
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,13 +25,13 @@ function Sidebar() {
     <div className="lg:fixed lg:top-0 lg:right-0 lg:h-full mb-10 lg:mb-0 mx-[5%] lg:mx-0 py-10 lg:py-20 px-10 lg:px-6 rounded-xl lg:rounded-none drop-shadow-xl lg:drop-shadow-none lg:border-l w-[90%] lg:w-[35%] border-slate-400 z-40 bg-white flex flex-col gap-10">
       <div className="flex gap-2">
         <div className="w-[40%]">
-          <Image
+          <img
             src={selectedProduct?.imgSrc != null ? selectedProduct.imgSrc : ""}
             width={800}
             height={800}
             alt="selected product pic"
             className="aspect-square rounded-xl"
-          ></Image>
+          ></img>
         </div>
 
         <div className="flex flex-col gap-2 w-[60%] break-words">

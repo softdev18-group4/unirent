@@ -1,5 +1,5 @@
 "use clients";
-import Image from "next/image";
+
 import Star from "./Star";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -59,7 +59,7 @@ function ProductListCard({
     >
       <div className="flex flex-col justify-center h-full w-full">
         {
-          <Image
+          <img
             src={
               imgSrc
                 ? imgSrc

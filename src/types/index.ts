@@ -20,9 +20,10 @@ export interface ProductState {
   availability: boolean;
   rentalOptions: RentalOption[];
   src: string[];
+  imageName : string[];
 }
 
-interface RentalOption {
+export interface RentalOption {
   id: string;
   productId: string;
   type: string; // Daily, Weekly, Monthly
@@ -46,6 +47,9 @@ export interface StarProps {
 export interface ProductSelectorProps {
   title: string;
   price: number;
+  handleClick?: () => void;
+  select : boolean;
+  key : number;
 }
 
 export interface CardDetailProps {
