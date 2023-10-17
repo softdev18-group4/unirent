@@ -47,8 +47,9 @@ export interface StarProps {
 export interface ProductSelectorProps {
   title: string;
   price: number;
-  handleClick?: MouseEventHandler<HTMLButtonElement>;
+  handleClick?: () => void;
   select : boolean;
+  key : number;
 }
 
 export interface CardDetailProps {
