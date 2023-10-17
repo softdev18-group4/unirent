@@ -7,6 +7,7 @@ import { Star, CustomButton, ProductSelector } from "..";
 import { SetStateAction, useEffect, useState } from "react";
 import { ProductState, RentalOption } from "@/types/index";
 import { days } from "@/constants";
+import { useSession } from "next-auth/react";
 
 const ProductSelect = () => {
   const dispatch = useAppDispatch();
@@ -18,9 +19,9 @@ const ProductSelect = () => {
   const [min , setMin] = useState(0)
   const [total , setTotal] = useState(0);
   const [selectedOption, setSelectedOption] = useState(-1);
-
+  const { data: session } = useSession();
   const handleAddToCart = () => {
-    if (selectedOption !== -1){
+    if (selectedOption !== -1 && session){
       dispatch(
         addToCart({
           isSelected: true,
