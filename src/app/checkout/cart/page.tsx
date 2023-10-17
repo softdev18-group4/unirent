@@ -32,22 +32,22 @@ function Cart() {
     }
   }, []);
   //for testing
-  const handleAddToCart = () => {
-    dispatch(
-      addToCart({
-        isSelected: true,
-        productid: "sadasdasdas",
-        rentalId: "asdasdasd",
-        imgSrc: "/product.png",
-        location: "stasadsad",
-        name: "notebook123",
-        description: "test redux",
-        type: "Daily",
-        period: 8,
-        price: 1000,
-      })
-    );
-  };
+  // const handleAddToCart = () => {
+  //   dispatch(
+  //     addToCart({
+  //       isSelected: true,
+  //       productid: "sadasdasdas",
+  //       rentalId: "asdasdasd",
+  //       imgSrc: "/product.png",
+  //       location: "stasadsad",
+  //       name: "notebook123",
+  //       description: "test redux",
+  //       type: "Daily",
+  //       period: 8,
+  //       price: 1000,
+  //     })
+  //   );
+  // };
   const handleNextPage = () => {
     if (totalselect == 1) {
       push("/checkout/contract");
