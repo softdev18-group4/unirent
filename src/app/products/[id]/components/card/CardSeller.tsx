@@ -18,7 +18,8 @@ const CardSeller = () => {
           alt="avatar"
         />
         <div className="avatar_title">
-            <h1>{product.owner.firstName}</h1>
+          {product && <h1>{product.owner.firstName}</h1>}
+            
             <CustomButton customBtn="btn_custom3" title="แชทพูดคุย"/>
         </div>
       </div>

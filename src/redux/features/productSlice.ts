@@ -44,7 +44,12 @@ const initialState = {
       }
     ],
     src: imageList,
-    imageName : imageList
+    imageName : imageList,
+    owner : {
+      email : "mew@example.com",
+      firstName: "John",
+      lastName: "Doe"
+    }
   } as ProductState
 } as InitialState
 
