@@ -1,6 +1,6 @@
 "use client"
 
-import Image from "next/image";
+
 import { ProductRent, CardSeller , ProductDetail ,ProductCharacteristics ,ProductReview} from "./components";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useEffect } from "react";

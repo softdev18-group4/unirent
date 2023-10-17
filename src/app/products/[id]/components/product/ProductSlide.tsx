@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+
 import { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 
@@ -24,9 +24,9 @@ const ProductSlide = () => {
     <div className="product_image">
       {product && (
         <>
-        <Image
+        <img
         src={product.imageName[currentIndex]}
-        alt={`Image ${currentIndex + 1}`}
+        alt={`img ${currentIndex + 1}`}
         className="image_fix object-cover"
       />
 
@@ -38,9 +38,9 @@ const ProductSlide = () => {
               index === currentIndex ? "active" : ""
             }`}
           >
-            <Image
+            <img
               src={image}
-              alt={`Image ${index + 1}`}
+              alt={`img ${index + 1}`}
               className="image_fixv2"
               onClick={() => setCurrentIndex(index)}
             />

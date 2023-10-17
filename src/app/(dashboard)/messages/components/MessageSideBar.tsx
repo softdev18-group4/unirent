@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -64,7 +64,7 @@ function MessageSideBar() {
             </svg>
           </div>
 
-          <Image
+          <img
             src="/product.png"
             width={60}
             height={60}

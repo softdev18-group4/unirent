@@ -41,7 +41,7 @@ body {
 .main_container {
   @apply container mx-auto;
 }
-/* Image Next js Fix */
+/* img Next js Fix */
 .image_fix {
   @apply w-full h-[500px] rounded-xl object-cover;
 }
