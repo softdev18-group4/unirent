@@ -19,8 +19,8 @@ interface TableData {
   timeleft: string;
   productId: string;
 }
-
-function PaginationTable({ api }: { api: string }) {
+//=================================================================================================================
+function PaginationTable() {
   const [inputValue, setInputValue] = useState<string>("");
   const [tableInfo, setTableInfo] = useState<TableData[]>([]);
   const [isLoading, setLoading] = useState(true);
@@ -40,10 +40,8 @@ function PaginationTable({ api }: { api: string }) {
   //fetch data
   const getData = async (page: number) => {
     if (session) {
-      const apiEndpoint =
-        api === "yourProduct"
-          ? "/api/services/products/yourProduct"
-          : "/api/services/orders/yourOrder";
+      const apiEndpoint = "/api/services/products/yourProduct";
+
       try {
         const query = await fetch(
           `${apiEndpoint}/byUser/search?page=${page}&perPage=5&keyword=${inputValue}&searchBy=name`,
@@ -102,47 +100,29 @@ function PaginationTable({ api }: { api: string }) {
 
   const getTableData = (data: any) => {
     const tableData: TableData[] = [];
-    if (api === "yourProduct") {
-      data.forEach((tmp: any) => {
-        const period = tmp.rentalOptions
-          .map((option: any) => option.type)
-          .join("/");
-        const price = tmp.rentalOptions
-          .map((option: any) => option.priceRate)
-          .join("/");
-        const startDate = new Date(tmp.availableDays.startDate);
-        const onedata: TableData = {
-          imgSrc: tmp.imageName[0] ? `${tmp.imageName[0]}` : "/product.png",
-          name: tmp.name,
-          status: tmp.availability ? "ว่าง" : "กำลังปล่อยเช่า",
-          period: period,
-          price: price,
-          date: `${startDate.getDate()} ${monthToString(
-            startDate.getMonth()
-          )} ${startDate.getFullYear()}`,
-          timeleft: "",
-          productId: tmp.id,
-        };
-        tableData.push(onedata);
-      });
-    } else if (api === "yourOrder") {
-      data.forEach((tmp: any) => {
-        const startDate = new Date(tmp.product.availableDays.startDate);
-        const onedata: TableData = {
-          imgSrc: tmp.imageName[0] ? tmp.imageName[0] : "/product.png",
-          name: tmp.product.name,
-          status: tmp.status === "wait" ? "กำลังดำเนินการ" : "ได้รับแล้ว",
-          period: tmp.rentalOption.type,
-          price: tmp.rentalOption.priceRate,
-          date: `${startDate.getDate()} ${monthToString(
-            startDate.getMonth()
-          )} ${startDate.getFullYear()}`,
-          timeleft: `${tmp.rentTime} ชั่วโมง`,
-          productId: tmp.productId,
-        };
-        tableData.push(onedata);
-      });
-    }
+    data.forEach((tmp: any) => {
+      const period = tmp.rentalOptions
+        .map((option: any) => option.type)
+        .join("/");
+      const price = tmp.rentalOptions
+        .map((option: any) => option.priceRate)
+        .join("/");
+      const startDate = new Date(tmp.availableDays.startDate);
+      const onedata: TableData = {
+        imgSrc: tmp.imageName[0] ? `${tmp.imageName[0]}` : "/product.png",
+        name: tmp.name,
+        status: tmp.availability ? "ว่าง" : "กำลังปล่อยเช่า",
+        period: period,
+        price: price,
+        date: `${startDate.getDate()} ${monthToString(
+          startDate.getMonth()
+        )} ${startDate.getFullYear()}`,
+        timeleft: "",
+        productId: tmp.id,
+      };
+      tableData.push(onedata);
+    });
+
     setTableInfo(tableData);
   };
 
@@ -205,7 +185,7 @@ function PaginationTable({ api }: { api: string }) {
                   date={data.date}
                   timeleft={data.timeleft}
                   productId={data.productId}
-                  canDelete={api === "yourProduct"}
+                  canDelete={true}
                   handleDelete={handleDelete}
                 />
               </tbody>
