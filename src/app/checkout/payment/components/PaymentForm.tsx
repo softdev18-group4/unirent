@@ -5,6 +5,8 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useSession } from "next-auth/react";
 import { API_HOST } from "@/config";
 import PaymentConfirm from "./PaymentConfirm";
+import { useSelector } from "react-redux";
+import { SelectedProduct } from "@/redux/features/cartSlice";
 
 interface Props {
     setPayment: (value: boolean) => void
@@ -23,8 +25,27 @@ export default function PaymentForm({ setPayment }: Props) {
         // elements.getElement(CardElement)!;
 
         try {
+            const selectedProduct = useSelector(SelectedProduct);
+
+            const productId = selectedProduct?.productid
+
+            const query = {
+                rentalId : selectedProduct?.rentalId,
+                rentTime : selectedProduct?.period
+            }
+
+            const createOrder = await fetch(`/api/services/orders/${productId}`,{
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${session?.user.accessToken}`
+                },
+                body : JSON.stringify(query)
+            })
+
             if (!stripe || !CardElement) return null;
-            const orderId = "652badcae6839f6ce48b174a"
+            const orderData = await createOrder.json()
+            const orderId = orderData.order.id
+
             const res = await fetch(`/api/services/payment/${orderId}`, {
                 method: "POST",
                 headers: {
@@ -43,9 +64,30 @@ export default function PaymentForm({ setPayment }: Props) {
 
             if (result.error) {
                 console.log(result.error.message)
+
+                await fetch (`/api/services/orders/${orderId}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Authorization": `Bearer ${session?.user.accessToken}`
+                    },
+                })
+
                 setPaymentState('error');
             } else if (result.paymentIntent.status === "succeeded") {
                 console.log("Payment succeeded!");
+
+                const rentStatus = {
+                    status : "rent"
+                }
+                
+                await fetch (`/api/services/orders/${orderId}`, {
+                    method: "PATCH",
+                    headers: {
+                        "Authorization": `Bearer ${session?.user.accessToken}`
+                    },
+                    body: JSON.stringify(rentStatus)
+                })
+
                 setPaymentState('success');
             }
 

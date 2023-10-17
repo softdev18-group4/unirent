@@ -55,6 +55,7 @@ export interface CardDetailProps {
 export interface CartItem {
   isSelected: boolean;
   productid: string;
+  rentalId: string;
   imgSrc: string;
   location: string;
   name: string;

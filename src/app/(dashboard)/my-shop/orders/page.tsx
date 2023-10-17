@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import PaginationTable from "../components/PaginationTable";
+import PaginationTable from "./components/PaginationTable";
 
 export const metadata: Metadata = {
   //title: "Your Orders",
@@ -13,7 +13,7 @@ function OrdersPage() {
           your orders
         </div>
       </div>
-      <PaginationTable api="yourOrder"></PaginationTable>
+      <PaginationTable></PaginationTable>
     </div>
   );
 }
