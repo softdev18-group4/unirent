@@ -1,5 +1,5 @@
 import { filterReview } from "@/constants"
-import { CustomButton,Star } from ".."
+import {Star } from ".."
 
 const CardReview = () => {
   return (
@@ -14,7 +14,7 @@ const CardReview = () => {
         <div className="right">
             {
                 filterReview.map((item , index) => (
-                    <CustomButton customBtn="btn_custom4" title={item} key={index}/>
+                    <button className="btn_custom4" key={index}>item</button>
                 ))
             }
         </div>

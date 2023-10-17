@@ -1,10 +1,9 @@
 "use client";
 
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { reset, updateProduct } from "@/redux/features/productSlice";
 import { addToCart} from "@/redux/features/cartSlice";
-import { Star, CustomButton, ProductSelector } from "..";
-import { SetStateAction, useEffect, useState } from "react";
+import { Star, ProductSelector } from "..";
+import { useEffect, useState } from "react";
 import { ProductState, RentalOption } from "@/types/index";
 import { days } from "@/constants";
 import { useSession } from "next-auth/react";
@@ -79,7 +78,7 @@ const ProductSelect = () => {
     <div className="product_select">
       <div className="product_select_title">
         <h1>{product.name}</h1>
-        <CustomButton title="เพิ่มไปยังตะกร้า" handleClick={handleAddToCart} customBtn="btn_custom1" />
+        <button  onClick={handleAddToCart} className="btn_custom1">เพิ่มไปยังตะกร้า</button>
       </div>
       <div className="product_select_tag">
         <p>Macbook</p>
@@ -109,11 +108,11 @@ const ProductSelect = () => {
         </div>
       </div>
       <div className="product_select_count">
-        <CustomButton title="-" handleClick={handleDecrease} />
+        <button onClick={handleDecrease} >-</button>
         <h1>{count}</h1>
-        <CustomButton title="+" handleClick={handleIncrease} />
+        <button onClick={handleIncrease} >+</button>
       </div>
-      <CustomButton title="เช่า" handleClick={handleAddToCart} customBtn="btn_custom2" />
+      <button onClick={handleAddToCart} className="btn_custom2" >เช่า</button>
     </div>
   );
 };

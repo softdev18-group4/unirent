@@ -7,40 +7,28 @@ import { ProductState, InitialState } from "@/types";
 const initialState = {
   value: {
     specifications: {
-      brand: "Example Brand",
-      model: "GamerPro X",
-      processor: "Intel Core i9",
-      graphicCard: "NVIDIA GeForce RTX 3080",
-      ramSize: 16,
-      storageSize: 1000
+      brand: "",
+      model: "",
+      processor: "",
+      graphicCard: "",
+      ramSize: 0,
+      storageSize: 0
     },
     availableDays: {
       startDate: "2023-09-15T00:00:00.000Z",
       endDate: "2023-09-15T00:00:00.000Z"
     },
-    id: "6502cfbf89d76f38290ff5c5",
-    name: "Gaming Laptop",
-    description: "Powerful gaming laptop for immersive gaming experiences.",
-    ownerId: "65016f4172559e91e72127df",
+    id: "",
+    name: "",
+    description: "",
+    ownerId: "",
     availability: true,
     rentalOptions: [
       {
-        id: "6502cfc089d76f38290ff5c6",
-        productId: "6502cfbf89d76f38290ff5c5",
+        id: "",
+        productId: "",
         type: "Daily",
-        priceRate: 25.99
-      },
-      {
-        id: "6502cfc089d76f38290ff5c8",
-        productId: "6502cfbf89d76f38290ff5c5",
-        type: "Monthly",
-        priceRate: 549.99
-      },
-      {
-        id: "6502cfc089d76f38290ff5c7",
-        productId: "6502cfbf89d76f38290ff5c5",
-        type: "Weekly",
-        priceRate: 149.99
+        priceRate:0
       }
     ],
     src: imageList,
