@@ -69,7 +69,7 @@ export const options: NextAuthOptions = {
       }
       return true; // Do different verification for other providers that don't have `email_verified`
     },
-    async jwt({ token, user, account }) {
+    async jwt({ token, user, trigger, account, session }) {
       if (account?.provider === "google") {
         const response = await verifyGoogleAccount(account.id_token as string);
         if (response && response.ok) {
@@ -77,6 +77,9 @@ export const options: NextAuthOptions = {
           const profile = await fetchProfile(accessToken as string);
           return { ...token, ...user, account, accessToken, data: profile };
         }
+      }
+      if (trigger === "update") {
+        return { ...token, ...session.user };
       }
       return { ...token, ...user, account };
     },

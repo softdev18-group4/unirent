@@ -107,9 +107,7 @@ function PaginationTable() {
       year = new Date(tmp.product.availableDays.startDate).getFullYear();
       //get Product of the order
       const onedata: tableData = {
-        imgSrc: tmp.imageName[0]
-          ? "https://storage-unirent.1tpp.dev/unirent/" + tmp.imageName[0]
-          : "/product.png",
+        imgSrc: tmp.imageName[0] ? tmp.imageName[0] : "/product.png",
         name: tmp.product.name,
         status: tmp.status == "wait" ? "กำลังดำเนินการ" : "ได้รับแล้ว",
         period: tmp.rentalOption.type,
