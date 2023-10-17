@@ -54,7 +54,7 @@ function ProductListCard({
   }, []);
   return (
     <Link
-      href={"/product/detail/" + id}
+      href={`/products/${id}`}
       className="cursor-pointer drop-shadow-lg bg-white rounded-xl"
     >
       <div className="flex flex-col justify-center h-full w-full">

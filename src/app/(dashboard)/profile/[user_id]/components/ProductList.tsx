@@ -93,14 +93,6 @@ function ProductList({ userId }: { userId: string }) {
           <div className="grow flex items-center justify-center text-3xl">
             ไม่พบข้อมูลสินค้าของผู้ใช้
           </div>
-          {/* <div className="grid grid-cols-2 lg:grid-cols-3 gap-10 w-full">
-            <LoadingCard></LoadingCard>
-            <LoadingCard></LoadingCard>
-            <LoadingCard></LoadingCard>
-            <LoadingCard></LoadingCard>
-            <LoadingCard></LoadingCard>
-            <LoadingCard></LoadingCard>
-          </div> */}
         </div>
       )}
     </div>
