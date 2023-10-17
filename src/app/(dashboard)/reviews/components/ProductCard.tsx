@@ -28,7 +28,6 @@ function ProductCard({
                 src={imgSrc}
                 width={60}
                 height={60}
-                objectFit="none"
                 alt="Picture of the product"
                 className="hidden rounded-md lg:flex aspect-square"
               />
