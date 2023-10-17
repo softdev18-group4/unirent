@@ -228,7 +228,7 @@ function ProfileCard({ userId }: { userId: string }) {
               {/* เข้าร่วมเมื่อ: <div className="text-[coral]">10/03/2546</div> */}
             </div>
             <div className="flex gap-2">
-              คำแนนรีวิวเฉลี่ย:{" "}
+              คะแนนรีวิวเฉลี่ย:{" "}
               {allReviews != 0 ? (
                 <div className="text-[coral]">{avgRating}</div>
               ) : (
