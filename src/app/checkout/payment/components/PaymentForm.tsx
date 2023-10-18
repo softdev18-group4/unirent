@@ -80,8 +80,16 @@ export default function PaymentForm({ setPayment }: Props) {
         payment_method: { card: cardElement },
       });
 
-      if (result.paymentIntent?.status === "succeeded") {
-        console.log("Payment succeeded!");
+      if (result?.error?.message) {
+        await fetch(`/api/services/orders/${orderId}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${session?.user?.accessToken || ""}`,
+            "Content-Type": "application/json",
+          },
+        });
+        setPaymentState("error");
+      } else {
         await fetch(`/api/services/orders/${orderId}`, {
           method: "PATCH",
           headers: {
@@ -94,17 +102,6 @@ export default function PaymentForm({ setPayment }: Props) {
         });
         setIsLoading(false);
         setPaymentState("success");
-        return;
-      } else {
-        console.error(result?.error?.message);
-        await fetch(`/api/services/orders/${orderId}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${session?.user?.accessToken || ""}`,
-            "Content-Type": "application/json",
-          },
-        });
-        setPaymentState("error");
       }
     } catch (error) {
       console.error(error);
