@@ -22,7 +22,7 @@ const AnimatedLoadingBar = () => {
           style={{
             width: '50%',
             height: '100%',
-            backgroundColor: '#007bff',
+            backgroundColor: '#FF6E31',
             position: 'absolute',
             animation: 'loading 2s linear infinite', // CSS animation for the loading effect
           }}
