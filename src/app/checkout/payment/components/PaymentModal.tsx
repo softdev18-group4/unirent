@@ -47,7 +47,6 @@ export default function PaymentModal({ showModal, paymentMethod, setPayment }: M
             <div className="font-semibold	text-4xl">Coming Soon!</div>
           </div>
         </div>
-
       </div>
     </div>
   );

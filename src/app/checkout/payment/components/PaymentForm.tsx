@@ -7,7 +7,7 @@ import PaymentConfirm from "./PaymentConfirm";
 import { useSelector } from "react-redux";
 import { SelectedProduct } from "@/redux/features/cartSlice";
 import { ScaleLoader } from "react-spinners";
-
+import { useRouter } from "next/navigation";
 interface Props {
   setPayment: (value: boolean) => void;
 }
@@ -19,7 +19,7 @@ export default function PaymentForm({ setPayment }: Props) {
   const [paymentState, setPaymentState] = useState<string>("none");
   const selectedProduct = useSelector(SelectedProduct);
   const [isLoading, setIsLoading] = useState(false);
-
+  const router = useRouter();
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -75,37 +75,39 @@ export default function PaymentForm({ setPayment }: Props) {
       const data = await res.json();
       const clientSecret = data.client_secret;
       console.log(clientSecret);
-      
-      const result = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: { card: cardElement },
-      });
 
-      if (result?.error?.message) {
-        await fetch(`/api/services/orders/${orderId}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${session?.user?.accessToken || ""}`,
-            "Content-Type": "application/json",
-          },
-        });
-        setPaymentState("error");
-      } else {
-        await fetch(`/api/services/orders/${orderId}`, {
-          method: "PATCH",
-          headers: {
-            Authorization: `Bearer ${session?.user?.accessToken || ""}`,
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            status: "rent",
-          }),
-        });
-        setIsLoading(false);
-        setPaymentState("success");
-      }
+      // const result = await stripe.confirmCardPayment(clientSecret, {
+      //   payment_method: { card: cardElement },
+      // });
+
+      // if (result?.error?.message) {
+      //   await fetch(`/api/services/orders/${orderId}`, {
+      //     method: "DELETE",
+      //     headers: {
+      //       Authorization: `Bearer ${session?.user?.accessToken || ""}`,
+      //       "Content-Type": "application/json",
+      //     },
+      //   });
+      //   setPaymentState("error");
+      // } else {
+      await fetch(`/api/services/orders/${orderId}`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${session?.user?.accessToken || ""}`,
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          status: "rent",
+        }),
+      });
+      setIsLoading(false);
+      setPaymentState("success");
+      localStorage.clear();
+      router.push("/my-shop/orders");
+      // }
     } catch (error) {
       console.error(error);
-      setPaymentState("error");
+      // setPaymentState("error");
     }
   };
 
