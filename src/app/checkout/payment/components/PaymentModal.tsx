@@ -1,3 +1,5 @@
+"use client";
+
 import { loadStripe } from "@stripe/stripe-js";
 import PaymentForm from "./PaymentForm";
 import { Elements } from "@stripe/react-stripe-js";
@@ -45,7 +47,6 @@ export default function PaymentModal({ showModal, paymentMethod, setPayment }: M
             <div className="font-semibold	text-4xl">Coming Soon!</div>
           </div>
         </div>
-
       </div>
     </div>
   );

@@ -17,6 +17,7 @@ export interface ProductState {
     email : string;
     firstName : string;
     lastName : string;
+    profileImage: string;
   }
   id: string;
   name: string;

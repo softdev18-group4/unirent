@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useSession } from "next-auth/react";
@@ -5,7 +7,7 @@ import PaymentConfirm from "./PaymentConfirm";
 import { useSelector } from "react-redux";
 import { SelectedProduct } from "@/redux/features/cartSlice";
 import { ScaleLoader } from "react-spinners";
-
+import { useRouter } from "next/navigation";
 interface Props {
   setPayment: (value: boolean) => void;
 }
@@ -17,19 +19,20 @@ export default function PaymentForm({ setPayment }: Props) {
   const [paymentState, setPaymentState] = useState<string>("none");
   const selectedProduct = useSelector(SelectedProduct);
   const [isLoading, setIsLoading] = useState(false);
-
-  const override = `
-  display: block;
-  margin: 0 auto;
-  border-color: red;  /* You can adjust the border color here */
-`;
-
+  const router = useRouter();
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
-    const cardElement = elements?.getElement("card");
 
     try {
+      if (elements == null) {
+        return;
+      }
+
+      setIsLoading(true);
+      const cardElement = elements?.getElement("card");
+      if (!stripe || !cardElement) {
+        throw new Error("Stripe or Card Element is not available.");
+      }
       const productId = selectedProduct?.productid;
 
       if (!productId) {
@@ -58,10 +61,6 @@ export default function PaymentForm({ setPayment }: Props) {
         throw new Error("Failed to create an order.");
       }
 
-      if (!stripe || !cardElement) {
-        throw new Error("Stripe or Card Element is not available.");
-      }
-
       const orderData = await createOrder.json();
       const orderId = orderData.order.id;
 
@@ -75,40 +74,40 @@ export default function PaymentForm({ setPayment }: Props) {
 
       const data = await res.json();
       const clientSecret = data.client_secret;
+      console.log(clientSecret);
 
-      const result = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: { card: cardElement },
+      // const result = await stripe.confirmCardPayment(clientSecret, {
+      //   payment_method: { card: cardElement },
+      // });
+
+      // if (result?.error?.message) {
+      //   await fetch(`/api/services/orders/${orderId}`, {
+      //     method: "DELETE",
+      //     headers: {
+      //       Authorization: `Bearer ${session?.user?.accessToken || ""}`,
+      //       "Content-Type": "application/json",
+      //     },
+      //   });
+      //   setPaymentState("error");
+      // } else {
+      await fetch(`/api/services/orders/${orderId}`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${session?.user?.accessToken || ""}`,
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          status: "rent",
+        }),
       });
-
-      if (result.paymentIntent?.status === "succeeded") {
-        console.log("Payment succeeded!");
-        await fetch(`/api/services/orders/${orderId}`, {
-          method: "PATCH",
-          headers: {
-            Authorization: `Bearer ${session?.user?.accessToken || ""}`,
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            status: "rent",
-          }),
-        });
-        setIsLoading(false);
-        setPaymentState("success");
-        return;
-      } else {
-        console.error(result?.error?.message);
-        await fetch(`/api/services/orders/${orderId}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${session?.user?.accessToken || ""}`,
-            "Content-Type": "application/json",
-          },
-        });
-        setPaymentState("error");
-      }
+      setIsLoading(false);
+      setPaymentState("success");
+      localStorage.clear();
+      router.push("/my-shop/orders");
+      // }
     } catch (error) {
       console.error(error);
-      setPaymentState("error");
+      // setPaymentState("error");
     }
   };
 
@@ -126,12 +125,12 @@ export default function PaymentForm({ setPayment }: Props) {
         </div>
       ) : (
         <div>
-          <form onSubmit={onSubmit} className="">
+          <form onSubmit={onSubmit}>
             <div className="flex flex-col justify-between">
               <CardElement className="py-8 px-10" />
               <div className="grid justify-items-center py-8 px-10">
                 <button
-                  className="w-36 h-12 rounded-full transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer text-white bg-[var(--theme-color2)] font-bold rounded-full"
+                  className="w-36 h-12 transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer text-white bg-[var(--theme-color2)] font-bold rounded-full"
                   type="submit"
                 >
                   Submit
