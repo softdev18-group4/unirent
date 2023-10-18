@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useState } from "react";
 
 type SignInSchema = z.infer<typeof signInSchema>;
 
@@ -27,7 +28,8 @@ const Form: React.FC = () => {
   } = useForm<SignInSchema>({
     resolver: zodResolver(signInSchema),
   });
-
+  const session = useSession();
+  const [error, seterror] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/";
@@ -35,13 +37,16 @@ const Form: React.FC = () => {
   const onSubmit: SubmitHandler<SignInSchema> = async (data, e) => {
     e?.preventDefault();
     const { email, password } = data;
+    //console.log(email, password);
     const result = await signIn("credentials", {
       email,
       password,
       redirect: false,
     });
-
-    if (result?.error) {
+    console.log(session.data?.user);
+    if (session.data?.user.accessToken == null) {
+      seterror(true);
+    } else if (result?.error) {
       console.log(result.error);
     } else {
       router.push(callbackUrl);
@@ -107,6 +112,11 @@ const Form: React.FC = () => {
           </Link>
         </div>
       </div>
+      {error && (
+        <div className="flex font-bold uppercase gap-2 text-red-600">
+          email หรือ password ไม่ถูกต้อง
+        </div>
+      )}
       <div className="flex font-bold uppercase gap-2">
         not a member?
         <Link href="/auth/sign-up" className="font-bold uppercase text-[coral]">

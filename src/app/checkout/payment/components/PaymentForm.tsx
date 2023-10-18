@@ -4,10 +4,11 @@ import React, { useState } from "react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useSession } from "next-auth/react";
 import PaymentConfirm from "./PaymentConfirm";
-import { useSelector } from "react-redux";
-import { SelectedProduct } from "@/redux/features/cartSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { SelectedProduct, setCart } from "@/redux/features/cartSlice";
 import { ScaleLoader } from "react-spinners";
 import { useRouter } from "next/navigation";
+import { CartItem } from "@/types";
 interface Props {
   setPayment: (value: boolean) => void;
 }
@@ -20,6 +21,7 @@ export default function PaymentForm({ setPayment }: Props) {
   const selectedProduct = useSelector(SelectedProduct);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch();
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -102,7 +104,10 @@ export default function PaymentForm({ setPayment }: Props) {
       });
       setIsLoading(false);
       setPaymentState("success");
+      //clear local storage
       localStorage.clear();
+      const cart: CartItem[] = [];
+      dispatch(setCart(cart));
       router.push("/my-shop/orders");
       // }
     } catch (error) {

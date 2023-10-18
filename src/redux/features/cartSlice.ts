@@ -17,6 +17,7 @@ const cartSlice = createSlice({
     reset: () => initialState,
     setCart: (state, action: PayloadAction<CartItem[]>) => {
       state.items = action.payload;
+      localStorage.setItem("cart", JSON.stringify(state.items));
     },
     addToCart: (state, action: PayloadAction<CartItem>) => {
       const {
@@ -30,7 +31,7 @@ const cartSlice = createSlice({
         type,
         period,
         price,
-        rentTime
+        rentTime,
       } = action.payload;
       const existingItem = state.items.find(
         (item) => item.productid === productid
@@ -48,7 +49,7 @@ const cartSlice = createSlice({
           type,
           period,
           price,
-          rentTime
+          rentTime,
         });
       }
       localStorage.setItem("cart", JSON.stringify(state.items));
