@@ -1,3 +1,5 @@
+"use client";
+
 import { title } from 'process';
 import Swal from 'sweetalert2';
 import Payment from '../page';
