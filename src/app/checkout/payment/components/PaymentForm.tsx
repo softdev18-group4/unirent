@@ -29,8 +29,7 @@ export default function PaymentForm({ setPayment }: Props) {
         rentalId: selectedProduct?.rentalId,
         rentTime: selectedProduct?.rentTime,
       };
-      console.log(selectedProduct, query);
-
+      
       const createOrder = await fetch(`/api/services/orders/${productId}`, {
         method: "POST",
         headers: {
