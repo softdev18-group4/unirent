@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useSession } from "next-auth/react";
@@ -13,40 +11,55 @@ interface Props {
 
 export default function PaymentForm({ setPayment }: Props) {
   const stripe = useStripe();
-  const element = useElements();
+  const elements = useElements();
   const { data: session } = useSession();
   const [paymentState, setPaymentState] = useState<string>("none");
   const selectedProduct = useSelector(SelectedProduct);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const cardElement = element?.getElement("card")!;
+    const cardElement = elements?.getElement("card");
 
     try {
       const productId = selectedProduct?.productid;
+
+      if (!productId) {
+        throw new Error("Product ID is missing.");
+      }
 
       const query = {
         rentalId: selectedProduct?.rentalId,
         rentTime: selectedProduct?.rentTime,
       };
-      
+
+      if (!query.rentalId || !query.rentTime) {
+        throw new Error("Rental ID or rent time is missing.");
+      }
+
       const createOrder = await fetch(`/api/services/orders/${productId}`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${session?.user.accessToken}`,
+          Authorization: `Bearer ${session?.user?.accessToken || ""}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(query),
       });
 
-      if (!stripe || !CardElement) return null;
+      if (!createOrder.ok) {
+        throw new Error("Failed to create an order.");
+      }
+
+      if (!stripe || !cardElement) {
+        throw new Error("Stripe or Card Element is not available.");
+      }
+
       const orderData = await createOrder.json();
       const orderId = orderData.order.id;
 
       const res = await fetch(`/api/services/payment/${orderId}`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${session?.user.accessToken}`,
+          Authorization: `Bearer ${session?.user?.accessToken || ""}`,
           "Content-Type": "application/json",
         },
       });
@@ -60,18 +73,18 @@ export default function PaymentForm({ setPayment }: Props) {
       });
 
       if (result.error) {
-        console.log(result.error.message);
+        console.error(result.error.message);
 
         await fetch(`/api/services/orders/${orderId}`, {
           method: "DELETE",
           headers: {
-            Authorization: `Bearer ${session?.user.accessToken}`,
+            Authorization: `Bearer ${session?.user?.accessToken || ""}`,
             "Content-Type": "application/json",
           },
         });
 
         setPaymentState("error");
-      } else if (result.paymentIntent.status === "succeeded") {
+      } else if (result.paymentIntent?.status === "succeeded") {
         console.log("Payment succeeded!");
 
         const rentStatus = {
@@ -81,7 +94,7 @@ export default function PaymentForm({ setPayment }: Props) {
         await fetch(`/api/services/orders/${orderId}`, {
           method: "PATCH",
           headers: {
-            Authorization: `Bearer ${session?.user.accessToken}`,
+            Authorization: `Bearer ${session?.user?.accessToken || ""}`,
             Accept: "application/json",
           },
           body: JSON.stringify(rentStatus),
@@ -90,7 +103,7 @@ export default function PaymentForm({ setPayment }: Props) {
         setPaymentState("success");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       setPaymentState("error");
     }
   };
@@ -103,18 +116,18 @@ export default function PaymentForm({ setPayment }: Props) {
             <CardElement className="py-8 px-10" />
             <div className="grid justify-items-center py-8 px-10">
               <button
-                className="w-36 h-12 rounded-fulltransition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer text-white bg-[color:var(--theme-color2)] font-bold rounded-full"
+                className="w-36 h-12 rounded-full transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer text-white bg-[var(--theme-color2)] font-bold rounded-full"
                 type="submit"
               >
-                submit{" "}
+                Submit
               </button>
             </div>
           </div>
         </form>
       </div>
-      {paymentState != "none" ? (
+      {paymentState !== "none" && (
         <PaymentConfirm setPayment={setPayment} paymentState={paymentState} />
-      ) : null}
+      )}
     </div>
   );
 }
