@@ -3,7 +3,6 @@ import Star from "../Star";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-
 function ProductListCard({
   id,
   name,
@@ -81,7 +80,7 @@ function ProductListCard({
       <div className="flex flex-col justify-center h-full w-full">
         {
           <img
-            src={imgSrc ? imgSrc : "/product.png"}
+            src={imgSrc ? `${imgSrc}` : "/product.png"}
             width={300}
             height={200}
             alt="Picture of the product"
