@@ -52,7 +52,7 @@ function PaginationTable() {
         }
       );
       const response = await query.json();
-      getTableData(response);
+      getTableData(response.data);
     }
     setLoading(false);
   };
