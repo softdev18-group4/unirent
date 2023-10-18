@@ -21,21 +21,21 @@ export default function PaymentForm({ setPayment }: Props) {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const cardElement = element?.getElement("card")!;
-    // elements.getElement(CardElement)!;
 
     try {
       const productId = selectedProduct?.productid;
 
       const query = {
         rentalId: selectedProduct?.rentalId,
-        rentTime: selectedProduct?.period,
+        rentTime: selectedProduct?.rentTime,
       };
-      console.log(selectedProduct , query);
-      
+      console.log(selectedProduct, query);
+
       const createOrder = await fetch(`/api/services/orders/${productId}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${session?.user.accessToken}`,
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(query),
       });
@@ -48,6 +48,7 @@ export default function PaymentForm({ setPayment }: Props) {
         method: "POST",
         headers: {
           Authorization: `Bearer ${session?.user.accessToken}`,
+          "Content-Type": "application/json",
         },
       });
 
@@ -66,6 +67,7 @@ export default function PaymentForm({ setPayment }: Props) {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${session?.user.accessToken}`,
+            "Content-Type": "application/json",
           },
         });
 
@@ -81,6 +83,7 @@ export default function PaymentForm({ setPayment }: Props) {
           method: "PATCH",
           headers: {
             Authorization: `Bearer ${session?.user.accessToken}`,
+            Accept: "application/json",
           },
           body: JSON.stringify(rentStatus),
         });
