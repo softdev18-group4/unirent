@@ -1,10 +1,33 @@
 import { useAppSelector } from '@/redux/hooks';
 import { ProductState } from '@/types';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { use } from 'react';
 
 const CardSeller = () => {
   const product : ProductState=  useAppSelector(
     (state: { productReducer: { value: any } }) => state.productReducer.value
   );
+  const { data: session } = useSession();
+
+  const handleCLick = async () => {
+    const router = useRouter()
+
+    const res = await fetch(`/api/services/conversation`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${session?.user?.accessToken || ""}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: product.ownerId,
+      }), 
+
+
+    });
+
+    console.log(res)
+  }
   
   return (
     <div className="card_seller">
@@ -19,7 +42,7 @@ const CardSeller = () => {
         <div className="avatar_title">
           {product && <h1>{product.owner.firstName}</h1>}
             
-            <button className="btn_custom3" >แชทพูดคุย</button>
+            <button onClick={handleCLick} className="btn_custom3 transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer text-white bg-[var(--theme-color2)" >แชทพูดคุย</button>
         </div>
       </div>
       <div className="line"></div>
