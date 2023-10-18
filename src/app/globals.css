@@ -222,7 +222,7 @@ body {
 }
 
 .card_detail {
-  @apply bg-white rounded-lg p-10 my-10;
+  @apply bg-white rounded-lg p-10 my-4;
 }
 .card_detail p {
   @apply text-gray-400
