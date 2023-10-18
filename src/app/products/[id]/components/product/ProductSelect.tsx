@@ -25,7 +25,7 @@ const ProductSelect = () => {
     if (selectedOption !== -1 && session){
       dispatch(
         addToCart({
-          isSelected: true,
+          isSelected: false,
           productid: product.id,
           rentalId: product.rentalOptions[selectedOption].id ,
           imgSrc:  product.imageName[0],
