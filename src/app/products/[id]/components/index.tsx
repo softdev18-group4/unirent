@@ -10,6 +10,8 @@ import ProductCharacteristics from "./product/ProductCharacteristics";
 import CardDetail from "./card/CardDetail";
 import CardReview from "./card/CardReview";
 import ProductReview from './product/ProductReview';
+import AnimatedLoadingBar from "./AnimatedLoadingBar";
+
 
 export {
   ProductRent,
@@ -23,5 +25,6 @@ export {
   ProductCharacteristics,
   CardDetail,
   CardReview,
-  ProductReview
+  ProductReview,
+  AnimatedLoadingBar
 };
