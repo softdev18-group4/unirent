@@ -7,17 +7,28 @@ import {
 } from "@/redux/features/cartSlice";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useSession } from "next-auth/react";
+import { ProductState } from "@/types";
 
 function Contract() {
   const { push } = useRouter();
   const totalselect = useSelector(totalSelectedProduct);
+  const { data: session } = useSession();
   const selectedProduct = useSelector(SelectedProduct);
+  const [owner,setOwner] = useState <ProductState|null> (null)
+
+  const getData = async () => {
+    const res = await fetch(`/api/services/products/${selectedProduct?.productid}`);
+    const data = await res.json();
+    setOwner(data)
+  }
   useEffect(() => {
     if (totalselect != 1) {
       push("/checkout/cart");
     }
+    getData()
   }, []);
 
   return (
@@ -61,38 +72,155 @@ function Contract() {
         <div className="w-full h-0 border boerder-slate-400"></div>
         <div className="font-bold text-slate-400">Contract</div>
         <div className="font-bold text-slate-800">
-          Contrary to popular belief, Lorem Ipsum is not simply random text. It
-          has roots in a piece of classical Latin literature from 45 BC, making
-          it over 2000 years old. Richard McClintock, a Latin professor at
-          Hampden-Sydney College in Virginia, looked up one of the more obscure
-          Latin words, consectetur, from a Lorem Ipsum passage, and going
-          through the cites of the word in classical literature, discovered the
-          undoubtable source. Lorem Ipsum comes from sections 1.10.32 and
-          1.10.33 of de Finibus Bonorum et Malorum (The Extremes of Good and
-          Evil) by Cicero, written in 45 BC. This book is a treatise on the
-          theory of ethics, very popular during the Renaissance. The first line
-          of Lorem Ipsum, Lorem ipsum dolor sit amet.., comes from a line in
-          section 1.10.32. The standard chunk of Lorem Ipsum used since the
-          1500s is reproduced below for those interested. Sections 1.10.32 and
-          1.10.33 from de Finibus Bonorum et Malorum by Cicero are also
-          reproduced in their exact original form, accompanied by English
-          versions from the 1914 translation by H. Rackham.Contrary to popular
-          belief, Lorem Ipsum is not simply random text. It has roots in a piece
-          of classical Latin literature from 45 BC, making it over 2000 years
-          old. Richard McClintock, a Latin professor at Hampden-Sydney College
-          in Virginia, looked up one of the more obscure Latin words,
-          consectetur, from a Lorem Ipsum passage, and going through the cites
-          of the word in classical literature, discovered the undoubtable
-          source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of de
-          Finibus Bonorum et Malorum (The Extremes of Good and Evil) by Cicero,
-          written in 45 BC. This book is a treatise on the theory of ethics,
-          very popular during the Renaissance. The first line of Lorem Ipsum,
-          Lorem ipsum dolor sit amet.., comes from a line in section 1.10.32.
-          The standard chunk of Lorem Ipsum used since the 1500s is reproduced
-          below for those interested. Sections 1.10.32 and 1.10.33 from de
-          Finibus Bonorum et Malorum by Cicero are also reproduced in their
-          exact original form, accompanied by English versions from the 1914
-          translation by H. Rackham.
+          แบบสัญญา
+          <br />
+          <br />
+          สัญญาเชาคอมพิวเตอร์
+          <br />
+          <br />
+          สัญญาฉบับนี้ทำขึ้นระหว่าง
+          <br />
+          <br />
+          เมื่อวันที่ {session?.expires.slice(0,10)} โดย {session?.user.name + " "}
+          ซึ่งต่อไปนี้สัญญานี้เรียกว่า ผู้เช่า ฝ่ายหนึ่ง กับ {owner?.owner.firstName} ซึ่งต่อไปในสัญญานี้เรียกว่า ผู้ให้เช่า อีกฝ่ายหนึ่ง
+          <br />
+          <br />
+          คู่สัญญาได้ตกลงกันมีข้อความดังต่อไปนี้
+          <br />
+          <br />
+          ข้อ ๑ คำนิยาม
+          <br />
+          <br />
+          ค่าเช่า หมายความรวมถึง ค่าบำรุงรักษาด้วย ค่าบำรุงรักษา
+          หมายความรวมถึง ค่าใช้จ่ายทั้งสิ้นในการบำรุงรักษาและซ่อมแชมแก้ไข
+          การบำรุงรักษา หมายความรวมถึง
+          การตรวจสอบตามกำหนดเวลาตลอดจนการช่อมแชม
+          แก้ไขและเปลี่ยนแปลงส่วนประกอบที่เกี่ยวกับคอมพิวเตอร์ที่เช่าเพื่อให้ใช้งานได้อย่างทันสมัยเป็นปกติและมีประสิทธิภาพตลอดระยะเวลาของการเช่า
+          การซ่อมแชมแก้ไข หมายความรวมถึง
+          การช่อมแชมแก้ไขไม่ว่าจะเป็นการซ่อมแชมแก้ไขเล็กน้อยหรือไม่
+          <br />
+          <br />
+          ข้อ ๒ ข้อตกลงเช่า
+          <br />
+          <br />
+          ผู้เช่าตกลงเช่าและให้ผู้เช่าตกลงให้เช่าเครื่องคอมพิวเตอร์ (Hardware)
+          ชอฟท์แวร์ (Software) อุปกรณ์ประมวลผลระบบคอมพิวเตอร์
+          โปรแกรมประยุกต์การให้บริการ อุปกรณ์ประกอบระบบ (ชื่อระบบปฏิบัติการ)
+          รวมทั้งส่วนประกอบอื่นๆ ที่สามารถรับโปรแกรม ข้อมูล ประมวลผลสื่อสาร
+          เคลื่อนย้ายข้อมูล และแสดงผลลัพธ์ได้
+          ซึ่งเป็นผลิตภัณฑ์ของซึ่งต่อไปในสัญญานี้เรียกว่า คอมพิวเตอร์
+          <br />
+          <br />
+          ข้อ ๓ ระยะเวลาการเช่า
+          <br />
+          <br />
+          สัญญานี้มีผลบังคับตั้งแต่วันที่ลงนามในสัญญา ตั้งแต่วันที่ (xx-xx)
+          <br />
+          <br />
+          ข้อ ๔ การชำระค่าเช่า
+          <br />
+          <br />
+          ผู้เช่าจะต้องชำระค่าเช่าล่วงหน้าผ่านระบบเท่านั้น
+          <br />
+          <br />
+          ข้อ ๕ การบำรุงรักษา
+          <br />
+          <br />
+          ผู้ให้เช่ามีหน้าที่บำรุงรักษาคอมพิวเตอร์ให้อยู่ในสภาพใช้งานได้ดีอยู่เสมอ
+          รวมทั้งปรับปรุงพัฒนาระบบคอมพิวเตอร์ให้ทันสมัยเป็นปัจจุบันและมีประสิทธิภาพตามความต้องการใช้งานของผู้เช่า
+          ด้วยค่าใช้จ่ายของให้เช่า
+          <br />
+          <br />
+          ข้อ ๖ การใช้ประโยชน์
+          <br />
+          <br />
+          การใช้ประโยชน์ในคอมพิวเตอร์ตามสัญญานี้
+          ผู้ให้เช่ายินยอมให้อยู่ภายใต้การจัดการและการควบคุมดูแลของผู้เช่าโดยสิ้นเชิง
+          นอกจากผู้เช่าจะใช้ในการปฏิบัติงานของผู้เช่าแล้ว
+          ผู้เช่าอาจให้ผู้อื่นมาใช้ คอมพิวเตอร์นี้ได้
+          โดยอยู่ภายใต้การควบคุมดูแลของผู้เช่า
+          <br />
+          <br />
+          ข้อ ๗ ข้อตกลงการใช้โปรแกรม
+          <br />
+          <br />
+          ผู้ให้เช่ายินยอมปฏิบัติตามข้อตกลงการใช้โปรแกรมตามที่กำหนดไว้ -
+          ผู้ให้เช่าต้องดำเนินการให้ผู้เช่าและผู้ที่ได้รับมอบหมายจากผู้เช่าได้รับอนุญาตตามกฎหมายจากเจ้าของลิขสิทธิ์ในการใช้และสร้างสรรค์โดยการดัดแปลง
+          การรวบรวม หรือการประกอบกันเข้า จากโปรแกรมคอมพิวเตอร์ที่เช่า -
+          บรรดาข้อมูลและสารสนเทศไม่ว่าในรูปแบบใดที่เก็บอยู่ในหรือที่สร้างขึ้นโดยระบบคอมพิวเตอร์รวมทั้งงานโปรแกรมคอมพิวเตอร์ที่สร้างสรรค์ขึ้นโดยผู้ให้เช่า
+          หรือลูกจ้าง พนักงาน และผู้ที่ได้รับ มอบหมายจากผู้ให้เช่า
+          ให้ถือว่าเป็นลิชสิทธิ์ของผู้เช่าทั้งสิ้น -
+          ประโยชน์อันจะเกิดขึ้นในอนาคตจากการพัฒนา การแก้ไขเปลี่ยนแปลง
+          การใช้การทำซ้ำโปรแกรมคอมพิวเตอร์
+          อันเป็นงานสร้างสรรค์อันมีลิขสิทธิ์ใหม่ตามวรรคก่อน
+          ซึ่งบางส่วนจะใช้ประโยชน์
+          จากโปรแกรมคอมพิวเตอร์ที่เช่าอันเป็นงานสร้างสรรค์ที่ลิขสิทธิ์เติมเป็นของผู้ให้เช่า
+          ทั้งลิขสิทธิ์ที่มีอยู่หรือที่อาจจะเกิดขึ้นในภายหน้า
+          ซึ่งรวมถึงในกรณีที่มีชอฟต์แวร์ที่ติดตั้งมาพร้อมกับส่วนอุปกรณ์ครั้งนี้ด้วย
+          ผู้ให้เช่าไม่มีสิทธิ เรียกร้องค่าใช้จ่ายใดๆ จากผู้เช่าทั้งสิ้น
+          <br />
+          <br />
+          ห้ามมิให้ผู้ให้เช่า ลูกจ้าง ตัวแทนหรือพนักงานของผู้ให้เชาเอาไป
+          เปิดเผยหรือใช้ข้อมูลและหรือสารสนเทศในระบบดังกล่าว
+          หรือกระทำด้วยประการใดๆ ให้บุคคลอื่นเอาไป เปิดเผย
+          หรือใช้ข้อมูลและหรือสารสนเทศในระบบตังกล่าวหรือเข้าถึงโดยมิชอบชีงระบบคอมพิวเตอร์หรือถ่วงรู้มาตรการป้องกันการเข้าถึงระบบคอมพิวเตอร์ที่จัดทำขึ้นเป็นการเฉพาะหรือกระทำด้วยประการใดโดยมิชอบด้วยวิธีการทางอิเล็กทรอนิกส์
+          เพื่อตักรับไว้ซึ่งข้อมูลคอมพิวเตอร์ของผู้เช่าหรือผู้ที่เกี่ยวข้องกับผู้เช่าที่อยู่ระหว่างการส่งในระบบคอมพิวเตอร์
+          โดยไม่ชอบด้วยกฎหมายหรือโดยไม่ได้รับความยินยอมเป็นหนังสือจากผู้เช่า
+          หากมีการฝ่าฝืนผู้ให้เช่าต้องรับผิดชอบ
+          ชดใช้ค่าเสียหายให้แก่ผู้เช่าจนเต็มจำนวน
+          <br />
+          <br />
+          ข้อ ๘ ความรับผิดต่อความเสียหาย
+          <br />
+          <br />
+          ผู้เช่าไม่ต้องรับผิดชอบต่อการสูญหายหรือเสียหายใด ๆ
+          ที่เกิดขึ้นแก่คอมพิวเตอร์อันไม่ใช่ความผิดของผู้เช่าตลอดระยะเวลาที่คอมพิวเตอร์อยู่ในความครอบครองของผู้เช่า
+          ถ้าเกิดความเสียหายขึ้นแก่คอมพิวเตอร์หรือส่วนใดส่วนหนึ่งของคอมพิวเตอร์ที่อยู่
+          ในความครอบครองของผู้เช่าตามวรรคหนึ่ง
+          ผู้ให้เซ่าต้องดำเนินการทุกประการตามที่จำเป็นเพื่อทำให้คอมพิวเตอร์กลับคืนสภาพที่ใช้งานได้ดีดังเดิมโดยเร็วที่สุด
+          และในกรณีที่ไม่อาจดำเนินการให้คอมพิวเตอร์คืนสูสภาพที่ใช้งานได้ดีดังเดิมได้
+          หรือในกรณีที่คอมพิวเตอร์สูญหาย
+          ผู้ให้เช่าต้องนำคอมพิวเตอร์เครื่องใหม่ที่มีคุณภาพ
+          ประสิทธิภาพและความสามารถใช้งานไม่ต่ำกว่าคอมพิวเตอร์เดิมมาติดตั้งให้แก่ผู้เช่าแทนภายใน,
+          นับถัดจากวันที่ผู้ให้เช่าได้รับแจ้งจากผู้เช่า
+          คอมพิวเตอร์ที่นำมาติดตั้งแทนนี้ให้ถือเป็นคอมพิวเตอร์ตามนัยแห่งสัญญานี้ด้วย
+          ทั้งนี้
+          ในการปฏิบัติตามสัญญาข้อนี้ผู้ให้เช่าเป็นผู้ออกค่าใช้จ่ายเองทั้งสิ้น
+          <br />
+          <br />
+          ข้อ ๙ การบอกเลิกสัญญา
+          <br />
+          <br />
+          เมื่อครบกำหนดติดตั้งและส่งมอบคอมพิวเตอร์ตามสัญญาแล้ว
+          ถ้าผู้ให้เช่าไม่ส่งมอบและติดตั้งคอมพิวเตอร์บางรายการหรือทั้งหมดให้แก่ผู้เช่าภายใจกำหนดเวลาตามสัญญา
+          หรือส่งมอบคอมพิวเตอร์ ไม่ตรงตามสัญญา หรือมีคุณสมบัติไม่ถูกต้องตามสัญญา
+          หรือส่งมอบและติดตั้งแล้วเสร็จภายในกำหนดแต่ไม่สามารถใช้งานได้อย่างมีประสิทธิภาพ
+          หรือใช้งานได้ไม่ครบถ้วนตามสัญญา หรือผู้ให้เช่าไม่ปฏิบัติตามสัญญา
+          ข้อใดข้อหนึ่ง ผู้เช่ามีสิทธิบอกเลิกสัญญาทั้งหมดหรือแต่บางส่วนได้
+          การใช้สิทธิบอกเลิกสัญญานั้นไม่กระทบสิทธิของผู้เช่าที่จะเรียกร้องค่าเสียหายจากผู้ให้เช่า
+          <br />
+          <br />
+          ข้อ ๑๐ การนำคอมพิวเตอร์กลับคืนไป
+          <br />
+          <br />
+          เมื่อสัญญาสิ้นสุดลงไม่ว่าจะโดยการบอกเลิกสัญญา หรือครบอายุสัญญา
+          ผู้เช่าต้องนำคอมพิวเตอร์กลับคืนไปภายใน 3 วัน
+          นับถัดจากวันที่สัญญาสิ้นสุดลง
+          โดยผู้เช่าเป็นผู้เสียค่าใช้จ่ายเองทั้งสิ้น
+          <br />
+          <br />
+          ข้อ ๑๑ การโอนกรรมสิทธิ์ให้บุคคลอื่น
+          <br />
+          <br />
+          ในระหว่างอายุสัญญาเช่า
+          ผู้ให้เช่าจะไม่โอนกรมสิทธิ์ในคอมพิวเตอร์ที่ให้เชาแก่บุคคลอื่นหากผู้ให้เช่าฝ้าฝืน
+          ผู้ให้เช่ายินยอมชดใช้ค่าเสียหายให้แก่ผู้เช่า
+          <br />
+          <br />
+          ข้อ ๑๒ การโอนสิทธิและหน้าที่ตามสัญญา
+          <br />
+          <br />
+          ผู้ให้เช่าจะไม่โอนสิทธิและหน้าที่ที่มีต่อผู้เช่าตามสัญญานี้ให้แก่บุคคลอื่นโดยไม่ได้รับความเห็นชอบเป็นหนังสือจากผู้เช่าก่อน
         </div>
       </div>
 

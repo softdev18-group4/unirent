@@ -14,7 +14,7 @@ const CardReview = () => {
         <div className="right">
             {
                 filterReview.map((item , index) => (
-                    <button className="btn_custom4" key={index}>item</button>
+                    <button className="btn_custom4" key={index}>{item}</button>
                 ))
             }
         </div>
