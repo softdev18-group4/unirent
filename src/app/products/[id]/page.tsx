@@ -1,29 +1,33 @@
-"use client"
+"use client";
 
-
-import { ProductRent, CardSeller , ProductDetail ,ProductCharacteristics ,ProductReview} from "./components";
+import {
+  ProductRent,
+  CardSeller,
+  ProductDetail,
+  ProductCharacteristics,
+  ProductReview,
+} from "./components";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useEffect } from "react";
-import { reset, updateProduct } from "@/redux/features/productSlice";
-import {imageList} from "@/constants"
-import { API_HOST } from "@/config";
+import { updateProduct } from "@/redux/features/productSlice";
+import { imageList } from "@/constants";
 
 const Detail = ({ params }: { params: { id: string } }) => {
   const dispatch = useAppDispatch();
-  const product = useAppSelector((state: { productReducer: { value: any; }; }) => state.productReducer.value);
+  const product = useAppSelector(
+    (state: { productReducer: { value: any } }) => state.productReducer.value
+  );
 
   useEffect(() => {
     getProduct();
-  },[]);
-  
+  }, []);
+
   const getProduct = async () => {
-    const res = await fetch(
-      `/api/services/products/${params.id}`
-    );
+    const res = await fetch(`/api/services/products/${params.id}`);
     const product = await res.json();
-    product.src = imageList
+    product.src = imageList;
     console.log(product);
-    
+
     dispatch(updateProduct(product));
   };
   return (
@@ -32,12 +36,11 @@ const Detail = ({ params }: { params: { id: string } }) => {
       <CardSeller />
       <div className="product_layout">
         <div>
-      <ProductDetail />
-      <ProductCharacteristics />
+          <ProductDetail />
+          <ProductCharacteristics />
         </div>
-      <ProductReview />
+        <ProductReview />
       </div>
-      
     </div>
   );
 };
