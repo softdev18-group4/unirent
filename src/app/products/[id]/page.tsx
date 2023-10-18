@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { ProductRent, CardSeller, ProductDetail, ProductCharacteristics, ProductReview, AnimatedLoadingBar } from "./components";
