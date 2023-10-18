@@ -128,7 +128,7 @@ export default function PaymentForm({ setPayment }: Props) {
               <CardElement className="py-8 px-10" />
               <div className="grid justify-items-center py-8 px-10">
                 <button
-                  className="w-36 h-12 rounded-full transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer text-white bg-[var(--theme-color2)] font-bold rounded-full"
+                  className="w-36 h-12 transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer text-white bg-[var(--theme-color2)] font-bold rounded-full"
                   type="submit"
                 >
                   Submit
