@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import PaymentConfirm from "./PaymentConfirm";
 import { useSelector } from "react-redux";
 import { SelectedProduct } from "@/redux/features/cartSlice";
-import { ScaleLoader } from 'react-spinners';
+import { ScaleLoader } from "react-spinners";
 
 interface Props {
   setPayment: (value: boolean) => void;
@@ -23,7 +23,6 @@ export default function PaymentForm({ setPayment }: Props) {
   margin: 0 auto;
   border-color: red;  /* You can adjust the border color here */
 `;
-
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -81,19 +80,7 @@ export default function PaymentForm({ setPayment }: Props) {
         payment_method: { card: cardElement },
       });
 
-      if (result.error) {
-        console.error(result.error.message);
-
-        await fetch(`/api/services/orders/${orderId}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${session?.user?.accessToken || ""}`,
-            "Content-Type": "application/json",
-          },
-        });
-
-        setPaymentState("error");
-      } else if (result.paymentIntent?.status === "succeeded") {
+      if (result.paymentIntent?.status === "succeeded") {
         console.log("Payment succeeded!");
         await fetch(`/api/services/orders/${orderId}`, {
           method: "PATCH",
@@ -107,7 +94,17 @@ export default function PaymentForm({ setPayment }: Props) {
         });
         setIsLoading(false);
         setPaymentState("success");
-        
+        return;
+      } else {
+        console.error(result?.error?.message);
+        await fetch(`/api/services/orders/${orderId}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${session?.user?.accessToken || ""}`,
+            "Content-Type": "application/json",
+          },
+        });
+        setPaymentState("error");
       }
     } catch (error) {
       console.error(error);
@@ -119,26 +116,30 @@ export default function PaymentForm({ setPayment }: Props) {
     <div>
       {isLoading ? (
         <div className="flex justify-center items-center h-24">
-          <ScaleLoader color={'#FF6E31'} loading={isLoading} width={6} radius={2} margin={6} />
+          <ScaleLoader
+            color={"#FF6E31"}
+            loading={isLoading}
+            width={6}
+            radius={2}
+            margin={6}
+          />
         </div>
-      ) : 
-      (
-      <div>
-        
-        <form onSubmit={onSubmit} className="">
-          <div className="flex flex-col justify-between">
-            <CardElement className="py-8 px-10" />
-            <div className="grid justify-items-center py-8 px-10">
-              <button
-                className="w-36 h-12 rounded-full transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer text-white bg-[var(--theme-color2)] font-bold rounded-full"
-                type="submit"
-              >
-                Submit
-              </button>
+      ) : (
+        <div>
+          <form onSubmit={onSubmit} className="">
+            <div className="flex flex-col justify-between">
+              <CardElement className="py-8 px-10" />
+              <div className="grid justify-items-center py-8 px-10">
+                <button
+                  className="w-36 h-12 rounded-full transition ease-in-out delay-150 duration-200 hover:scale-110 cursor-pointer text-white bg-[var(--theme-color2)] font-bold rounded-full"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              </div>
             </div>
-          </div>
-        </form>
-      </div>
+          </form>
+        </div>
       )}
       {paymentState !== "none" && (
         <PaymentConfirm setPayment={setPayment} paymentState={paymentState} />
