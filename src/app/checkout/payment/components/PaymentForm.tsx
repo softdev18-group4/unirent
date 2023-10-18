@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useSession } from "next-auth/react";
@@ -18,18 +20,19 @@ export default function PaymentForm({ setPayment }: Props) {
   const selectedProduct = useSelector(SelectedProduct);
   const [isLoading, setIsLoading] = useState(false);
 
-  const override = `
-  display: block;
-  margin: 0 auto;
-  border-color: red;  /* You can adjust the border color here */
-`;
-
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
-    const cardElement = elements?.getElement("card");
 
     try {
+      if (elements == null) {
+        return;
+      }
+
+      setIsLoading(true);
+      const cardElement = elements?.getElement("card");
+      if (!stripe || !cardElement) {
+        throw new Error("Stripe or Card Element is not available.");
+      }
       const productId = selectedProduct?.productid;
 
       if (!productId) {
@@ -58,10 +61,6 @@ export default function PaymentForm({ setPayment }: Props) {
         throw new Error("Failed to create an order.");
       }
 
-      if (!stripe || !cardElement) {
-        throw new Error("Stripe or Card Element is not available.");
-      }
-
       const orderData = await createOrder.json();
       const orderId = orderData.order.id;
 
@@ -75,7 +74,8 @@ export default function PaymentForm({ setPayment }: Props) {
 
       const data = await res.json();
       const clientSecret = data.client_secret;
-
+      console.log(clientSecret);
+      
       const result = await stripe.confirmCardPayment(clientSecret, {
         payment_method: { card: cardElement },
       });
@@ -123,7 +123,7 @@ export default function PaymentForm({ setPayment }: Props) {
         </div>
       ) : (
         <div>
-          <form onSubmit={onSubmit} className="">
+          <form onSubmit={onSubmit}>
             <div className="flex flex-col justify-between">
               <CardElement className="py-8 px-10" />
               <div className="grid justify-items-center py-8 px-10">
