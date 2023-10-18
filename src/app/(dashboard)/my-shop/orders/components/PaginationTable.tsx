@@ -93,6 +93,9 @@ function PaginationTable() {
     else if (month == 11) return "Dec";
   };
   const getTimeleft = (timeleft: number) => {
+    if (timeleft <= 0) {
+      return "หมดเวลาแล้ว";
+    }
     const remainday = Math.floor(timeleft);
     if (remainday == 0) {
       const remainhour = Math.floor(timeleft * 24);
