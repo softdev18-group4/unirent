@@ -52,7 +52,8 @@ function PaginationTable() {
         }
       );
       const response = await query.json();
-      getTableData(response.data);
+      //console.log(response);
+      getTableData(response);
     }
     setLoading(false);
   };
@@ -91,6 +92,16 @@ function PaginationTable() {
     else if (month == 10) return "Nov";
     else if (month == 11) return "Dec";
   };
+  const getTimeleft = (timeleft: number) => {
+    const remainday = Math.floor(timeleft);
+    if (remainday == 0) {
+      const remainhour = Math.floor(timeleft * 24);
+      if (remainhour > 0) return `เหลือ ${remainhour} ชั่วโมง`;
+      return "เหลือน้อยกว่า 1 ชั่วโมง";
+    } else {
+      return `เหลือ ${remainday} วัน`;
+    }
+  };
   //transfrom array of product data to table data
   const getTableData = (data: any) => {
     //data:any input depends on (Your Order) and (Your Product) api
@@ -100,20 +111,29 @@ function PaginationTable() {
     //transfrom array of order data to table data
     data.map((tmp: any) => {
       let day, month, year;
-      day = new Date(tmp.product.availableDays.startDate).getDate();
-      month = monthToString(
-        new Date(tmp.product.availableDays.startDate).getMonth()
-      );
-      year = new Date(tmp.product.availableDays.startDate).getFullYear();
+      day = new Date(tmp.startRent).getDate();
+      month = monthToString(new Date(tmp.startRent).getMonth());
+      year = new Date(tmp.startRent).getFullYear();
+      const timeleft =
+        tmp.rentTime -
+        Math.round(
+          ((new Date().getTime() - new Date(tmp.startRent).getTime()) /
+            86400000) *
+            100
+        ) /
+          100;
+      const timeleftStr = getTimeleft(timeleft);
       //get Product of the order
       const onedata: tableData = {
-        imgSrc: tmp.imageName[0] ? tmp.imageName[0] : "/product.png",
+        imgSrc: tmp.product.imageName[0]
+          ? tmp.product.imageName[0]
+          : "/product.png",
         name: tmp.product.name,
-        status: tmp.status == "wait" ? "กำลังดำเนินการ" : "ได้รับแล้ว",
+        status: tmp.status == "waiting" ? "กำลังดำเนินการ" : "ได้รับแล้ว",
         period: tmp.rentalOption.type,
         price: tmp.rentalOption.priceRate,
         date: day + " " + month + " " + year,
-        timeleft: tmp.rentTime + " ชั่วโมง",
+        timeleft: timeleftStr,
         id: tmp.id,
       };
       tabledata.push(onedata);
