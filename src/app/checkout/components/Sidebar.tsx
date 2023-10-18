@@ -12,7 +12,7 @@ function Sidebar() {
 
   const selectedProduct = useSelector(SelectedProduct);
   const dispatch = useDispatch();
-  const discount = 2000;
+  const discount = 10;
   useEffect(() => {
     let cartData = localStorage.getItem("cart");
     if (cartData) {
