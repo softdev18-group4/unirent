@@ -6,6 +6,7 @@ const nextConfig = {
       {
         source: '/api/services/:path*',
         destination: 'https://api-unirent.1tpp.dev/:path*',
+        // destination: 'http://localhost:6060/:path*',
       },
     ];
   },
