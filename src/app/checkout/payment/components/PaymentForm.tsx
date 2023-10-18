@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import PaymentConfirm from "./PaymentConfirm";
 import { useSelector } from "react-redux";
 import { SelectedProduct } from "@/redux/features/cartSlice";
+import { ScaleLoader } from 'react-spinners';
 
 interface Props {
   setPayment: (value: boolean) => void;
@@ -15,9 +16,18 @@ export default function PaymentForm({ setPayment }: Props) {
   const { data: session } = useSession();
   const [paymentState, setPaymentState] = useState<string>("none");
   const selectedProduct = useSelector(SelectedProduct);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const override = `
+  display: block;
+  margin: 0 auto;
+  border-color: red;  /* You can adjust the border color here */
+`;
+
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
     const cardElement = elements?.getElement("card");
 
     try {
@@ -95,8 +105,9 @@ export default function PaymentForm({ setPayment }: Props) {
             status: "rent",
           }),
         });
-
+        setIsLoading(false);
         setPaymentState("success");
+        
       }
     } catch (error) {
       console.error(error);
@@ -106,7 +117,14 @@ export default function PaymentForm({ setPayment }: Props) {
 
   return (
     <div>
+      {isLoading ? (
+        <div className="flex justify-center items-center h-24">
+          <ScaleLoader color={'#FF6E31'} loading={isLoading} width={6} radius={2} margin={6} />
+        </div>
+      ) : 
+      (
       <div>
+        
         <form onSubmit={onSubmit} className="">
           <div className="flex flex-col justify-between">
             <CardElement className="py-8 px-10" />
@@ -121,6 +139,7 @@ export default function PaymentForm({ setPayment }: Props) {
           </div>
         </form>
       </div>
+      )}
       {paymentState !== "none" && (
         <PaymentConfirm setPayment={setPayment} paymentState={paymentState} />
       )}

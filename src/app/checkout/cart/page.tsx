@@ -25,6 +25,7 @@ function Cart() {
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cart.items);
   useEffect(() => {
+    dispatch(selectProduct(""));
     let cartData = localStorage.getItem("cart");
     if (cartData) {
       const data: CartItem[] = JSON.parse(cartData);
