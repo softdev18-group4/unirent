@@ -65,7 +65,6 @@ export default function PaymentForm({ setPayment }: Props) {
       });
 
       const data = await res.json();
-      console.log(data);
       const clientSecret = data.client_secret;
 
       const result = await stripe.confirmCardPayment(clientSecret, {
@@ -86,18 +85,15 @@ export default function PaymentForm({ setPayment }: Props) {
         setPaymentState("error");
       } else if (result.paymentIntent?.status === "succeeded") {
         console.log("Payment succeeded!");
-
-        const rentStatus = {
-          status: "rent",
-        };
-
         await fetch(`/api/services/orders/${orderId}`, {
           method: "PATCH",
           headers: {
             Authorization: `Bearer ${session?.user?.accessToken || ""}`,
             Accept: "application/json",
           },
-          body: JSON.stringify(rentStatus),
+          body: JSON.stringify({
+            status: "rent",
+          }),
         });
 
         setPaymentState("success");
