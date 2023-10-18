@@ -1,8 +1,24 @@
-function ExploreCard({ id, description }: { id: number; description: string }) {
+function ExploreCard({
+  id,
+  description,
+  imgSrc,
+  grow,
+}: {
+  id: number;
+  description: string;
+  imgSrc: string;
+  grow: number;
+}) {
   return (
-    <div className="grow drop-shadow h-36 bg-white p-3 rounded-lg cursor-pointer ">
-      <div className="flex items-center justify-center h-full">
-        {description}
+    <div className={`grow-[${grow}] drop-shadow h-48 bg-white rounded-lg `}>
+      <div className="flex items-center justify-center w-full h-full aspect-square">
+        <img
+          src={imgSrc}
+          width={2000}
+          height={2000}
+          alt="Picture of ads"
+          className="w-full h-full rounded-md"
+        />
       </div>
     </div>
   );
