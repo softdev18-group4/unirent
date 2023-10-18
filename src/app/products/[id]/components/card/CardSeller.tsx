@@ -2,7 +2,6 @@ import { useAppSelector } from '@/redux/hooks';
 import { ProductState } from '@/types';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { use } from 'react';
 
 const CardSeller = () => {
   const product : ProductState=  useAppSelector(
@@ -23,7 +22,7 @@ const CardSeller = () => {
         userId: product.ownerId,
       }), 
 
-
+      
     });
 
     console.log(res)

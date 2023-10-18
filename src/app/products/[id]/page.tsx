@@ -5,8 +5,6 @@ import { ProductRent, CardSeller, ProductDetail, ProductCharacteristics, Product
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useEffect } from "react";
 import { reset, updateProduct } from "@/redux/features/productSlice";
-import { imageList } from "@/constants";
-import { API_HOST } from "@/config";
 
 const Detail = ({ params }: { params: { id: string } }) => {
   const dispatch = useAppDispatch();
@@ -23,7 +21,6 @@ const Detail = ({ params }: { params: { id: string } }) => {
     try {
       const res = await fetch(`/api/services/products/${params.id}`);
       const product = await res.json();
-      product.src = imageList;
       console.log(product);
       dispatch(updateProduct(product));
     } catch (error) {
