@@ -104,7 +104,7 @@ function MessageSideBar() {
                 name="Captain Ameraica"
                 imgSrc="/product.png"
                 lastMsg="Hello, I want a computer"
-                herf={"//messages/" + val}
+                herf={"/messages/" + val}
                 notificationNumber={2}
                 toggleChat={toggleChat}
               ></MessageCard>

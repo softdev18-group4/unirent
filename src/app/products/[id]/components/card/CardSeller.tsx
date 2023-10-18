@@ -1,16 +1,16 @@
 import { useAppSelector } from '@/redux/hooks';
 import { ProductState } from '@/types';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const CardSeller = () => {
   const product : ProductState=  useAppSelector(
     (state: { productReducer: { value: any } }) => state.productReducer.value
   );
   const { data: session } = useSession();
+  const router = useRouter()
 
   const handleCLick = async () => {
-    const router = useRouter()
 
     const res = await fetch(`/api/services/conversation`, {
       method: "POST",
@@ -21,18 +21,17 @@ const CardSeller = () => {
       body: JSON.stringify({
         userId: product.ownerId,
       }), 
-
-      
     });
 
-    console.log(res)
+    const conversation = await res.json();
+    router.push(`/messages/${conversation.id}`)
   }
   
   return (
     <div className="card_seller">
       <div className="left">
         <img
-          src={"/product.png"}
+          src={`${product.owner.profileImage}`}
           width={50}
           height={50}
           className="avatar_card"
