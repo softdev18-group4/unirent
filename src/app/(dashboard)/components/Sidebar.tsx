@@ -391,13 +391,11 @@ function Sidebar({
 
                 <div className="cursor-default justify-self-end w-[70%] flex flex-col items-start justify-center truncate">
                   <div className="text-slate-600 text-sm">
-                    {session?.user.data != null
-                      ? `${session.user.data.firstName} ${session.user.data.lastName}`
+                    {session?.user.data ? `${session.user.data.firstName} ${session.user.data.lastName}`
                       : "loading"}
                   </div>
                   <div className="text-slate-400 text-sm truncate">
-                    {session?.user.data != null
-                      ? `${session.user.data.email}`
+                    {session?.user.data ? `${session.user.data.email}`
                       : "loading"}
                   </div>
                 </div>

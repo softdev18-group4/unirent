@@ -17,7 +17,6 @@ const cartSlice = createSlice({
     reset: () => initialState,
     setCart: (state, action: PayloadAction<CartItem[]>) => {
       state.items = action.payload;
-      //localStorage.setItem("cart", JSON.stringify(state.items));
     },
     addToCart: (state, action: PayloadAction<CartItem>) => {
       const {
@@ -50,7 +49,6 @@ const cartSlice = createSlice({
           period,
           price,
           rentTime
-          
         });
       }
       localStorage.setItem("cart", JSON.stringify(state.items));
